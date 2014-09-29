@@ -27,3 +27,4 @@ If you've stumbled across a bug, please help us out by reporting the bug you hav
 - Actual result
 
 This will help me to fix the bug as quickly as possible, and if you'd like to fix it yourself feel free to fork us on GitHub and submit a pull request!
+,
