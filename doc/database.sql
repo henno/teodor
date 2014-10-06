@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Loomise aeg: Sept 29, 2014 kell 03:59 PM
+-- Loomise aeg: Okt 06, 2014 kell 09:47 AM
 -- Serveri versioon: 5.5.34
 -- PHP versioon: 5.5.10
 
@@ -12,8 +12,20 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Andmebaas: `halo`
+-- Andmebaas: `teodor`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabeli struktuur tabelile `person`
+--
+
+DROP TABLE IF EXISTS `person`;
+CREATE TABLE `person` (
+  `person_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`person_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
