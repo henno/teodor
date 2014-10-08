@@ -2,7 +2,6 @@
 if (isset($_POST['module'])) {
 
     // Bootstrap mini-framework
-    define('PROJECT_NAME', 'Halo');
     require 'config.php';
     require '../system/database.php';
 
