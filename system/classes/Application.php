@@ -134,11 +134,11 @@ class Application
         }
         if($this->controller == 'journal' && $this->action == 'teacher'){
             $this->controller = 'journal_teacher';
-            $this->action = $this->params[0];
+            $this->action = empty($this->params[0]) ? 'index' : $this->params[0];
         }
         if($this->controller == 'journal' && $this->action == 'student'){
             $this->controller = 'journal_student';
-            $this->action = $this->params[0];
+            $this->action = empty($this->params[0]) ? 'index' : $this->params[0];
         }
     }
 

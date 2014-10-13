@@ -6,7 +6,7 @@
  * Time: 10:29
  */
 
-class journal_student {
+class journal_student extends Controller {
     function index(){
     }
 } 
