@@ -12,12 +12,9 @@ class tests extends Controller{
 
     function view()
     {
-        $test_name = $this->params[0];
-        $this->tests = get_all("SELECT person_name, test_name COUNT(*)
-                                FROM test_participants
-                                NATURAL JOIN person
-                                NATURAL JOIN test
-                                GROUP BY person_id, test_id
-                                 WHERE test_name ='$test_name'");
+        $test_id = $this->params[0];
+        $this->test = get_first("SELECT * FROM test");
+        $this->questions = get_all("SELECT * FROM test_question
+                                       WHERE test_id = '$test_id'");
     }
 }
