@@ -46,6 +46,7 @@
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li <?= $controller == 'groups' ? 'class="active"' : ''?>><a href="groups"><?__('Grupid')?></a></li>
+				<li <?= $controller == 'thesises' ? 'class="active"' : ''?>><a href="thesises"><?__('Lõputööd')?></a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="../navbar/">Default</a></li>
