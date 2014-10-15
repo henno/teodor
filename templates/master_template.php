@@ -48,6 +48,9 @@
 				<li <?= $controller == 'groups' ? 'class="active"' : ''?>><a href="groups"><?__('Grupid')?></a></li>
 				<li <?= $controller == 'thesises' ? 'class="active"' : ''?>><a href="thesises"><?__('Lõputööd')?></a></li>
 			</ul>
+            <ul class="nav navbar-nav">
+                <li <?= $controller == 'tests' ? 'class="active"' : ''?>><a href="tests"><?__('Testid')?></a></li>
+            </ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="../navbar/">Default</a></li>
 				<li><a href="../navbar-static-top/">Static top</a></li>
