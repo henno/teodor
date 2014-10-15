@@ -1,14 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Anneli
- * Date: 13.10.14
- * Time: 10:43
- */
-
-namespace views\journal_student;
+<h3><? __('Päevik') ?></h3>
 
 
-class journal_student_index {
+    <ul class="nav nav-pills">
+        <li class="active"><a href="#">Aasta</a></li>
+        <li><a href="#">1.periood</a></li>
+        <li><a href="#">2.periood</a></li>
+    </ul>
 
-} 
