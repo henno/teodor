@@ -26,7 +26,7 @@
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 	<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 	<![endif]-->
-
+    <script src="assets/components/jquery/1.10.2/jquery-1.10.2.min.js"></script>
 
 </head>
 
@@ -72,7 +72,6 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="assets/components/jquery/1.10.2/jquery-1.10.2.min.js"></script>
 <script src="assets/components/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </body>
 </html>
