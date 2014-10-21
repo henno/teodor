@@ -5,86 +5,91 @@
  * Date: 9/16/13
  * Time: 11:17 PM
  */
-
 class Application
 {
-	public $auth = null;
-	public $params = null;
-	public $action = 'index';
-	public $controller = DEFAULT_CONTROLLER;
+    public $auth = null;
+    public $params = null;
+    public $action = 'index';
+    public $controller = DEFAULT_CONTROLLER;
 
-	function __construct()
-	{
-		ob_start();
-		session_start();
+    function __construct()
+    {
+        ob_start();
+        session_start();
 
-		$this->load_common_functions();
-		$this->set_base_url();
-		$this->load_config();
-		$this->process_uri();
-		$this->init_db();
-		$this->handle_routing();
+        $this->load_common_functions();
+        $this->set_base_url();
+        $this->load_config();
+        $this->process_uri();
+        $this->init_db();
+        $this->handle_routing();
 
-		$this->auth = new Auth;
+        $this->auth = new Auth;
 
 
-		// Instantiate controller
+        // Instantiate controller
 
-		if (!file_exists("controllers/$this->controller.php"))
-			error_out("<b>Error:</b> File <i>controllers/{$this->controller}.php</i> does not exist.");
-		require "controllers/$this->controller.php";
+        if (!file_exists("controllers/$this->controller.php"))
+            error_out("<b>Error:</b> File <i>controllers/{$this->controller}.php</i> does not exist.");
+        require "controllers/$this->controller.php";
 
-		if (!class_exists($this->controller, false))
-		error_out("<b>Error:</b>
+        if (!class_exists($this->controller, false))
+            error_out("<b>Error:</b>
 				File  <i>controllers/{$this->controller}.php</i> exists but class <i>{$this->controller}</i> does not. You probably copied the file but forgot to rename the class in the copy.");
-		$controller = new $this->controller;
+        $controller = new $this->controller;
 
-		// Make request and auth properties available to controller
-		$controller->controller = $this->controller;
-		$controller->action = $this->action;
-		$controller->params = $this->params;
-		$controller->auth = $this->auth;
+        // Make request and auth properties available to controller
+        $controller->controller = $this->controller;
+        $controller->action = $this->action;
+        $controller->params = $this->params;
+        $controller->auth = $this->auth;
 
-		// Check if the user has extended Controller
-		if (!isset($controller->requires_auth)) {
-			$errors[] = 'You forgot the "<i>extends Controller</i>" part for the class <i>' . $controller->controller . '</i> in controllers/' . $controller->controller . '.php</i>. Fix it.';
-			require 'templates/error_template.php';
-			exit();
-		}
+        // Check if the user has extended Controller
+        if (!isset($controller->requires_auth)) {
+            $errors[] = 'You forgot the "<i>extends Controller</i>" part for the class <i>' . $controller->controller . '</i> in controllers/' . $controller->controller . '.php</i>. Fix it.';
+            require 'templates/error_template.php';
+            exit();
+        }
 
-		// Authenticate user, if controller requires it
-		if ($controller->requires_auth && !$controller->auth->logged_in) {
-			$controller->auth->require_auth();
-		}
+        // Authenticate user, if controller requires it
+        if ($controller->requires_auth && !$controller->auth->logged_in) {
+            $controller->auth->require_auth();
+        }
 
-		// Run the action
-		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && method_exists($controller, $controller->action . '_ajax')) {
-			$action_name = $controller->action . '_ajax';
-			$controller->$action_name();
-			exit();
-		} else {
-			// Check for and process POST ( executes $action_post() )
-			if (isset($_POST) && !empty($_POST) && method_exists($controller, $controller->action . '_post')) {
-				$action_name = $controller->action . '_post';
-				$controller->$action_name();
-			}
+        // Run the action
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && method_exists($controller, $controller->action . '_ajax')) {
+            $action_name = $controller->action . '_ajax';
+            $controller->$action_name();
+            exit();
+        } else {
+            // Check for and process POST ( executes $action_post() )
+            if (isset($_POST) && !empty($_POST) && method_exists($controller, $controller->action . '_post')) {
+                $action_name = $controller->action . '_post';
+                $controller->$action_name();
+            }
 
-			// Proceed with regular action processing ( executes $action() )
-			if(!method_exists($controller, $controller->action))
-				error_out("<b>Error:</b>
+            // Check for and process FILES ( executes $action_upload() )
+            if (isset($_FILES) && !empty($_FILES) && method_exists($controller, $controller->action . '_upload')) {
+                $action_name = $controller->action . '_upload';
+                $controller->$action_name();
+            }
+
+            // Proceed with regular action processing ( executes $action() )
+            if (!method_exists($controller, $controller->action))
+                error_out("<b>Error:</b>
 				The action <i>{$controller->controller}::{$controller->action}()</i> does not exist.
 				Open <i>controllers/{$controller->controller}.php</i> and add method <i>{$controller->action}()</i>");
-			$controller->{$controller->action}();
-			$controller->render($controller->template);
-		}
+            $controller->{$controller->action}();
+            $controller->render($controller->template);
+        }
 
-	}
+    }
 
 	private function load_common_functions()
 	{
 		require dirname(__FILE__). '/../functions.php';
 
-	}
+    }
 
 	private function set_base_url()
 	{
@@ -108,32 +113,32 @@ class Application
         }
 	}
 
-	private function process_uri()
-	{
-		if (isset($_SERVER['PATH_INFO'])) {
-			if ($path_info = explode('/', $_SERVER['PATH_INFO'])) {
-				array_shift($path_info);
+    private function process_uri()
+    {
+        if (isset($_SERVER['PATH_INFO'])) {
+            if ($path_info = explode('/', $_SERVER['PATH_INFO'])) {
+                array_shift($path_info);
                 $this->controller = isset($path_info[0]) ? array_shift($path_info) : DEFAULT_CONTROLLER;
                 $this->action = isset($path_info[0]) && !empty($path_info[0]) ? array_shift($path_info) : 'index';
-				$this->params = isset($path_info[0]) ? $path_info : NULL;
-			}
-		}
-	}
+                $this->params = isset($path_info[0]) ? $path_info : NULL;
+            }
+        }
+    }
 
-	private function handle_routing()
-	{
-		//TODO: write here your own code if you want to manipulate controller, action
+    private function handle_routing()
+    {
+        //TODO: write here your own code if you want to manipulate controller, action
 
         // Allow shorter URLs (users/view/3 becomes users/3)
-        if( is_numeric($this->action) ){
+        if (is_numeric($this->action)) {
             $this->params[0] = $this->action;
             $this->action = 'view';
         }
-        if($this->controller == 'journal' && $this->action == 'teacher'){
+        if ($this->controller == 'journal' && $this->action == 'teacher') {
             $this->controller = 'journal_teacher';
             $this->action = empty($this->params[0]) ? 'index' : $this->params[0];
         }
-        if($this->controller == 'journal' && $this->action == 'student'){
+        if ($this->controller == 'journal' && $this->action == 'student') {
             $this->controller = 'journal_student';
             $this->action = empty($this->params[0]) ? 'index' : $this->params[0];
         }
