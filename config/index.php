@@ -2,10 +2,8 @@
 if (isset($_POST['module'])) {
 
     // Bootstrap mini-framework
-    define('PROJECT_NAME', 'Halo');
-    define('DEFAULT_CONTROLLER', 'Halo');
-    require '../system/classes/Application.php';
-    $app = new Application;
+    require '../index.php';
+
 
     // Check if the module's table already exists in the database
     $module = substr($_POST['module'], -1) == 's' ? substr($_POST['module'], 0, -1) : $_POST['module'];
