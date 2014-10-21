@@ -82,7 +82,7 @@ class Application
 
 	private function load_common_functions()
 	{
-		require 'system/functions.php';
+		require dirname(__FILE__). '/../functions.php';
 
 	}
 
@@ -100,15 +100,12 @@ class Application
 	}
 	private function load_config()
 	{
-
-
-
-		// Load config file or bail out
-		if (file_exists('config/config.php')) {
-			require 'config/config.php';
-		} else {
-			error_out('No config.php. Please make a copy of config.sample.php and name it config.php and configure it.');
-		}
+    	// Load config file or bail out
+        try {
+            include dirname(__FILE__).'/../../config/config.php';
+        } catch (Exception $e){
+            error_out('No config.php. Please make a copy of config.sample.php and name it config.php and configure it.');
+        }
 	}
 
 	private function process_uri()
@@ -144,7 +141,7 @@ class Application
 
 	private function init_db()
 	{
-		require 'system/database.php';
+		require dirname(__FILE__) . '/../database.php';
 	}
 
 }
