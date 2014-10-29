@@ -12,11 +12,40 @@
                 <button type="button" class="btn btn-default">Lisamaterjalid</button>
             </div>
         </div>
-        <form id="uploadForm" method="post" enctype="multipart/form-data">
-            <?php var_dump($_FILES) ?>
-            <input type="file" name="input_upload" id="input_upload" class="file-upload"/>
-            <input type="text" id="file-name" class="text-upload" readonly/>
+        <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
+            <input type="file" name="draft_upload" id="draft_upload" class="file-upload"/>
         </form>
+        <?php var_dump($_FILES) ?>
+        <script>
+            $('#thesis-draft').click(function (event) {
+                $('#draft_upload').click();
+            });
+
+            //capture selected filename
+            $('#draft_upload').change(function (click) {
+                //  $('#file-name').val(this.value);
+                $('form#uploadForm').submit();
+            });
+        </script>
+        <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
+            <input type="file" name="final_upload" id="final_upload" class="file-upload"/>
+        </form>
+        <?php var_dump($_FILES) ?>
+        <script>
+            $('#thesis-final').click(function (event) {
+                $('#final_upload').click();
+            });
+
+            //capture selected filename
+            $('#ifinal_upload').change(function (click) {
+                //  $('#file-name').val(this.value);
+                $('form#uploadForm').submit();
+            });
+        </script>
+        <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
+            <input type="file" name="draft_upload" id="draft_upload" class="file-upload"/>
+        </form>
+        <?php var_dump($_FILES) ?>
         <script>
             $('#thesis-draft').click(function (event) {
                 $('#input_upload').click();
