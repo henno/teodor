@@ -4,24 +4,24 @@
         You are not an administrator.
     </div>
 <? exit(); endif; ?>
-<h1>User '<?= $user['username'] ?>'</h1>
+<h1>person '<?= $person['username'] ?>'</h1>
 <form id="form" method="post">
     <table class="table table-bordered">
         <tr>
-            <th>Username</th>
-            <td><input type="text" name="data[username]" value="<?= $user['username'] ?>"/></td>
+            <th>username</th>
+            <td><input type="text" name="data[username]" value="<?= $person['username'] ?>"/></td>
         </tr>
         <tr>
             <th>Password</th>
-            <td><input type="text" name="data[password]" value="<?= $user['password'] ?>"/></td>
+            <td><input type="text" name="data[password]" value="<?= $person['password'] ?>"/></td>
         </tr>
         <tr>
             <th>Active</th>
-            <td><input type="checkbox" name="data[active]" <?= $user['active'] != 0 ? 'checked="checked"' : '' ?>/>
+            <td><input type="checkbox" name="data[active]" <?= $person['active'] != 0 ? 'checked="checked"' : '' ?>/>
         </tr>
         <tr>
             <th>Email</th>
-            <td><input type="text" name="data[email]" value="<?= $user['email'] ?>">
+            <td><input type="text" name="data[email]" value="<?= $person['email'] ?>">
         </tr>
     </table>
 </form>
@@ -30,12 +30,12 @@
 <div class="pull-right">
 
     <!-- CANCEL -->
-    <button class="btn btn-default" onclick="window.location.href = 'users/view/<?= $user['user_id'] ?>/<?= $user['username'] ?>'">
+    <button class="btn btn-default" onclick="window.location.href = 'persons/view/<?= $person['person_id'] ?>/<?= $person['username'] ?>'">
         Cancel
     </button>
 
     <!-- DELETE -->
-    <button class="btn btn-danger" onclick="delete_user(<?=$user['user_id']?>)">
+    <button class="btn btn-danger" onclick="delete_person(<?=$person['person_id']?>)">
         Delete
     </button>
 
@@ -48,10 +48,10 @@
 <!-- END BUTTONS -->
 
 <script>
-    function delete_user(user_id){
-        $.post("users/delete", {user_id: <?=$user['user_id']?>}, function (data) {
+    function delete_person(person_id){
+        $.post("persons/delete", {person_id: <?=$person['person_id']?>}, function (data) {
             if(data == '1'){
-                window.location.href = 'users';
+                window.location.href = 'persons';
             }else{
                 alert('Fail');
             }

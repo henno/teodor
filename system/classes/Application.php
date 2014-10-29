@@ -129,7 +129,7 @@ class Application
     {
         //TODO: write here your own code if you want to manipulate controller, action
 
-        // Allow shorter URLs (users/view/3 becomes users/3)
+        // Allow shorter URLs (persons/view/3 becomes persons/3)
         if (is_numeric($this->action)) {
             $this->params[0] = $this->action;
             $this->action = 'view';

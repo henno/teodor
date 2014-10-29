@@ -1,6 +1,6 @@
 <?php
 /**
- * Class auth authenticates user and permits to check if the user has been logged in
+ * Class auth authenticates person and permits to check if the person has been logged in
  * Automatically loaded when the controller has $requires_auth property.
  */
 class Auth
@@ -11,28 +11,28 @@ class Auth
 
     function __construct()
     {
-        if (isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['person_id'])) {
             $this->logged_in = TRUE;
-            $user = get_first("SELECT *
-                                       FROM user
-                                       WHERE user_id = '{$_SESSION['user_id']}'");
+            $person = get_first("SELECT *
+                                       FROM person
+                                       WHERE person_id = '{$_SESSION['person_id']}'");
 
-            // Dynamically add all user table fields as object properties to auth object
-            foreach($user as $user_attr => $value){
-                $this->$user_attr = $value;
+            // Dynamically add all person table fields as object properties to auth object
+            foreach($person as $person_attr => $value){
+                $this->$person_attr = $value;
             }
         }
     }
 
     /**
-     * Verifies if the user is logged in and authenticates if not and POST contains username, else displays the login form
-     * @return bool Returns true when the user has been logged in
+     * Verifies if the person is logged in and authenticates if not and POST contains username, else displays the login form
+     * @return bool Returns true when the person has been logged in
      */
     function require_auth()
     {
         global $errors;
 
-        // If user has already logged in...
+        // If person has already logged in...
         if ($this->logged_in) {
             return TRUE;
         }
@@ -41,12 +41,12 @@ class Auth
         if (isset($_POST['username'])) {
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $user = get_first("SELECT user_id, is_admin FROM user
+            $person = get_first("SELECT person_id, is_admin FROM person
                                 WHERE username = '$username'
                                   AND password = '$password'
                                   AND  deleted = 0");
-            if (! empty($user['user_id'])) {
-                $_SESSION['user_id'] = $user['user_id'];
+            if (! empty($person['person_id'])) {
+                $_SESSION['person_id'] = $person['person_id'];
                 return true;
             } else {
                 $errors[] = "Vale kasutajanimi või parool";

@@ -1,13 +1,13 @@
-<h3>Users</h3>
+<h3>Persons</h3>
 <ul class="list-group">
-    <? foreach ($users as $user): ?>
+    <? foreach ($persons as $person): ?>
         <li class="list-group-item"><a
-                href="users/view/<?= $user['user_id'] ?>/<?= $user['username'] ?>"><?= $user['username'] ?></a></li>
+                href="persons/view/<?= $person['person_id'] ?>/<?= $person['username'] ?>"><?= $person['username'] ?></a></li>
     <? endforeach ?>
 </ul>
 
 <?php if ($auth->is_admin): ?>
-<h3>Add new user</h3>
+<h3>Add new person</h3>
 
 <form method="post" id="form">
     <form id="form" method="post">
