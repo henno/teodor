@@ -10,11 +10,22 @@ class tests extends Controller{
         $this->tests = get_all("SELECT * FROM `test`");
     }
 
-    function view()
-    {
+    function view() {
         $test_id = $this->params[0];
         $this->test = get_first("SELECT * FROM test");
         $this->questions = get_all("SELECT * FROM test_question
                                        WHERE test_id = '$test_id'");
+    }
+
+    function add_post(){
+        echo "klaabu";
+        $data = $_POST['data'];
+        $data['test_id'] = $this->params[0];
+        var_dump($data);
+        insert('test', $data);
+    }
+
+    function add(){
+
     }
 }

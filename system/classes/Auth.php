@@ -11,11 +11,11 @@ class Auth
 
     function __construct()
     {
-        if (isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['person_id'])) {
             $this->logged_in = TRUE;
             $user = get_first("SELECT *
-                                       FROM user
-                                       WHERE user_id = '{$_SESSION['user_id']}'");
+                                       FROM person
+                                       WHERE person_id = '{$_SESSION['person_id']}'");
 
             // Dynamically add all user table fields as object properties to auth object
             foreach($user as $user_attr => $value){
@@ -38,15 +38,15 @@ class Auth
         }
 
         // Authenticate by POST data
-        if (isset($_POST['username'])) {
-            $username = $_POST['username'];
+        if (isset($_POST['person_name'])) {
+            $username = $_POST['person_name'];
             $password = $_POST['password'];
-            $user = get_first("SELECT user_id, is_admin FROM user
+            $user = get_first("SELECT person_id, is_admin FROM person
                                 WHERE username = '$username'
                                   AND password = '$password'
                                   AND  deleted = 0");
-            if (! empty($user['user_id'])) {
-                $_SESSION['user_id'] = $user['user_id'];
+            if (! empty($user['person_id'])) {
+                $_SESSION['person_id'] = $user['person_id'];
                 return true;
             } else {
                 $errors[] = "Vale kasutajanimi või parool";

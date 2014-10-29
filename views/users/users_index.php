@@ -2,7 +2,7 @@
 <ul class="list-group">
     <? foreach ($users as $user): ?>
         <li class="list-group-item"><a
-                href="users/view/<?= $user['user_id'] ?>/<?= $user['username'] ?>"><?= $user['username'] ?></a></li>
+                href="users/view/<?= $user['person_id'] ?>/<?= $user['person_name'] ?>"><?= $user['person_name'] ?></a></li>
     <? endforeach ?>
 </ul>
 
@@ -14,7 +14,7 @@
         <table class="table table-bordered">
             <tr>
                 <th>Username</th>
-                <td><input type="text" name="data[username]" placeholder="Jaan"/></td>
+                <td><input type="text" name="data[person_name]" placeholder="Nimi"/></td>
             </tr>
             <tr>
                 <th>Password</th>

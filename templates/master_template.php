@@ -52,7 +52,7 @@
                 <li <?= $controller == 'tests' ? 'class="active"' : ''?>><a href="tests"><?__('Testid')?></a></li>
             </ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="../navbar/">Default</a></li>
+                <li><a href="<?=BASE_URL?><?= $auth->logged_in == true? 'logout' : 'login'?>"><?= $auth->logged_in == true? 'Logout' : 'Login'?></a></li>
 				<li><a href="../navbar-static-top/">Static top</a></li>
 				<li class="active"><a href="./">Fixed top</a></li>
 			</ul>

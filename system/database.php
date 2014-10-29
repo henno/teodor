@@ -157,6 +157,7 @@ function update($table, array $data, $where)
 	if ($table and is_array($data) and !empty($data)) {
 		$values = implode(',', escape($data));
 
+        
 		if (isset($where)) {
 			$sql = "UPDATE `{$table}` SET {$values} WHERE {$where}";
 		} else {

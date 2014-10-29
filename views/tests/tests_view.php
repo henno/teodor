@@ -11,7 +11,7 @@
     </form>
 <? endif; ?>
 
-<h1><? __('Küsimused') ?></h1>
+<h3><? __('Küsimused') ?></h3>
 <table class="table table-bordered">
 
     <? $n = 0;

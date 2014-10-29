@@ -82,11 +82,11 @@
 
 		<h2 class="form-signin-heading"><?__('Please sign in')?></h2>
 
-		<label for="user"><?__('Username')?></label>
+		<label for="user"><?__('username')?></label>
 
 		<div class="input-group">
 			<span class="input-group-addon"><i class="icon-user"></i></span>
-			<input id="user" name="username" type="text" class="form-control" placeholder="jaan" autofocus>
+			<input id="user" name="person_name" type="text" class="form-control" placeholder="Nimi" autofocus>
 		</div>
 
 		<br/>

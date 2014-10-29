@@ -1,8 +1,8 @@
-<h1>User '<?= $user['username'] ?>'</h1>
+<h1>User '<?= $user['person_name'] ?>'</h1>
 <table class="table table-bordered">
     <tr>
         <th>Username</th>
-        <td><?= $user['username'] ?></td>
+        <td><?= $user['person_name'] ?></td>
     </tr>
     <? if( $auth->is_admin ): ?>
     <tr>
@@ -22,7 +22,7 @@
 
 <!-- EDIT BUTTON -->
 <? if($auth->is_admin):?>
-<form action="users/edit/<?= $user['user_id'] ?>">
+<form action="users/edit/<?= $user['person_id'] ?>">
     <div class="pull-right">
         <button class="btn btn-primary">
             Edit
