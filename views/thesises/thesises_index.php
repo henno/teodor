@@ -8,13 +8,14 @@
 
             <div class="btn-group btn-group-lg">
                 <button type="button" class="btn btn-default" id="thesis-draft">Eelkaitsmine </button>
-                <button type="button" class="btn btn-default">Lõputöö</button>
+                <button type="button" class="btn btn-default" id="thesis-final">Lõputöö</button>
                 <button type="button" class="btn btn-default">Lisamaterjalid</button>
             </div>
         </div>
-        <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
+        <form id="uploadForm"method="post" enctype="multipart/form-data" style=" display: none">
             <input type="file" name="draft_upload" id="draft_upload" class="file-upload"/>
         </form>
+
         <?php var_dump($_FILES) ?>
         <script>
             $('#thesis-draft').click(function (event) {
@@ -30,6 +31,7 @@
         <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
             <input type="file" name="final_upload" id="final_upload" class="file-upload"/>
         </form>
+
         <?php var_dump($_FILES) ?>
         <script>
             $('#thesis-final').click(function (event) {

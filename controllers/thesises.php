@@ -35,7 +35,7 @@ class thesises extends Controller
             $uploadOk = 0;
         }
 
-        // Only GIF files allowed
+        // Only PDF files allowed
         if (!($f['type'] == "application/pdf")) {
             __('upload ebaõnnestus');
             $uploadOk = 0;
