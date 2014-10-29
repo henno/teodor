@@ -28,7 +28,7 @@
         <tr>
             <td><b>Kursuse nimetus</b></td>
             <td><b>Aasta/Perioodi hinded</b></td>
-            <td><b>Ainetunnid</b></td>
+            <td><b>Ainehinded</b></td>
         </tr>
         <tr>
             <td>Eesti keel</td>
