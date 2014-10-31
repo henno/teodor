@@ -6,6 +6,7 @@ class thesises extends Controller
     function index()
     {
         $this->thesises = get_all("SELECT * FROM `thesis`");
+        $this->instructors = get_all("SELECT * FROM `person`");
     }
 
     function view()
@@ -52,5 +53,10 @@ class thesises extends Controller
                 echo "Sorry, there was an error uploading your file.";
             }
         }
+    }
+
+    function archive()
+    {
+        $this->thesises = get_all("SELECT * FROM `thesis`");
     }
 }
