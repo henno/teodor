@@ -24,11 +24,14 @@
                        placeholder="Siia kirjuta lõputöö teema" value="<?= $test['test_name'] ?>">
             </div>
         </div>
+        <span class="commit_btn">
+            <button class="btn btn-primary" type="submit">Kinnita</button>
+        </span>
     </div>
     <div class="instructor">
         <div class="row">
             <h3 class="col-sm-5">Kinnita juhendaja nimi</h3>
-            <div class="form-group col-sm-7">
+            <div class="form-group col-sm-6">
                 <form method="post">
                     <div class="input-group">
                         <select name="data[thesis_name]" data-placeholder="Juhendaja nimi" class="chosen-select" tabindex="2">

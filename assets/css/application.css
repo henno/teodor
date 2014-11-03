@@ -12,7 +12,7 @@ ul.nav li:hover ul.dropdown-menu {
     margin-left: 0;
 }
 .thesis_title, .instructor, .upload_files {
-    margin: 15px 5px;
+    margin: 80px 5px;
 }
 .commit_btn {
     float: right;
