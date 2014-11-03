@@ -48,6 +48,9 @@
                        placeholder="Siia kirjuta juhendaja kui ei leidnud valikust sobivat" value="<?= $test['test_name'] ?>">
             </div>
         </div>
+        <span class="commit_btn">
+            <button class="btn btn-primary" type="submit">Kinnita</button>
+        </span>
     </div>
     <!-- EDIT BUTTON -->
     <? if ($auth->is_admin): ?>
