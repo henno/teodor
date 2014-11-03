@@ -1,7 +1,7 @@
 <h2 xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"><? __('Lõputööd') ?></h2>
 <h3>Dokumentatsioon</h3>
 <form role="form" class="form-horizontal" method="post" action="tests/<?= $test['test_id'] ?>">
-    <div class="thesis_title"></div>
+    <div class="thesis_title">
         <div class="row">
             <h3 class="col-sm-5">Kinnita lõputöö teema</h3>
             <div class="form-group col-sm-7">
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="instructor"
+    <div class="instructor">
         <div class="row">
             <h3 class="col-sm-5">Kinnita juhendaja nimi</h3>
             <div class="form-group col-sm-7">
