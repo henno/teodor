@@ -38,7 +38,7 @@
     display: block;
     overflow: hidden;
     padding: 0 0 0 8px;
-    height: 23px;
+    height: 40px;
     border: 1px solid #aaa;
     border-radius: 5px;
     background-color: #fff;
@@ -52,7 +52,8 @@
     color: #444;
     text-decoration: none;
     white-space: nowrap;
-    line-height: 24px;
+    font-size: 18px;
+    line-height: 35px;
 }
 .chosen-container-single .chosen-default {
     color: #999;
@@ -326,6 +327,9 @@
 }
 .chosen-container-active .chosen-choices li.search-field input[type="text"] {
     color: #111 !important;
+}
+.chosen-select{
+    width: 400px;
 }
 
 /* @end */

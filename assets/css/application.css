@@ -3,4 +3,15 @@ ul.nav li:hover ul.dropdown-menu {
     display: block;
     margin: 0
 }
-
+.instructor {
+    width: 400px;
+    margin: 10px 0px;
+}
+.thesis_name {
+    width: 400px;
+    margin: 10px 0px;
+}
+p {
+    font-size: 18px;
+    padding: 10px 0;
+}
