@@ -547,7 +547,7 @@ a.fc-more:hover {
 
 .fc-toolbar {
 	text-align: center;
-	margin-bottom: 1em;
+	margin: 3em 0 1em 0;
 }
 
 .fc-toolbar .fc-left {
