@@ -8,7 +8,9 @@ class thesises extends Controller
         $this->thesises = get_all("SELECT * FROM `thesis`");
         $this->instructors = get_all("SELECT * FROM `person`");
     }
-
+function index_post() {
+    echo "tere";
+}
     function view()
     {
 
