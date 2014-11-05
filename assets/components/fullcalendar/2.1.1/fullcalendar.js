@@ -17,7 +17,7 @@
 
 var defaults = {
 
-	lang: 'en',
+	lang: 'est',
 
 	defaultTimedEventDuration: '02:00:00',
 	defaultAllDayEventDuration: { days: 1 },
@@ -25,7 +25,7 @@ var defaults = {
 	nextDayThreshold: '09:00:00', // 9am
 
 	// display
-	defaultView: 'month',
+	defaultView: 'basicDay',
 	aspectRatio: 1.35,
 	header: {
 		left: 'title',
@@ -78,10 +78,10 @@ var defaults = {
 		next: "next",
 		prevYear: "prev year",
 		nextYear: "next year",
-		today: 'today',
-		month: 'month',
-		week: 'week',
-		day: 'day'
+		today: 'Täna',
+		month: 'Kuu',
+		week: 'Nädal',
+		day: 'Päev'
 	},
 
 	buttonIcons: {
