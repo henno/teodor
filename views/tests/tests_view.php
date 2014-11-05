@@ -50,8 +50,11 @@
         <label class="col-sm-5 control-label" for="subject_id">Aine nimi</label>
 
         <div class="col-sm-7">
-            <input type="text" class="form-control" name="data[subject_id]" id="subject_id" placeholder="Keemia"
-                   value="<?= $test['subject_id'] ?>">
+            <select id="subject_id" name="data[subject_id]" class="chosen-select">
+                <? foreach ($subjects as $subject): ?>
+                    <option value="<?= $subject['subject_id'] ?>" <?= $test['subject_id'] == $subject['subject_id'] ? 'selected="selected"' : ''?>><?= $subject['subject_name'] ?></option>
+                <? endforeach ?>
+            </select>
         </div>
     </div>
     <div class="form-group">
@@ -66,7 +69,7 @@
 
     <!-- EDIT BUTTON -->
     <? if ($auth->is_admin): ?>
-        <form >
+        <form>
             <div class="pull-right">
                 <button class="btn btn-primary">
                     Salvesta
