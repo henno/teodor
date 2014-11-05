@@ -1,32 +1,30 @@
 <h2 xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"><? __('Lõputööd') ?></h2>
 <h3>Dokumentatsioon</h3>
-<form role="form" class="form-horizontal" method="post" action="tests/<?= $test['test_id'] ?>">
+<form role="form" class="form-horizontal" method="post" action="thesises/<?= $thesis['thesis_id'] ?>">
     <div class="thesis_title">
         <div class="row">
             <h3 class="col-sm-5">Kinnita lõputöö teema</h3>
             <div class="form-group col-sm-7">
-                <form method="post">
+
                     <div class="input-group">
-                        <select name="data[thesis_name]" data-placeholder="Lõputöö pealkiri" class="chosen-select" tabindex="2">
+                        <select name="data[thesis_id]" data-placeholder="Lõputöö pealkiri" class="chosen-select" tabindex="2">
                             <option value=""></option>
-                            <? foreach ($instructors as $instructor): ?>
-                                <option value="<?= $instructor['person_id'] ?>"><?= $instructor['person_name'] ?></option>
+                            <? foreach ($thesises as $thesis): ?>
+                                <option value="<?= $thesis['thesis_title'] ?>"><?= $thesis['thesis_title'] ?></option>
                             <? endforeach ?>
                         </select>
                     </div>
-                </form>
+
             </div>
         </div>
         <div class="row">
             <label class="col-sm-5 control-label" for="thesis_title">Lõputöö teema</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" name="data[test_name]" id="test_name"
-                       placeholder="Siia kirjuta lõputöö teema" value="<?= $test['test_name'] ?>">
+                <input type="text" class="form-control" name="data[thesis_title]" id="thesis_title"
+                       placeholder="või kirjuta siia oma lõputöö teema" >
             </div>
         </div>
-        <span class="commit_btn">
-            <button class="btn btn-primary" type="submit">Kinnita</button>
-        </span>
+
     </div>
     <div class="instructor">
         <div class="row">
@@ -34,14 +32,14 @@
             <div class="form-group col-sm-6">
                 <form method="post">
                     <div class="input-group">
-                        <select name="data[thesis_name]" data-placeholder="Juhendaja nimi" class="chosen-select" tabindex="2">
+                        <select name="data[instructor_id]" data-placeholder="Juhendaja nimi" class="chosen-select" tabindex="2">
                             <option value=""></option>
                             <? foreach ($instructors as $instructor): ?>
-                                <option value="<?= $instructor['person_id'] ?>"><?= $instructor['person_name'] ?></option>
+                                <option value="<?= $instructor['person_name'] ?>"><?= $instructor['person_name'] ?></option>
                             <? endforeach ?>
                         </select>
                     </div>
-                </form>
+
             </div>
         </div>
         <div class="row">
@@ -51,19 +49,17 @@
                        placeholder="Siia kirjuta juhendaja kui ei leidnud valikust sobivat" value="<?= $test['test_name'] ?>">
             </div>
         </div>
-        <span class="commit_btn">
-            <button class="btn btn-primary" type="submit">Kinnita</button>
-        </span>
+
     </div>
     <!-- EDIT BUTTON -->
     <? if ($auth->is_admin): ?>
-        <form >
+
             <div class="pull-right">
                 <button class="btn btn-primary">
                     Salvesta
                 </button>
             </div>
-        </form>
+
     <? endif; ?>
 </form>
 <div class="row upload_files">
@@ -75,7 +71,7 @@
             <div class="btn-group btn-group-lg">
                 <button type="button" class="btn btn-default" id="thesis-draft">Eelkaitsmine</button>
                 <button type="button" class="btn btn-default" id="thesis-final">Lõputöö</button>
-                <button type="button" class="btn btn-default">Lisamaterjalid</button>
+                <button type="button" class="btn btn-default" id="thesis_file_name">Lisamaterjalid</button>
             </div>
         </div>
         <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
@@ -103,21 +99,21 @@
             });
 
             //capture selected filename
-            $('#ifinal_upload').change(function (click) {
+            $('#final_upload').change(function (click) {
 //  $('#file-name').val(this.value);
                 $('form#uploadForm').submit();
             });
         </script>
         <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
-            <input type="file" name="draft_upload" id="draft_upload" class="file-upload"/>
+            <input type="file" name="thesis_file_upload" id="thesis_file_upload" class="file-upload"/>
         </form>
         <script>
-            $('#thesis-draft').click(function (event) {
-                $('#input_upload').click();
+            $('#thesis_file_name').click(function (event) {
+                $('#file_upload').click();
             });
 
             //capture selected filename
-            $('#input_upload').change(function (click) {
+            $('#file_upload').change(function (click) {
 //  $('#file-name').val(this.value);
                 $('form#uploadForm').submit();
             });

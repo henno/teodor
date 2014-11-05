@@ -3,16 +3,14 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2014 at 10:07 AM
+-- Generation Time: Nov 05, 2014 at 01:51 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-drop database if exists teodor;
-CREATE DATABASE teodor CHARACTER SET utf8 COLLATE utf8_general_ci;
-use teodor;
+
 --
 -- Database: `teodor`
 --
@@ -25,18 +23,9 @@ use teodor;
 
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE IF NOT EXISTS `course` (
-  `person_id` int(10) unsigned NOT NULL,
-  `subject_id` int(10) unsigned NOT NULL
+  `subject_id` int(10) unsigned NOT NULL,
+  `person_id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `course`
---
-
-INSERT INTO `course` (`person_id`, `subject_id`) VALUES
-(1, 1),
-(3, 1),
-(1, 2);
 
 -- --------------------------------------------------------
 
@@ -73,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `person` (
   `active` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `email` varchar(255) NOT NULL,
   `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `person`
@@ -82,7 +71,20 @@ CREATE TABLE IF NOT EXISTS `person` (
 INSERT INTO `person` (`person_id`, `person_name`, `username`, `is_admin`, `password`, `active`, `email`, `deleted`) VALUES
 (1, 'Sammal Habe', 'sammal.habe', 1, 'sammal', 0, '', 0),
 (2, 'King Pool', 'king.pool', 1, 'king', 0, '', 0),
-(3, 'Muh V', 'muh.v', 0, 'muh', 0, '', 0);
+(3, 'Muh V', 'muh.v', 0, 'muh', 0, '', 0),
+(4, 'test', 'test', 1, 'test', 0, '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `room`
+--
+
+DROP TABLE IF EXISTS `room`;
+CREATE TABLE IF NOT EXISTS `room` (
+`room_id` int(11) NOT NULL,
+  `room_nr` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -308,6 +310,23 @@ CREATE TABLE IF NOT EXISTS `thesis_file` (
   `thesis_file_uploaded_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `timetable`
+--
+
+DROP TABLE IF EXISTS `timetable`;
+CREATE TABLE IF NOT EXISTS `timetable` (
+`timetable_id` int(10) unsigned NOT NULL,
+  `group_id` int(10) unsigned NOT NULL,
+  `person_id` int(10) unsigned NOT NULL,
+  `room_id` int(10) unsigned NOT NULL,
+  `subject_id` int(10) unsigned NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 --
 -- Indexes for dumped tables
 --
@@ -316,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `thesis_file` (
 -- Indexes for table `course`
 --
 ALTER TABLE `course`
- ADD PRIMARY KEY (`person_id`,`subject_id`), ADD KEY `subject_id` (`subject_id`);
+ ADD PRIMARY KEY (`subject_id`);
 
 --
 -- Indexes for table `group`
@@ -329,6 +348,12 @@ ALTER TABLE `group`
 --
 ALTER TABLE `person`
  ADD PRIMARY KEY (`person_id`), ADD UNIQUE KEY `UNIQUE` (`username`);
+
+--
+-- Indexes for table `room`
+--
+ALTER TABLE `room`
+ ADD PRIMARY KEY (`room_id`);
 
 --
 -- Indexes for table `student`
@@ -391,6 +416,12 @@ ALTER TABLE `thesis_file`
  ADD PRIMARY KEY (`thesis_file_id`);
 
 --
+-- Indexes for table `timetable`
+--
+ALTER TABLE `timetable`
+ ADD PRIMARY KEY (`timetable_id`), ADD KEY `group_id` (`group_id`,`person_id`,`room_id`,`subject_id`,`start_time`,`end_time`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -403,7 +434,12 @@ MODIFY `group_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-MODIFY `person_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `person_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `room`
+--
+ALTER TABLE `room`
+MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `subject`
 --
@@ -435,15 +471,13 @@ MODIFY `test_question_type_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INC
 ALTER TABLE `thesis_file`
 MODIFY `thesis_file_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `timetable`
+--
+ALTER TABLE `timetable`
+MODIFY `timetable_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `course`
---
-ALTER TABLE `course`
-ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`),
-ADD CONSTRAINT `course_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`);
 
 --
 -- Constraints for table `student`

@@ -1,8 +1,10 @@
 <link href='assets/components/fullcalendar/2.1.1/fullcalendar.css' rel='stylesheet'/>
 <link href='assets/components/fullcalendar/2.1.1/fullcalendar.print.css' rel='stylesheet' media='print'/>
+<link href='assets/components/fullcalendar/2.1.1/timetable.css' rel='stylesheet'/>
 <script src='assets/components/fullcalendar/2.1.1/lib/moment.min.js'></script>
 <script src='assets/components/fullcalendar/2.1.1/lib/jquery.min.js'></script>
-<script src='assets/components/fullcalendar/2.1.1/fullcalendar.min.js'></script>
+<script src='assets/components/fullcalendar/2.1.1/fullcalendar.js'></script>
+<script src='assets/components/fullcalendar/2.1.1/lang/est.js'></script>
 <script>
 
     $(document).ready(function () {
@@ -11,9 +13,9 @@
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,basicWeek,basicDay'
+                right: 'basicDay,basicWeek,month'
             },
-            defaultDate: '2014-09-12',
+            defaultDate: moment().format("YYYY/MM/DD"),
             editable: true,
             eventLimit: true, // allow "more" link when too many events
             events: [
