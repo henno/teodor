@@ -10,15 +10,7 @@
 
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-5 control-label" for="test_max_allowed_time">Testi sooritamiseks lubatud aeg</label>
 
-        <div class="col-sm-7">
-            <input type="text" class="form-control" name="data[test_max_allowed_time]" id="test_max_allowed_time"
-                   placeholder="Keemia" value="<?= $test['test_max_allowed_time'] ?>">
-
-        </div>
-    </div>
     <div class="form-group">
         <label class="col-sm-5 control-label" for="test_max_allowed_attempts">Lubatud soorituste arv</label>
 
@@ -57,15 +49,6 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-5 control-label" for="lecture_id">Loengu nimi</label>
-
-        <div class="col-sm-7">
-            <input type="text" class="form-control" name="data[lecture_id]" id="lecture_id" placeholder="Keemia"
-                   value="<?= $test['lecture_id'] ?>">
-        </div>
-    </div>
-
 
     <!-- EDIT BUTTON -->
     <? if ($auth->is_admin): ?>
