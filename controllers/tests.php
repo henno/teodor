@@ -19,6 +19,7 @@ class tests extends Controller
         $this->test = get_first("SELECT * FROM test NATURAL JOIN person WHERE test_id = '$test_id'");
         $this->questions = get_all("SELECT * FROM test_question
                                        WHERE test_id = '$test_id'");
+        $this->subjects = get_all("SELECT * FROM subject");
     }
 
     function index_post()
@@ -34,7 +35,8 @@ class tests extends Controller
         $data = $_POST['data'];
         unset($data['person_id']);
         unset($data['person_name']);
-        $test_id = insert('test', $data);
+        $test_id= $this->params[0];
+        update('test', $data, "test_id = {$test_id}");
         header('Location: ' . BASE_URL . 'tests/' . $test_id);
     }
 
