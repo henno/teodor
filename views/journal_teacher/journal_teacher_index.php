@@ -13,48 +13,93 @@
     <tr>
         <td><b>Grupi nimi</b></td>
         <td><b>Kursuse nimetus</b></td>
-        <td><b>Õpilased</b></td>
+        <td><b>Tunde</b></td>
         <td><b>Õppeaasta</b></td>
         <td><b>Perioodid</b></td>
         <td><b>Kursuse pikkus</b></td>
     </tr>
-    <tr>
-        <td><b>VS14</b></td>
+    <tr class="header">
+        <td><b><a><img src="assets/pic/plus.jpg" height="20" width="20"></a> VS13</b></td>
         <td>Eesti keel</td>
-        <td>26</td>
+        <td>42/80</td>
         <td>2013/2014</td>
         <td>I - II</td>
         <td>80 tundi</td>
     </tr>
     <tr>
-        <td><b>VS13</b></td>
+        <td><b></b></td>
         <td>Eesti keel</td>
-        <td>30</td>
+        <td>40/40</td>
+        <td>2013/2014</td>
+        <td>I</td>
+        <td>40 tundi</td>
+    </tr>
+    <tr>
+        <td><b</b></td>
+        <td>Eesti keel</td>
+        <td>2/40</td>
+        <td>2013/2014</td>
+        <td>II</td>
+        <td>40 tundi</td>
+    </tr>
+    <tr class="header">
+        <td><img src="assets/pic/plus.jpg" height="20" width="20"> VS14</td>
+        <td>Eesti keel</td>
+        <td>2/80</td>
         <td>2014/2015</td>
         <td> I - II </td>
         <td>80 tundi</td>
     </tr>
-
+    <tr class="subrow">
+        <td><b></b></td>
+        <td>Eesti keel</td>
+        <td>40/40</td>
+        <td>2013/2014</td>
+        <td>I</td>
+        <td>40 tundi</td>
+    </tr>
+    <tr>
+        <td><b</b></td>
+        <td>Eesti keel</td>
+        <td>2/40</td>
+        <td>2013/2014</td>
+        <td>II</td>
+        <td>40 tundi</td>
+    </tr>
 </table>
+
+<script>
+    $(function() {
+        $("td.subrow").hide();
+        $("table").click(function(event) {
+            event.stopPropagation();
+            var $target = $(event.target);
+            if ( $target.closest("td").attr("colspan") > 1 ) {
+                $target.slideUp();
+            } else {
+                $target.closest("tr").next().find("p").slideToggle();
+            }
+        });
+    });
+</script>
+
 <br>
 <table class="table table-bordered">
     <tr>
         <td><b>Õpilase nimi</b></td>
-        <td><b>Hinded/Puudumised</b></td>
-        <td><b>Arvestustööd</b></td>
+        <td><b>01.10</b></td> <td><b>02.10</b></td> <td><b>03.10</b></td> <td><b>04.10</b></td> <td><b>05.10</b></td><td><b>08.10</b></td>
         <td><b>Perioodi-, aastahinded</b></td>
     </tr>
     <tr>
         <td>Kristi Henno</td>
-        <td>5,5,4,5,-</td>
-        <td> IT, KT</td>
+        <td>5</td> <td>-</td> <td>4</td> <td>4</td> <td>5</td> <td>IT</td>
         <td></td>
     </tr>
     <tr>
         <td>Anneli Loo</td>
-        <td>3,3,4,4</td>
-        <td> IT, KT</td>
+        <td>4</td> <td>+</td> <td>5</td> <td>5</td> <td>4</td> <td>IT</td>
         <td></td>
     </tr>
 
 </table>
+
