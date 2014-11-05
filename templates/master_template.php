@@ -35,6 +35,8 @@
             $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         });
     </script>
+    <script src="assets/components/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
 
 </head>
 
@@ -63,6 +65,7 @@
 			</ul>
             <ul class="nav navbar-nav">
                 <li <?= $controller == 'tests' ? 'class="active"' : ''?>><a href="tests"><?__('Testid')?></a></li>
+                <li <?= $controller == 'timetable' ? 'class="active"' : ''?>><a href="timetable"><?__('Tunniplaan')?></a></li>
             </ul>
 			<ul class="nav navbar-nav navbar-right">
                 <li><a href="<?=BASE_URL?><?= $auth->logged_in == true? 'logout' : 'login'?>"><?= $auth->logged_in == true? 'Logout' : 'Login'?></a></li>
@@ -85,6 +88,5 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="assets/components/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </body>
 </html>
