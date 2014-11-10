@@ -59,9 +59,3 @@
 
 </style>
 <div id='calendar'></div>
-
-<?foreach( $lectures as $lecture ):?>
-
-    <h1><?=$lectures['subject_id']?></h1>
-
-<?endforeach?>
