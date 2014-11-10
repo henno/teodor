@@ -35,7 +35,7 @@
             $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         });
     </script>
-    <script src="assets/components/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="assets/components/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
 
 </head>

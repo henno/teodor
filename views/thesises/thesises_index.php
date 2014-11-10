@@ -31,8 +31,8 @@
             <h3 class="col-sm-5">Kinnita juhendaja nimi</h3>
             <div class="form-group col-sm-6">
                 <form method="post">
-                    <div class="input-group">
-                        <select name="data[instructor_id]" data-placeholder="Juhendaja nimi" class="chosen-select" tabindex="2">
+                    <div class="input-group"><?$person_id_instructor = empty($_POST["selected_person_id_instructor"]) ? $_POST["person_id_instructor"] : $_POST["selected_person_id_instructor"]?>
+                        <select name="data[selected_person_id_instructor]" data-placeholder="Juhendaja nimi" class="chosen-select" tabindex="2">
                             <option value=""></option>
                             <? foreach ($instructors as $instructor): ?>
                                 <option value="<?= $instructor['person_name'] ?>"><?= $instructor['person_name'] ?></option>
@@ -71,7 +71,7 @@
             <div class="btn-group btn-group-lg">
                 <button type="button" class="btn btn-default" id="thesis-draft">Eelkaitsmine</button>
                 <button type="button" class="btn btn-default" id="thesis-final">Lõputöö</button>
-                <button type="button" class="btn btn-default" id="thesis_file_name">Lisamaterjalid</button>
+                <button type="button" class="btn btn-default" id="thesis_file_upload">Lisamaterjalid</button>
             </div>
         </div>
         <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
@@ -108,12 +108,12 @@
             <input type="file" name="thesis_file_upload" id="thesis_file_upload" class="file-upload"/>
         </form>
         <script>
-            $('#thesis_file_name').click(function (event) {
-                $('#file_upload').click();
+            $('#thesis_files').click(function (event) {
+                $('#files_upload').click();
             });
 
             //capture selected filename
-            $('#file_upload').change(function (click) {
+            $('#files_upload').change(function (click) {
 //  $('#file-name').val(this.value);
                 $('form#uploadForm').submit();
             });

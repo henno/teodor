@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: henno
@@ -85,33 +86,34 @@ class Application
 
     }
 
-	private function load_common_functions()
-	{
-		require dirname(__FILE__). '/../functions.php';
+    private function load_common_functions()
+    {
+        require dirname(__FILE__) . '/../functions.php';
 
     }
 
-	private function set_base_url()
-	{
-		$s = &$_SERVER;
-		$ssl = (!empty($s['HTTPS']) && $s['HTTPS'] == 'on') ? true:false;
-		$sp = strtolower($s['SERVER_PROTOCOL']);
-		$protocol = substr($sp, 0, strpos($sp, '/')) . (($ssl) ? 's' : '');
-		$port = $s['SERVER_PORT'];
-		$port = ((!$ssl && $port=='80') || ($ssl && $port=='443')) ? '' : ':'.$port;
-		$host = isset($s['HTTP_X_FORWARDED_HOST']) ? $s['HTTP_X_FORWARDED_HOST'] : isset($s['HTTP_HOST']) ? $s['HTTP_HOST'] : $s['SERVER_NAME'];
-		$uri = $protocol . '://' . $host . $port . dirname($_SERVER['SCRIPT_NAME']);
-		define('BASE_URL', rtrim($uri, '/') . '/');
-	}
-	private function load_config()
-	{
-    	// Load config file or bail out
+    private function set_base_url()
+    {
+        $s = &$_SERVER;
+        $ssl = (!empty($s['HTTPS']) && $s['HTTPS'] == 'on') ? true : false;
+        $sp = strtolower($s['SERVER_PROTOCOL']);
+        $protocol = substr($sp, 0, strpos($sp, '/')) . (($ssl) ? 's' : '');
+        $port = $s['SERVER_PORT'];
+        $port = ((!$ssl && $port == '80') || ($ssl && $port == '443')) ? '' : ':' . $port;
+        $host = isset($s['HTTP_X_FORWARDED_HOST']) ? $s['HTTP_X_FORWARDED_HOST'] : isset($s['HTTP_HOST']) ? $s['HTTP_HOST'] : $s['SERVER_NAME'];
+        $uri = $protocol . '://' . $host . $port . dirname($_SERVER['SCRIPT_NAME']);
+        define('BASE_URL', rtrim($uri, '/') . '/');
+    }
+
+    private function load_config()
+    {
+        // Load config file or bail out
         try {
-            include dirname(__FILE__).'/../../config/config.php';
-        } catch (Exception $e){
+            include dirname(__FILE__) . '/../../config/config.php';
+        } catch (Exception $e) {
             error_out('No config.php. Please make a copy of config.sample.php and name it config.php and configure it.');
         }
-	}
+    }
 
     private function process_uri()
     {
@@ -131,9 +133,14 @@ class Application
 
         // Allow shorter URLs (persons/view/3 becomes persons/3)
         if (is_numeric($this->action)) {
-            $this->params[0] = $this->action;
+
+            // Prepend the number in action to params array
+            array_unshift($this->params, $this->action);
+
+            // Overwrite action to view
             $this->action = 'view';
         }
+
         if ($this->controller == 'journal' && $this->action == 'teacher') {
             $this->controller = 'journal_teacher';
             $this->action = empty($this->params[0]) ? 'index' : $this->params[0];
@@ -142,11 +149,17 @@ class Application
             $this->controller = 'journal_student';
             $this->action = empty($this->params[0]) ? 'index' : $this->params[0];
         }
+        if ($this->controller == 'tests' && $this->action == 'view') {
+            if (!empty($this->params[1]) && is_numeric($this->params[1])) {
+
+                $this->controller = 'test_questions';
+            }
+        }
     }
 
-	private function init_db()
-	{
-		require dirname(__FILE__) . '/../database.php';
-	}
+    private function init_db()
+    {
+        require dirname(__FILE__) . '/../database.php';
+    }
 
 }

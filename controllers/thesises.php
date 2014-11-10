@@ -9,7 +9,12 @@ class thesises extends Controller
         $this->instructors = get_all("SELECT * FROM `person`");
     }
 function index_post() {
-    echo "tere";
+    {
+        $data = $_POST['data'];
+        $data['person_id'] = $this->auth->person_id;
+        $thesis_id = insert('thesis', $data);
+        header('Location: ' . BASE_URL . 'tests/' . $test_id);
+    }
 }
     function view()
     {

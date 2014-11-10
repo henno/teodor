@@ -12,15 +12,11 @@ class Auth
     function __construct()
     {
         if (isset($_SESSION['person_id'])) {
-            $this->logged_in = TRUE;
             $person = get_first("SELECT *
                                        FROM person
                                        WHERE person_id = '{$_SESSION['person_id']}'");
 
-            // Dynamically add all person table fields as object properties to auth object
-            foreach($person as $person_attr => $value){
-                $this->$person_attr = $value;
-            }
+            $this->load_user_data($person);
         }
     }
 
@@ -47,6 +43,8 @@ class Auth
                                   AND  deleted = 0");
             if (! empty($person['person_id'])) {
                 $_SESSION['person_id'] = $person['person_id'];
+                $this->load_user_data($person);
+
                 return true;
             } else {
                 $errors[] = "Vale kasutajanimi või parool";
@@ -58,5 +56,17 @@ class Auth
 
         // Prevent loading the requested controller (not authenticated)
         exit();
+    }
+
+    /**
+     * Dynamically add all person table fields as object properties to auth object
+     * @param $person
+     */
+    public function load_user_data($person)
+    {
+        foreach ($person as $person_attr => $value) {
+            $this->$person_attr = $value;
+        }
+        $this->logged_in = TRUE;
     }
 }
