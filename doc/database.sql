@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2014 at 01:51 PM
+-- Generation Time: Nov 10, 2014 at 10:15 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -26,6 +26,14 @@ CREATE TABLE IF NOT EXISTS `course` (
   `subject_id` int(10) unsigned NOT NULL,
   `person_id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `course`
+--
+
+INSERT INTO `course` (`subject_id`, `person_id`) VALUES
+(1, 1),
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -84,7 +92,15 @@ DROP TABLE IF EXISTS `room`;
 CREATE TABLE IF NOT EXISTS `room` (
 `room_id` int(11) NOT NULL,
   `room_nr` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `room`
+--
+
+INSERT INTO `room` (`room_id`, `room_nr`) VALUES
+(1, 'A401'),
+(2, 'A402');
 
 -- --------------------------------------------------------
 
@@ -160,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `test` (
   `person_id` int(10) unsigned NOT NULL,
   `subject_id` int(10) unsigned DEFAULT NULL,
   `lecture_id` int(10) unsigned DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `test`
@@ -325,7 +341,14 @@ CREATE TABLE IF NOT EXISTS `timetable` (
   `subject_id` int(10) unsigned NOT NULL,
   `start_time` datetime NOT NULL,
   `end_time` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `timetable`
+--
+
+INSERT INTO `timetable` (`timetable_id`, `group_id`, `person_id`, `room_id`, `subject_id`, `start_time`, `end_time`) VALUES
+(1, 1, 1, 2, 1, '2014-11-06 08:30:00', '2014-11-06 10:00:00');
 
 --
 -- Indexes for dumped tables
@@ -439,7 +462,7 @@ MODIFY `person_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `subject`
 --
@@ -449,7 +472,7 @@ MODIFY `subject_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `test`
 --
 ALTER TABLE `test`
-MODIFY `test_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+MODIFY `test_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `test_question`
 --
@@ -474,7 +497,7 @@ MODIFY `thesis_file_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `timetable`
 --
 ALTER TABLE `timetable`
-MODIFY `timetable_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `timetable_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --
