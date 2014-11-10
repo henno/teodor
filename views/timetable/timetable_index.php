@@ -13,13 +13,21 @@
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'basicDay,basicWeek,month'
+                right: 'agendaDay,agendaWeek,month'
             },
             defaultDate: moment().format(),
-            defaultView: 'basicWeek',
+            defaultView: 'agendaWeek',
             editable: true,
+            height: "auto",
+            minTime: "08:00:00",
+            maxTime: "22:00:00",
+            weekends: false,
+            allDaySlot: false,
             eventLimit: true, // allow "more" link when too many events
             events: <?=$timetable ?>,
+            eventBackgroundColor:"#f8f8f8",
+            eventBorderColor:"#e7e7e7",
+            eventColor: "#333",
             eventRender: function (event, element) {
                 element.find('.fc-title').html(event.title);
 
@@ -39,23 +47,18 @@
     }
 
     #calendar {
-        max-width: 900px;
         margin: 0 auto;
     }
 
-    #calendar .fc-title a{
-        color: white;
+    #calendar .fc-title a, .fc-time{
+        color: #333;
     }
 
     #calendar div.fc-content{
-        text-align: center;
     }
+
 </style>
 <div id='calendar'></div>
-
-<?php
-    var_dump($lectures)
-?>
 
 <?foreach( $lectures as $lecture ):?>
 

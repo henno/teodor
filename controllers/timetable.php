@@ -18,10 +18,10 @@ class timetable extends Controller
 
         foreach ($lectures as $lecture) {
             $timetable['title'] = <<<EOT
-                <a title="$lecture[subject_name]" href="subjects/$lecture[subject_id]">$lecture[subject_name]</a><br/>
-                <a title="$lecture[group_name]" href="timetable/groups/$lecture[group_id]">$lecture[group_name]</a><br/>
-                <a title="$lecture[person_name]" href="timetable/persons/$lecture[person_id]">$lecture[person_name]</a><br/>
-                <a title="$lecture[room_nr]" href="timetable/rooms/$lecture[room_id]">$lecture[room_nr]</a><br/>
+                <a title="$lecture[room_nr]" href="timetable/rooms/$lecture[room_id]"><span class="label label-danger">$lecture[room_nr]</span></a>
+                <a title="$lecture[group_name]" href="timetable/groups/$lecture[group_id]"><span class="label label-danger">$lecture[group_name]</span></a>
+                <a title="$lecture[person_name]" href="timetable/persons/$lecture[person_id]"><span class="label label-success">$lecture[person_name]</span></a>
+                <a title="$lecture[subject_name]" href="subjects/$lecture[subject_id]">$lecture[subject_name]</a>
 EOT;
             $timetable['start'] = $lecture['start'];
             $timetable['end'] = $lecture['end'];
