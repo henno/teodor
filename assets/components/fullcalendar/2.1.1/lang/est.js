@@ -43,7 +43,7 @@
             dow: 1,
             doy: 4
         }}),
-        e.fullCalendar.datepickerLang("est", {
+        e.fullCalendar.datepickerLang("est","est", {
             closeText: "Valmis",
             prevText: "Eelmine",
             nextText: "Järgmine",
