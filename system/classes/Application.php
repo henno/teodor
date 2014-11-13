@@ -135,7 +135,9 @@ class Application
         if (is_numeric($this->action)) {
 
             // Prepend the number in action to params array
+            var_dump($this->params);
             array_unshift($this->params, $this->action);
+            var_dump($this->params);
 
             // Overwrite action to view
             $this->action = 'view';
