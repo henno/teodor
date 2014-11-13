@@ -94,7 +94,7 @@ class Application
 
     private function set_base_url()
     {
-        $s = &$_SERVER;
+        $s = & $_SERVER;
         $ssl = (!empty($s['HTTPS']) && $s['HTTPS'] == 'on') ? true : false;
         $sp = strtolower($s['SERVER_PROTOCOL']);
         $protocol = substr($sp, 0, strpos($sp, '/')) . (($ssl) ? 's' : '');
@@ -122,7 +122,7 @@ class Application
                 array_shift($path_info);
                 $this->controller = isset($path_info[0]) ? array_shift($path_info) : DEFAULT_CONTROLLER;
                 $this->action = isset($path_info[0]) && !empty($path_info[0]) ? array_shift($path_info) : 'index';
-                $this->params = isset($path_info[0]) ? $path_info : NULL;
+                $this->params = isset($path_info[0]) ? $path_info : [];
             }
         }
     }
