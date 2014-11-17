@@ -29,13 +29,14 @@
     <div class="instructor">
         <div class="row">
             <h3 class="col-sm-5">Kinnita juhendaja nimi</h3>
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6">        <?$person_id_instructor = empty($_POST["selected_person_id_instructor"]) ? $_POST["person_id_instructor"] : $_POST["selected_person_id_instructor"]?>
+
                 <form method="post">
-                    <div class="input-group"><?$person_id_instructor = empty($_POST["selected_person_id_instructor"]) ? $_POST["person_id_instructor"] : $_POST["selected_person_id_instructor"]?>
-                        <select name="data[selected_person_id_instructor]" data-placeholder="Juhendaja nimi" class="chosen-select" tabindex="2">
+                    <div class="input-group">
+                        <select name="selected_person_id_instructor" data-placeholder="Juhendaja nimi" class="chosen-select" tabindex="2">
                             <option value=""></option>
                             <? foreach ($instructors as $instructor): ?>
-                                <option value="<?= $instructor['person_name'] ?>"><?= $instructor['person_name'] ?></option>
+                                <option value="<?= $instructor['person_id'] ?>"><?= $instructor['person_name'] ?></option>
                             <? endforeach ?>
                         </select>
                     </div>
@@ -49,7 +50,6 @@
                        placeholder="Siia kirjuta juhendaja kui ei leidnud valikust sobivat" value="<?= $test['test_name'] ?>">
             </div>
         </div>
-
     </div>
     <!-- EDIT BUTTON -->
     <? if ($auth->is_admin): ?>

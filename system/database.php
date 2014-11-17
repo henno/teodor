@@ -149,6 +149,7 @@ function insert($table, $data)
     if ($table and is_array($data) and !empty($data)) {
         $values = implode(',', escape($data));
         $sql = "INSERT INTO `{$table}` SET {$values} ON DUPLICATE KEY UPDATE {$values}";
+        echo $sql;
         $q = mysqli_query($db, $sql) or db_error_out();
         $id = mysqli_insert_id($db);
         return ($id > 0) ? $id : FALSE;

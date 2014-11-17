@@ -8,14 +8,18 @@ class thesises extends Controller
         $this->thesises = get_all("SELECT * FROM `thesis`");
         $this->instructors = get_all("SELECT * FROM `person`");
     }
-function index_post() {
+
+    function index_post()
     {
         $data = $_POST['data'];
-        $data['person_id'] = $this->auth->person_id;
+        $data['person_id_author'] = $this->auth->person_id;
+        $data['person_id_instructor'] = empty($data['selected_person_id_instructor']) ? 1 : $data['selected_person_id_instructor'];
+        echo "<pre>";
+        var_dump($data['person_id_author']);
         $thesis_id = insert('thesis', $data);
-        header('Location: ' . BASE_URL . 'tests/' . $test_id);
+        header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
     }
-}
+
     function view()
     {
 
