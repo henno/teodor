@@ -20,7 +20,6 @@ class tests extends Controller
         $this->questions = get_all("SELECT * FROM test_question NATURAL JOIN test_question_type
                                        WHERE test_id = '$test_id'");
         $this->question_types = get_all("SELECT * FROM test_question_type");
-        var_dump($this->question_types);
         $this->subjects = get_all("SELECT * FROM subject");
     }
 
@@ -34,23 +33,30 @@ class tests extends Controller
 
     function view_post()
     {
+        $test_id = $this->params[0];
+
         // Update test properties
         if (isset($_POST['test'])) {
             $test = $_POST['test'];
             unset($test['person_id']);
             unset($test['person_name']);
-            $test_id = $this->params[0];
             update('test', $test, "test_id = {$test_id}");
             header('Location: ' . BASE_URL . 'tests/' . $test_id);
 
             // Add question
         } elseif (isset($_POST['question'])) {
+
+            // Set shortcut
             $question = $_POST['question'];
-            $test_id = $this->params[0];
-            $question['test_id'] = $test_id;
-            $question['test_question_type_id'] = 1;
-            insert('test_question', $question);
-            header('Location: ' . BASE_URL . 'tests/' . $test_id);
+
+            // Insert question
+            $question_id = insert('test_question', $question['test_question'] + array('test_id' => $test_id));
+
+            // Insert answers
+            foreach ($question['test_question_answer'] as $test_question_answer) {
+                $test_question_answer['test_question_answer_correct'] = isset($test_question_answer['test_question_answer_correct']) ? 1 : 0;
+                insert('test_question_answer', $test_question_answer + array('test_question_id' => $question_id));
+            }
 
         }
     }
