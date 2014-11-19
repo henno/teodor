@@ -22,7 +22,8 @@ class thesises extends Controller
 
     function view()
     {
-
+        $thesis_id = $this->params[0];
+        $this->thesis = get_first("SELECT * FROM thesis WHERE thesis_id = '$thesis_id'");
     }
 
     function view_upload()

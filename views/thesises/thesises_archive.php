@@ -21,9 +21,8 @@
         <? foreach ($thesises as $thesis): ?>
             <tr>
                 <td><?= $thesis['thesis_id'] ?></td>
-                <td><a href="thesises/view/<?= $thesis['thesis_id'] ?>/<?= $thesis['thesis_title'] ?>"><?= $thesis['thesis_title'] ?></a>
-                </td>
-                <td>...</td>
+                <td><?= $thesis['thesis_title'] ?>  </td>
+                <td><a href="thesises/view/<?= $thesis['thesis_id'] ?>/<?= $thesis['thesis_title'] ?>" class="btn btn-default" role="button">Vaatan lähemalt</a></td>
             </tr>
         <? endforeach ?>
         <tbody>
