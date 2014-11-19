@@ -2,8 +2,8 @@
 -- version 4.2.7.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Nov 17, 2014 at 01:25 PM
+-- Host: 127.0.0.1
+-- Generation Time: Nov 19, 2014 at 12:21 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -11,9 +11,6 @@ SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-DROP DATABASE IF EXISTS teodor;
-CREATE DATABASE teodor DEFAULT COLLATE utf8_general_ci DEFAULT CHARACTER SET utf8;
-USE teodor;
 --
 -- Database: `teodor`
 --
@@ -24,7 +21,6 @@ USE teodor;
 -- Table structure for table `building`
 --
 
-DROP TABLE IF EXISTS `building`;
 CREATE TABLE IF NOT EXISTS `building` (
 `building_id` int(10) unsigned NOT NULL,
   `building_name` varchar(255) NOT NULL
@@ -44,7 +40,6 @@ INSERT INTO `building` (`building_id`, `building_name`) VALUES
 -- Table structure for table `building_section`
 --
 
-DROP TABLE IF EXISTS `building_section`;
 CREATE TABLE IF NOT EXISTS `building_section` (
 `building_section_id` int(10) unsigned NOT NULL,
   `building_section_name` varchar(255) NOT NULL,
@@ -70,11 +65,19 @@ INSERT INTO `building_section` (`building_section_id`, `building_section_name`, 
 -- Table structure for table `course`
 --
 
-DROP TABLE IF EXISTS `course`;
 CREATE TABLE IF NOT EXISTS `course` (
+`course_id` int(10) unsigned NOT NULL,
   `subject_id` int(10) unsigned NOT NULL,
   `person_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `course`
+--
+
+INSERT INTO `course` (`course_id`, `subject_id`, `person_id`) VALUES
+(1, 1, 2),
+(2, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -82,7 +85,6 @@ CREATE TABLE IF NOT EXISTS `course` (
 -- Table structure for table `group`
 --
 
-DROP TABLE IF EXISTS `group`;
 CREATE TABLE IF NOT EXISTS `group` (
 `group_id` int(10) unsigned NOT NULL,
   `group_name` varchar(25) NOT NULL
@@ -98,10 +100,51 @@ INSERT INTO `group` (`group_id`, `group_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `period`
+--
+
+CREATE TABLE IF NOT EXISTS `period` (
+`period_id` int(10) unsigned NOT NULL,
+  `period_name` varchar(25) NOT NULL,
+  `year_id` int(10) unsigned NOT NULL,
+  `period_start` date NOT NULL,
+  `period_end` date NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `period`
+--
+
+INSERT INTO `period` (`period_id`, `period_name`, `year_id`, `period_start`, `period_end`) VALUES
+(1, '1.periood', 1, '2014-09-01', '2014-10-05'),
+(2, '2.periood', 1, '2014-10-06', '2014-11-02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `period_courses`
+--
+
+CREATE TABLE IF NOT EXISTS `period_courses` (
+  `period_id` int(11) unsigned NOT NULL,
+  `course_id` int(11) unsigned NOT NULL,
+  `planned_lessons` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `period_courses`
+--
+
+INSERT INTO `period_courses` (`period_id`, `course_id`, `planned_lessons`) VALUES
+(1, 2, 40),
+(1, 2, 40);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `person`
 --
 
-DROP TABLE IF EXISTS `person`;
 CREATE TABLE IF NOT EXISTS `person` (
 `person_id` int(10) unsigned NOT NULL,
   `person_name` varchar(70) NOT NULL,
@@ -129,7 +172,6 @@ INSERT INTO `person` (`person_id`, `person_name`, `username`, `is_admin`, `passw
 -- Table structure for table `room`
 --
 
-DROP TABLE IF EXISTS `room`;
 CREATE TABLE IF NOT EXISTS `room` (
 `room_id` int(10) unsigned NOT NULL,
   `room_nr` varchar(255) NOT NULL,
@@ -151,7 +193,6 @@ INSERT INTO `room` (`room_id`, `room_nr`, `building_section_id`) VALUES
 -- Table structure for table `student`
 --
 
-DROP TABLE IF EXISTS `student`;
 CREATE TABLE IF NOT EXISTS `student` (
   `person_id` int(10) unsigned NOT NULL,
   `group_id` int(10) unsigned NOT NULL
@@ -171,7 +212,6 @@ INSERT INTO `student` (`person_id`, `group_id`) VALUES
 -- Table structure for table `subject`
 --
 
-DROP TABLE IF EXISTS `subject`;
 CREATE TABLE IF NOT EXISTS `subject` (
 `subject_id` int(10) unsigned NOT NULL,
   `subject_name` varchar(70) NOT NULL
@@ -182,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
 --
 
 INSERT INTO `subject` (`subject_id`, `subject_name`) VALUES
-(1, 'Metsateadused'),
+(1, 'Metsateadused palspalsdplapsfsvfsdy'),
 (2, 'Ornitoloogia');
 
 -- --------------------------------------------------------
@@ -191,7 +231,6 @@ INSERT INTO `subject` (`subject_id`, `subject_name`) VALUES
 -- Table structure for table `teacher`
 --
 
-DROP TABLE IF EXISTS `teacher`;
 CREATE TABLE IF NOT EXISTS `teacher` (
   `person_id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -209,7 +248,6 @@ INSERT INTO `teacher` (`person_id`) VALUES
 -- Table structure for table `test`
 --
 
-DROP TABLE IF EXISTS `test`;
 CREATE TABLE IF NOT EXISTS `test` (
 `test_id` int(10) unsigned NOT NULL,
   `test_name` varchar(255) NOT NULL,
@@ -219,14 +257,14 @@ CREATE TABLE IF NOT EXISTS `test` (
   `person_id` int(10) unsigned NOT NULL,
   `subject_id` int(10) unsigned DEFAULT NULL,
   `lecture_id` int(10) unsigned DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `test`
 --
 
 INSERT INTO `test` (`test_id`, `test_name`, `test_max_allowed_time`, `test_max_allowed_attempts`, `test_min_score`, `person_id`, `subject_id`, `lecture_id`) VALUES
-(1, 'Metsateaduste töö', '2014-10-12 21:15:00', 3, 0, 1, 1, NULL),
+(1, 'Metsateaduste töö', '2014-10-12 21:15:00', 3, NULL, 1, 1, NULL),
 (9, 'zooloogia', NULL, NULL, NULL, 1, NULL, NULL),
 (10, 'botaanika', NULL, NULL, NULL, 1, NULL, NULL),
 (11, 'geoloogia', NULL, NULL, NULL, 1, NULL, NULL),
@@ -242,7 +280,6 @@ INSERT INTO `test` (`test_id`, `test_name`, `test_max_allowed_time`, `test_max_a
 -- Table structure for table `test_participants`
 --
 
-DROP TABLE IF EXISTS `test_participants`;
 CREATE TABLE IF NOT EXISTS `test_participants` (
   `person_id` int(10) unsigned NOT NULL,
   `test_id` int(10) unsigned NOT NULL,
@@ -263,14 +300,13 @@ INSERT INTO `test_participants` (`person_id`, `test_id`, `test_started_at`, `tes
 -- Table structure for table `test_question`
 --
 
-DROP TABLE IF EXISTS `test_question`;
 CREATE TABLE IF NOT EXISTS `test_question` (
 `test_question_id` int(10) unsigned NOT NULL,
   `test_question_text` text NOT NULL,
   `test_question_score` float NOT NULL,
   `test_id` int(10) unsigned NOT NULL,
   `test_question_type_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `test_question`
@@ -278,24 +314,7 @@ CREATE TABLE IF NOT EXISTS `test_question` (
 
 INSERT INTO `test_question` (`test_question_id`, `test_question_text`, `test_question_score`, `test_id`, `test_question_type_id`) VALUES
 (1, 'Kas mets mühiseb?', 2, 1, 1),
-(2, 'Mitu puud moodustavad metsa?', 1, 1, 2),
-(6, 'asdfadsf', 0, 1, 2),
-(7, 'asdfadsf', 0, 1, 2),
-(8, 'asdfadsf', 0, 1, 2),
-(9, '', 0, 1, 2),
-(10, '', 0, 1, 2),
-(11, 'adff', 0, 1, 2),
-(12, 'sadfadf', 0, 1, 2),
-(13, 'Küss', 0, 1, 2),
-(14, 'Küss2', 0, 1, 2),
-(15, 'Küss2', 0, 1, 2),
-(16, 'Küss2', 0, 1, 2),
-(17, 'Küss3', 0, 1, 2),
-(18, 'fasdfads', 0, 1, 2),
-(19, 'fasdfads', 0, 1, 2),
-(20, 'fasdfads', 0, 1, 2),
-(21, 'adsfasdf', 0, 1, 2),
-(22, 'asdfasdfadsf', 0, 1, 2);
+(2, 'Mitu puud moodustavad metsa?', 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -303,80 +322,24 @@ INSERT INTO `test_question` (`test_question_id`, `test_question_text`, `test_que
 -- Table structure for table `test_question_answer`
 --
 
-DROP TABLE IF EXISTS `test_question_answer`;
 CREATE TABLE IF NOT EXISTS `test_question_answer` (
 `test_question_answer_id` int(10) unsigned NOT NULL,
   `test_question_answer_text` text NOT NULL,
-  `test_question_answer_correct` tinyint(3) unsigned NOT NULL,
+  `test_question_correct` tinyint(3) unsigned NOT NULL,
+  `test_question_type_id` int(10) unsigned NOT NULL,
   `test_question_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=63 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `test_question_answer`
 --
 
-INSERT INTO `test_question_answer` (`test_question_answer_id`, `test_question_answer_text`, `test_question_answer_correct`, `test_question_id`) VALUES
-(1, 'jah', 1, 1),
-(2, 'ei', 0, 1),
-(3, 'üks', 0, 2),
-(4, 'kaks', 0, 2),
-(5, 'palju', 1, 2),
-(7, '1', 0, 8),
-(8, '2', 0, 8),
-(9, '3', 0, 8),
-(10, '4', 0, 8),
-(11, 'asdfasd', 0, 10),
-(12, 'asdfadsff', 0, 10),
-(13, '', 0, 10),
-(14, '', 0, 10),
-(15, 'dfd', 0, 11),
-(16, 'adfads', 0, 11),
-(17, '', 0, 11),
-(18, '', 0, 11),
-(19, 'ff', 0, 12),
-(20, 'fdfd', 0, 12),
-(21, 'dfd', 0, 12),
-(22, '', 0, 12),
-(23, 'Õige', 0, 13),
-(24, 'Vale', 0, 13),
-(25, '', 0, 13),
-(26, '', 0, 13),
-(27, 'Õige', 0, 14),
-(28, 'Vale', 0, 14),
-(29, '', 0, 14),
-(30, '', 0, 14),
-(31, 'Õige', 0, 15),
-(32, 'Vale', 0, 15),
-(33, '', 0, 15),
-(34, '', 0, 15),
-(35, 'Õige', 0, 16),
-(36, 'Vale', 0, 16),
-(37, '', 0, 16),
-(38, '', 0, 16),
-(39, 'Õige', 1, 17),
-(40, 'Vale', 0, 17),
-(41, '', 0, 17),
-(42, '', 0, 17),
-(43, 'adsf', 0, 18),
-(44, '', 0, 18),
-(45, '', 0, 18),
-(46, '', 0, 18),
-(47, 'adsf', 0, 19),
-(48, '', 0, 19),
-(49, '', 0, 19),
-(50, '', 0, 19),
-(51, 'adsf', 0, 20),
-(52, '', 0, 20),
-(53, '', 0, 20),
-(54, '', 0, 20),
-(55, 'adsfasd', 1, 21),
-(56, '', 0, 21),
-(57, '', 0, 21),
-(58, '', 0, 21),
-(59, 'adsf', 1, 22),
-(60, '', 0, 22),
-(61, '', 0, 22),
-(62, '', 0, 22);
+INSERT INTO `test_question_answer` (`test_question_answer_id`, `test_question_answer_text`, `test_question_correct`, `test_question_type_id`, `test_question_id`) VALUES
+(1, 'jah', 1, 1, 1),
+(2, 'ei', 0, 1, 1),
+(3, 'üks', 0, 2, 2),
+(4, 'kaks', 0, 2, 2),
+(5, 'palju', 1, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -384,7 +347,6 @@ INSERT INTO `test_question_answer` (`test_question_answer_id`, `test_question_an
 -- Table structure for table `test_question_type`
 --
 
-DROP TABLE IF EXISTS `test_question_type`;
 CREATE TABLE IF NOT EXISTS `test_question_type` (
 `test_question_type_id` int(10) unsigned NOT NULL,
   `test_question_type_name` varchar(50) NOT NULL
@@ -406,7 +368,6 @@ INSERT INTO `test_question_type` (`test_question_type_id`, `test_question_type_n
 -- Table structure for table `thesis`
 --
 
-DROP TABLE IF EXISTS `thesis`;
 CREATE TABLE IF NOT EXISTS `thesis` (
   `thesis_id` int(10) unsigned NOT NULL,
   `thesis_title` varchar(255) NOT NULL,
@@ -432,7 +393,6 @@ INSERT INTO `thesis` (`thesis_id`, `thesis_title`, `person_id_author`, `person_i
 -- Table structure for table `thesis_file`
 --
 
-DROP TABLE IF EXISTS `thesis_file`;
 CREATE TABLE IF NOT EXISTS `thesis_file` (
 `thesis_file_id` int(10) unsigned NOT NULL,
   `thesis_id` int(10) unsigned NOT NULL,
@@ -447,7 +407,6 @@ CREATE TABLE IF NOT EXISTS `thesis_file` (
 -- Table structure for table `timetable`
 --
 
-DROP TABLE IF EXISTS `timetable`;
 CREATE TABLE IF NOT EXISTS `timetable` (
 `timetable_id` int(10) unsigned NOT NULL,
   `group_id` int(10) unsigned NOT NULL,
@@ -464,6 +423,24 @@ CREATE TABLE IF NOT EXISTS `timetable` (
 
 INSERT INTO `timetable` (`timetable_id`, `group_id`, `person_id`, `room_id`, `subject_id`, `start`, `end`) VALUES
 (1, 1, 1, 2, 1, '2014-11-10 09:08:00', '2014-11-10 11:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `year`
+--
+
+CREATE TABLE IF NOT EXISTS `year` (
+`year_id` int(10) unsigned NOT NULL,
+  `year_name` varchar(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `year`
+--
+
+INSERT INTO `year` (`year_id`, `year_name`) VALUES
+(1, '2014/2015');
 
 --
 -- Indexes for dumped tables
@@ -485,13 +462,25 @@ ALTER TABLE `building_section`
 -- Indexes for table `course`
 --
 ALTER TABLE `course`
- ADD PRIMARY KEY (`subject_id`);
+ ADD PRIMARY KEY (`course_id`), ADD KEY `subject_id` (`subject_id`), ADD KEY `person_id` (`person_id`);
 
 --
 -- Indexes for table `group`
 --
 ALTER TABLE `group`
  ADD PRIMARY KEY (`group_id`);
+
+--
+-- Indexes for table `period`
+--
+ALTER TABLE `period`
+ ADD PRIMARY KEY (`period_id`), ADD KEY `period_year_id` (`year_id`);
+
+--
+-- Indexes for table `period_courses`
+--
+ALTER TABLE `period_courses`
+ ADD KEY `course_id` (`course_id`), ADD KEY `period_id` (`period_id`);
 
 --
 -- Indexes for table `person`
@@ -545,7 +534,7 @@ ALTER TABLE `test_question`
 -- Indexes for table `test_question_answer`
 --
 ALTER TABLE `test_question_answer`
- ADD PRIMARY KEY (`test_question_answer_id`), ADD KEY `test_question_id` (`test_question_id`);
+ ADD PRIMARY KEY (`test_question_answer_id`), ADD KEY `test_question_type_id` (`test_question_type_id`), ADD KEY `test_question_id` (`test_question_id`);
 
 --
 -- Indexes for table `test_question_type`
@@ -572,6 +561,12 @@ ALTER TABLE `timetable`
  ADD PRIMARY KEY (`timetable_id`), ADD KEY `group_id` (`group_id`), ADD KEY `person_id` (`person_id`), ADD KEY `room_id` (`room_id`), ADD KEY `subject_id` (`subject_id`), ADD KEY `start_time` (`start`), ADD KEY `end_time` (`end`);
 
 --
+-- Indexes for table `year`
+--
+ALTER TABLE `year`
+ ADD PRIMARY KEY (`year_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -586,10 +581,20 @@ MODIFY `building_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 ALTER TABLE `building_section`
 MODIFY `building_section_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
+-- AUTO_INCREMENT for table `course`
+--
+ALTER TABLE `course`
+MODIFY `course_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `group`
 --
 ALTER TABLE `group`
 MODIFY `group_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `period`
+--
+ALTER TABLE `period`
+MODIFY `period_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `person`
 --
@@ -609,17 +614,17 @@ MODIFY `subject_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `test`
 --
 ALTER TABLE `test`
-MODIFY `test_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+MODIFY `test_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `test_question`
 --
 ALTER TABLE `test_question`
-MODIFY `test_question_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+MODIFY `test_question_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `test_question_answer`
 --
 ALTER TABLE `test_question_answer`
-MODIFY `test_question_answer_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=63;
+MODIFY `test_question_answer_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `test_question_type`
 --
@@ -636,6 +641,11 @@ MODIFY `thesis_file_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 ALTER TABLE `timetable`
 MODIFY `timetable_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `year`
+--
+ALTER TABLE `year`
+MODIFY `year_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
 -- Constraints for dumped tables
 --
 
@@ -644,6 +654,26 @@ MODIFY `timetable_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 ALTER TABLE `building_section`
 ADD CONSTRAINT `building_section_ibfk_1` FOREIGN KEY (`building_id`) REFERENCES `building` (`building_id`);
+
+--
+-- Constraints for table `course`
+--
+ALTER TABLE `course`
+ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`),
+ADD CONSTRAINT `course_ibfk_2` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`);
+
+--
+-- Constraints for table `period`
+--
+ALTER TABLE `period`
+ADD CONSTRAINT `period_ibfk_1` FOREIGN KEY (`year_id`) REFERENCES `year` (`year_id`);
+
+--
+-- Constraints for table `period_courses`
+--
+ALTER TABLE `period_courses`
+ADD CONSTRAINT `period_courses_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`),
+ADD CONSTRAINT `period_courses_ibfk_2` FOREIGN KEY (`period_id`) REFERENCES `period` (`period_id`);
 
 --
 -- Constraints for table `room`
@@ -689,6 +719,7 @@ ADD CONSTRAINT `test_question_ibfk_2` FOREIGN KEY (`test_question_type_id`) REFE
 -- Constraints for table `test_question_answer`
 --
 ALTER TABLE `test_question_answer`
+ADD CONSTRAINT `test_question_answer_ibfk_1` FOREIGN KEY (`test_question_type_id`) REFERENCES `test_question_type` (`test_question_type_id`),
 ADD CONSTRAINT `test_question_answer_ibfk_2` FOREIGN KEY (`test_question_id`) REFERENCES `test_question` (`test_question_id`);
 
 --

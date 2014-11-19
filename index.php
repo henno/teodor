@@ -1,6 +1,7 @@
 <?php
 
 // Project constants
+define('PROJECT_NAME', 'teodor');
 define('DEFAULT_CONTROLLER', 'welcome');
 
 
