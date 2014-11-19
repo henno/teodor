@@ -12,9 +12,9 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>#</th>
-            <th>Teema</th>
-            <th>Tegevused</th>
+            <th class="col-md-1">#</th>
+            <th class="col-md-9">Teema</th>
+            <th class="col-md-2">Tegevused</th>
         </tr>
         </thead>
         <tbody>
