@@ -67,8 +67,6 @@ class thesises extends Controller
         }
     }
 
-    function archive()
-    {
-        $this->thesises = get_all("SELECT * FROM `thesis`");
-    }
+    function add ()
+    {}
 }
