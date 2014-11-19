@@ -5,7 +5,7 @@ class groups extends Controller
 
     function index()
     {
-        $this->groups = get_all("SELECT * FROM `group`");
+        $this->groups = get_all("SELECT * FROM period_courses NATURAL JOIN period NATURAL JOIN course NATURAL JOIN person NATURAL JOIN year NATURAL JOIN `group`");
     }
 
     function view()

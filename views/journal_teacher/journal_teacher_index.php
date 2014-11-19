@@ -19,14 +19,14 @@
         <td><b>Kursuse pikkus</b></td>
     </tr>
     <tr class="header">
-        <td><b><a><img src="assets/pic/plus.jpg" height="20" width="20"></a> VS13</b></td>
+        <td><b><a><input type="image" src="assets/pic/plus.jpg" name="saveForm" class="btTxt submit" id="saveForm" style="height:17px; width:17px"/></a> VS13</b></td>
         <td>Eesti keel</td>
         <td>42/80</td>
         <td>2013/2014</td>
         <td>I - II</td>
         <td>80 tundi</td>
     </tr>
-    <tr>
+    <tr class="subrow">
         <td><b></b></td>
         <td>Eesti keel</td>
         <td>40/40</td>
@@ -34,7 +34,7 @@
         <td>I</td>
         <td>40 tundi</td>
     </tr>
-    <tr>
+    <tr class="subrow2">
         <td><b</b></td>
         <td>Eesti keel</td>
         <td>2/40</td>
@@ -43,7 +43,7 @@
         <td>40 tundi</td>
     </tr>
     <tr class="header">
-        <td><img src="assets/pic/plus.jpg" height="20" width="20"> VS14</td>
+        <td><b><a><input type="image" src="assets/pic/plus.jpg" name="saveForm" class="btTxt submit" id="saveForm" style="height:17px; width:17px"/></a> VS14</b></td>
         <td>Eesti keel</td>
         <td>2/80</td>
         <td>2014/2015</td>
@@ -58,7 +58,7 @@
         <td>I</td>
         <td>40 tundi</td>
     </tr>
-    <tr>
+    <tr class="subrow2">
         <td><b</b></td>
         <td>Eesti keel</td>
         <td>2/40</td>
@@ -69,17 +69,8 @@
 </table>
 
 <script>
-    $(function() {
-        $("td.subrow").hide();
-        $("table").click(function(event) {
-            event.stopPropagation();
-            var $target = $(event.target);
-            if ( $target.closest("td").attr("colspan") > 1 ) {
-                $target.slideUp();
-            } else {
-                $target.closest("tr").next().find("p").slideToggle();
-            }
-        });
+    $('.header').click(function(){
+        $(this).next('.subrow').toggle();
     });
 </script>
 
