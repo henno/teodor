@@ -1,1 +1,0 @@
-NB! Palun uuenda andmebaasi!

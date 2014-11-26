@@ -11,6 +11,9 @@ function connect_db()
     @$db = new mysqli(DATABASE_HOSTNAME, DATABASE_USERNAME, DATABASE_PASSWORD);
     if ($connection_error = mysqli_connect_error()) {
         $errors[] = 'There was an error trying to connect to database at ' . DATABASE_HOSTNAME . ':<br><b>' . $connection_error . '</b>';
+        if (substr($connection_error, 0,13)=="Access denied"){
+            $errors[]='Check DATABASE_PASSWORD in config.php';
+        }
         require 'templates/error_template.php';
         die();
     }
