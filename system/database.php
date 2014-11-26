@@ -29,6 +29,21 @@ function connect_db()
     mysqli_query($db, "SET NAMES utf8");
     mysqli_query($db, "SET CHARACTER utf8");
 
+    //
+    if(ENV == 'development' and (DATABASE_HOSTNAME == 'localhost' or DATABASE_HOSTNAME == '127.0.0.1')){
+        $err_msg = <<<HEREDOC
+            We now use <pre>diarainfra.com</pre> as a development database server. Please open config.php and update the following lines:
+            <pre>
+                define('DATABASE_HOSTNAME', 'diarainfra.com');
+                define('DATABASE_USERNAME', 'teodor');
+                define('DATABASE_PASSWORD', '******');
+                define('DATABASE_DATABASE', 'khk_teodor_vs13_henno');
+            </pre>
+HEREDOC;
+        error_out($err_msg);
+
+    }
+
 }
 
 function q($sql, & $query_pointer = NULL, $debug = FALSE)
