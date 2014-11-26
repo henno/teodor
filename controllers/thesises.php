@@ -11,11 +11,9 @@ class thesises extends Controller
 
     function index_post()
     {
-        $data = $_POST['data'];
+        $data = $_POST['thesis'];
         $data['person_id_author'] = $this->auth->person_id;
         $data['person_id_instructor'] = empty($data['selected_person_id_instructor']) ? 1 : $data['selected_person_id_instructor'];
-        echo "<pre>";
-        var_dump($data['person_id_author']);
         $thesis_id = insert('thesis', $data);
         header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
     }
@@ -23,7 +21,13 @@ class thesises extends Controller
     function view()
     {
         $thesis_id = $this->params[0];
-        $this->thesis = get_first("SELECT * FROM thesis WHERE thesis_id = '$thesis_id'");
+        $this->thesis = get_first("SELECT *,
+                                   author.person_name as author_name,
+                                   instructor.person_name as instructor_name
+                                   FROM thesis
+                                   JOIN person instructor ON thesis.person_id_instructor = instructor.person_id
+                                   JOIN person author ON thesis.person_id_author = author.person_id
+                                   WHERE thesis_id = '$thesis_id' ");
     }
 
     function view_upload()
