@@ -17,3 +17,68 @@
         </button>
     </div>
 </form>
+<div class="row upload_files">
+    <h3>Laadi sobivad failid</h3>
+
+    <div class="col-md-6">
+        <span class="lead">Laadi üles:</span>
+        <div class="pull-right">
+            <div class="btn-group btn-group-lg">
+                <button type="button" class="btn btn-default" id="thesis-draft">Eelkaitsmine</button>
+                <button type="button" class="btn btn-default" id="thesis-final">Lõputöö</button>
+                <button type="button" class="btn btn-default" id="thesis_file_upload">Lisamaterjalid</button>
+            </div>
+        </div>
+        <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
+            <input type="file" name="draft_upload" id="draft_upload" class="file-upload"/>
+        </form>
+
+        <?php var_dump($_FILES) ?>
+        <script>
+            $('#thesis-draft').click(function (event) {
+                $('#draft_upload').click();
+            });
+
+            //capture selected filename
+            $('#draft_upload').change(function (click) {
+//  $('#file-name').val(this.value);
+                $('form#uploadForm').submit();
+            });
+        </script>
+        <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
+            <input type="file" name="final_upload" id="final_upload" class="file-upload"/>
+        </form>
+        <script>
+            $('#thesis-final').click(function (event) {
+                $('#final_upload').click();
+            });
+
+            //capture selected filename
+            $('#final_upload').change(function (click) {
+//  $('#file-name').val(this.value);
+                $('form#uploadForm').submit();
+            });
+        </script>
+        <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
+            <input type="file" name="thesis_file_upload" id="thesis_file_upload" class="file-upload"/>
+        </form>
+        <script>
+            $('#thesis_files').click(function (event) {
+                $('#files_upload').click();
+            });
+
+            //capture selected filename
+            $('#files_upload').change(function (click) {
+//  $('#file-name').val(this.value);
+                $('form#uploadForm').submit();
+            });
+        </script>
+    </div>
+</div>
+<script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
+<script>
+    $(function() {
+        $(".chosen-select").chosen({width: "100%"});
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+    });
+</script>
