@@ -19,7 +19,6 @@
 </form>
 <div class="row upload_files">
     <h3>Laadi sobivad failid</h3>
-
     <div class="col-md-6">
         <span class="lead">Laadi üles:</span>
         <div class="pull-right">
