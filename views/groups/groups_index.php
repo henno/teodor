@@ -1,4 +1,12 @@
 <h3><?__('Grupid')?></h3>
+
+<ul class="nav nav-pills">
+    <li role="presentation" class="active"><a href="groups?period=current">Jooksev periood</a></li>
+    <li role="presentation"><a href="groups?period=previous">Eelmine periood</a></li>
+    <li role="presentation"><a href="groups?period=year">Jooksev 6ppeaasta</a></li>
+    <li role="presentation"><a href="groups?period=lastyear">Eelmine 6ppeaasta</a></li>
+</ul>
+
 <ul class="list-group">
     <? foreach ($groups as $group): ?>
         <li class="list-group-item">
@@ -22,3 +30,4 @@
         <button class="btn btn-primary" type="submit">Add</button>
     </form>
     <?php endif; ?>
+

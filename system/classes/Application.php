@@ -113,6 +113,11 @@ class Application
         } else {
             error_out('No config.php. Please make a copy of config.sample.php and name it config.php and configure it.');
         }
+
+        // ENV check
+        if( !defined('ENV') ){
+            error_out("Your config.php does not include ENV constant.<br><br>You should add<pre>define('ENV','development');</pre> to your config.php,<br><br> or <pre>define('ENV','production');</pre> if teodor is installed on a production server.");
+        }
     }
 
     private function process_uri()

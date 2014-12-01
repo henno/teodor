@@ -61,6 +61,9 @@
                 <li <?= $controller == 'tests' ? 'class="active"' : ''?>><a href="tests"><?__('Testid')?></a></li>
                 <li <?= $controller == 'timetable' ? 'class="active"' : ''?>><a href="timetable"><?__('Tunniplaan')?></a></li>
             </ul>
+            <ul class="nav navbar-nav">
+                <li <?= $controller == 'journal_student' ? 'class="active"' : ''?>><a href="journal/student"><?__('Päevik')?></a></li>
+            </ul>
 			<ul class="nav navbar-nav navbar-right">
                 <li><a href="<?=BASE_URL?><?= $auth->logged_in == true? 'logout' : 'login'?>"><?= $auth->logged_in == true? 'Logout' : 'Login'?></a></li>
 			</ul>

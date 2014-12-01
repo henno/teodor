@@ -1,8 +1,9 @@
 <?php
 
 define('PROJECT_NAME', 'teodor');
-define('DATABASE_HOSTNAME', '127.0.0.1');
-define('DATABASE_USERNAME', 'root');
-define('DATABASE_PASSWORD', '');
-define('DATABASE_DATABASE', PROJECT_NAME);
+define('DATABASE_HOSTNAME', 'diarainfra.com');
+define('DATABASE_USERNAME', 'teodor');
+define('DATABASE_PASSWORD', '******');
+define('ENV','development');
+define('DATABASE_DATABASE', 'khk_teodor_vs13_henno');
 define('DEBUG', false);
