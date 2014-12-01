@@ -12,13 +12,19 @@
     <div class="col-sm-5">
         <input class="form-control" type="text" id="formGroupInputLarge" placeholder="Tellija nimi" name="thesis[thesis_client_info]">
     </div>
+    <div class="row">
+        <label class="col-sm-5 control-label" for="instructor">Juhendaja nimi ja ettevõte</label>
+        <div class="col-sm-7">
+            <input type="text" class="form-control" name="data[person_id_instructor]" id="test_name"
+                   placeholder="Siia kirjuta juhendaja kui ei leidnud valikust sobivat" value="<?= $test['test_name'] ?>">
+        </div>
+    </div>
     <div class="pull-right">
         <button class="btn btn-primary" id="thesis_title">Salvesta
         </button>
     </div>
 </form>
 <div class="row upload_files">
-    <h3>Laadi sobivad failid</h3>
     <div class="col-md-6">
         <span class="lead">Laadi üles:</span>
         <div class="pull-right">
