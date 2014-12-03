@@ -31,7 +31,7 @@
 <?php if ($auth->is_admin): ?>
 
     <div class="pull-left">
-        <button class="btn btn-primary" onclick="window.location.href = 'thesises/add/<?= $thesis['thesis_id'] ?>'">
+        <button class="btn btn-primary" onclick="window.location.href = 'thesises/add'">
             Sisesta uus
         </button>
     </div>
