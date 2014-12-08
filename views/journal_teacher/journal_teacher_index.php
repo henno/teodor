@@ -18,54 +18,17 @@
         <td><b>Perioodid</b></td>
         <td><b>Kursuse pikkus</b></td>
     </tr>
+    <? foreach($period_courses as $period_course): ?>
     <tr class="header">
-        <td><b><a><input type="image" src="assets/pic/plus.jpg" name="saveForm" class="btTxt submit" id="saveForm" style="height:17px; width:17px"/></a> VS13</b></td>
-        <td>Eesti keel</td>
-        <td>42/80</td>
-        <td>2013/2014</td>
-        <td>I - II</td>
+        <td><b><a><input type="image" src="assets/pic/plus.jpg" name="saveForm" class="btTxt submit" id="saveForm" style="height:17px; width:17px"/></a><?= $period_course['group_name']?></b></td>
+        <td><?= $period_course['subject_name']?></td>
+        <td><?= $period_course['planned_lessons']?></td>
+        <td><?= $period_course['year_name']?></td>
+        <td><?= $period_course['period_name']?></td>
         <td>80 tundi</td>
     </tr>
-    <tr class="subrow">
-        <td><b></b></td>
-        <td>Eesti keel</td>
-        <td>40/40</td>
-        <td>2013/2014</td>
-        <td>I</td>
-        <td>40 tundi</td>
-    </tr>
-    <tr class="subrow2">
-        <td><b</b></td>
-        <td>Eesti keel</td>
-        <td>2/40</td>
-        <td>2013/2014</td>
-        <td>II</td>
-        <td>40 tundi</td>
-    </tr>
-    <tr class="header">
-        <td><b><a><input type="image" src="assets/pic/plus.jpg" name="saveForm" class="btTxt submit" id="saveForm" style="height:17px; width:17px"/></a> VS14</b></td>
-        <td>Eesti keel</td>
-        <td>2/80</td>
-        <td>2014/2015</td>
-        <td> I - II </td>
-        <td>80 tundi</td>
-    </tr>
-    <tr class="subrow">
-        <td><b></b></td>
-        <td>Eesti keel</td>
-        <td>40/40</td>
-        <td>2013/2014</td>
-        <td>I</td>
-        <td>40 tundi</td>
-    </tr>
-    <tr class="subrow2">
-        <td><b</b></td>
-        <td>Eesti keel</td>
-        <td>2/40</td>
-        <td>2013/2014</td>
-        <td>II</td>
-        <td>40 tundi</td>
-    </tr>
+
+    <? endforeach ?>
 </table>
 
 <script>
