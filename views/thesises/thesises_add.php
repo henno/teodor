@@ -24,6 +24,15 @@
         </button>
     </div>
 </form>
+<? if($auth->is_admin):?>
+    <form action="groups/edit/<?= $group['group_id'] ?>">
+        <div class="pull-right">
+            <button class="btn btn-primary">
+                Edit
+            </button>
+        </div>
+    </form>
+<? endif; ?>
 <div class="row upload_files">
     <div class="col-md-6">
         <span class="lead">Laadi üles:</span>
