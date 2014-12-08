@@ -89,10 +89,3 @@
         </script>
     </div>
 </div>
-<script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
-<script>
-    $(function() {
-        $(".chosen-select").chosen({width: "100%"});
-        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
-    });
-</script>
