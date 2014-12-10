@@ -1,8 +1,8 @@
 <div class="btn-group" role="group" aria-label="...">
-    <button type="button" class="btn btn-default">Väljapakutud ideed</button>
-    <button type="button" class="btn btn-default">Kinnitamisel</button>
-    <button type="button" class="btn btn-default">Teostamisel</button>
-    <button type="button" class="btn btn-default">Eelnevate aastate lõputööd</button>
+    <button type="button" class="btn btn-default"><a href="thesises_index" >Väljapakutud ideed</a></button>
+    <button type="button" class="btn btn-default"><a href="thesises_approval"> Kinnitamisel</a></button>
+    <button type="button" class="btn btn-default"><a href="thesises_in_progress"> Teostamisel</a></button>
+    <button type="button" class="btn btn-default"><a href="thesises_archive"> Eelnevate aastate lõputööd</a></button>
 </div>
     <? if (empty($thesises)): ?>
         <div class="alert alert-info"><? __('Hetkel lõputööde andmebaas on tühi.') ?></div>

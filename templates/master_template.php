@@ -50,12 +50,7 @@
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li <?= $controller == 'groups' ? 'class="active"' : ''?>><a href="groups"><?__('Grupid')?></a></li>
-                <li <?= $controller == 'thesises' ? 'class="active"' : ''?> class="dropdown">
-                    <a href="thesises" class="dropdown-toggle" onclick="location.href='thesises'" data-toggle="dropdown"><?__('Lõputööd')?> <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="thesises/archive">Arhiiv</a></li>
-                    </ul>
-                </li>
+                <li <?= $controller == 'thesises' ? 'class="active"' : ''?>><a href="thesises"><?__('Lõputööd')?></a></li>
 			</ul>
             <ul class="nav navbar-nav">
                 <li <?= $controller == 'tests' ? 'class="active"' : ''?>><a href="tests"><?__('Testid')?></a></li>
