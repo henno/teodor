@@ -77,7 +77,8 @@
     foreach ($questions as $question): $n++ ?>
         <tr>
             <td><?= $n ?>.</td>
-            <td><?= $question['test_question_text'] ?></td>
+            <td><a href="<?=BASE_URL?>test_questions/<?=$question['test_question_id']?>"><?= $question['test_question_text'] ?></a></td> 
+            <td><?= $question['test_question_score']." punkti" ?></td>
         </tr>
     <? endforeach ?>
 </table>
@@ -137,13 +138,17 @@
                                        name="question[test_question_answer][1][test_question_answer_text]"
                                        id="test_question_answer_text" placeholder="Vastusevariant 2"></p>
 
-                            <p><input type="text" class="form-control"
-                                      name="question[test_question_answer][][test_question_answer_text]"
-                                      id="test_question_answer_text" placeholder="Vastusevariant 3"></p>
+                            <p><input type="checkbox" 
+                                      name="question[test_question_answer][2][test_question_answer_correct]"/> 
+                                <input type="text" class="form-control" 
+                                       name="question[test_question_answer][2][test_question_answer_text]" 
+                                       id="test_question_answer_text" placeholder="Vastusevariant 3"></p>  
 
-                            <p><input type="text" class="form-control"
-                                      name="question[test_question_answer][][test_question_answer_text]"
-                                      id="test_question_answer_text" placeholder="Vastusevariant 4"></p>
+                            <p><input type="checkbox" 
+                                       name="question[test_question_answer][3][test_question_answer_correct]"/> 
+                                <input type="text" class="form-control" 
+                                       name="question[test_question_answer][3][test_question_answer_text]" 
+                                       id="test_question_answer_text" placeholder="Vastusevariant 4"></p>
 
                             <p>
                                 <button onclick="return false"
@@ -151,8 +156,19 @@
                             </p>
 
                         </div>
-
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label"
+                               for="test_question_score">Mitu punkti</label>
+
+                        <div class="col-sm-7">
+                             <p><input type="text" class="form-control"
+                                       name="question[test_question][test_question_score]"
+                                       id="test_question_score" placeholder="Punkti"></p>
+                        </div>
+                    </div>
+
+
 
 
                     <!-- EDIT BUTTON -->
