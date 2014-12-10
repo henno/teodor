@@ -73,4 +73,13 @@ class thesises extends Controller
 
     function add ()
     {}
+
+    function edit ()
+    {}
+
+    function approval ()
+    {}
+
+    function in_progress()
+    {}
 }
