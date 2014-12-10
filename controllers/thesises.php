@@ -32,12 +32,13 @@ class thesises extends Controller
 
     function view_upload()
     {
-        $f = isset($_FILES["input_upload"]) ? $_FILES["input_upload"] : false;
+        $thesis_id = $this->params[0];
+        $f = isset($_FILES["draft_upload"]) ? $_FILES["draft_upload"] : false;
         if (!$f) {
             __('upload ebaõnnestus');
             return false;
         }
-        $target_dir = "uploads/" . basename($f["name"]);
+        $target_dir = "assets/uploads/" . basename($f["name"]);
         $uploadOk = 1;
 
         // Check if file already exists
@@ -53,10 +54,10 @@ class thesises extends Controller
         }
 
         // Only PDF files allowed
-        if (!($f['type'] == "application/pdf")) {
+       /* if (!($f['type'] == "application/pdf")) {
             __('upload ebaõnnestus');
             $uploadOk = 0;
-        }
+        }*/
 
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
@@ -65,6 +66,7 @@ class thesises extends Controller
         } else {
             if (move_uploaded_file($f["tmp_name"], $target_dir)) {
                 echo "The file " . basename($f["name"]) . " has been uploaded.";
+
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }
