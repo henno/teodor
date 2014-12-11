@@ -77,7 +77,22 @@ class thesises extends Controller
     {}
 
     function edit ()
-    {}
+    {
+        $this->thesis_id = $this->params[0];
+        $this->thesis = get_first("SELECT *,
+                                   author.person_name as author_name,
+                                   instructor.person_name as instructor_name
+                                   FROM thesis
+                                   JOIN person instructor ON thesis.person_id_instructor = instructor.person_id
+                                   JOIN person author ON thesis.person_id_author = author.person_id
+                                   WHERE thesis_id = '$thesis_id' ");
+    }
+
+    function edit_post() { 
+        $thesis = $_POST['thesis'];
+        update('thesis', $thesis, "thesis_id = {$thesis_id}");
+
+    }
 
     function approval ()
     {}
