@@ -28,6 +28,7 @@ class thesises extends Controller
                                    JOIN person instructor ON thesis.person_id_instructor = instructor.person_id
                                    JOIN person author ON thesis.person_id_author = author.person_id
                                    WHERE thesis_id = '$thesis_id' ");
+        $this->files = get_all("SELECT * FROM thesis_file WHERE thesis_id = '$thesis_id' ");
     }
 
     function view_upload()
@@ -68,16 +69,15 @@ class thesises extends Controller
             $fp      = fopen($f["tmp_name"], 'r');
             $content = fread($fp, filesize($f["tmp_name"]));
             $content = mysqli_real_escape_string($db, $content);
-            $size = 1;
+            $size = 1262;
             fclose($fp);
 
             if(!get_magic_quotes_gpc())
             {
                 $f["name"] = mysqli_real_escape_string($db, $f["name"]);
             }
-
-            $query = "INSERT INTO thesis_file (thesis_file_name, thesis_file_size, thesis_file_type, thesis_file_content ) ".
-                "VALUES ('$f[name]', '$size', '$f[type]', '$content')";
+            $query = "INSERT INTO thesis_file (thesis_file_name, thesis_id, thesis_file_size, thesis_file_type, thesis_file_content ) ".
+                "VALUES ('$f[name]', $thesis_id, '$size', '$f[type]', '$content')";
             q ($query);
             if (move_uploaded_file($f["tmp_name"], $target_dir)) {
                 echo "The file " . basename($f["name"]) . " has been uploaded.";
@@ -87,7 +87,16 @@ class thesises extends Controller
             }
         }
     }
-
+    function file () {
+        // clean the output buffer
+        ob_end_clean();
+        $thesis_file_id = $this->params[0];
+        $file = get_first("SELECT * FROM thesis_file WHERE thesis_file_id = '$thesis_file_id' ");
+        header("Content-length: $file[thesis_file_size]");
+        header("Content-type: $file[thesis_file_type]");
+        header("Content-Disposition: attachment; filename=$file[thesis_file_name]");
+        exit($file['thesis_file_content']);
+    }
     function add ()
     {}
 

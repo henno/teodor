@@ -72,3 +72,14 @@
         </script>
     </div>
 </div>
+
+<h2>Üleslaaditud failid</h2>
+<table class="table table-bordered">
+
+    <? foreach ($files as $file): ?>
+        <tr>
+            <td><a href="<?=BASE_URL?>thesises/file/<?=$file['thesis_file_id']?>"><?= $file['thesis_file_name'] ?></a></td> 
+            <td><?= $file['thesis_file_size'] ?></td>
+        </tr>
+    <? endforeach ?>
+</table>

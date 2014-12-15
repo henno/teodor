@@ -1,5 +1,5 @@
 <?php
-var_dump($_FILES);
+
 // Project constants
 define('DEFAULT_CONTROLLER', 'welcome');
 
