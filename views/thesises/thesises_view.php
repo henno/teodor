@@ -38,11 +38,11 @@
 
             //capture selected filename
             $('#draft_upload').change(function (click) {
-//  $('#file-name').val(this.value);
+            //$('#file-name').val(this.value);
                 $('form#uploadForm').submit();
             });
         </script>
-        <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
+        <form id="uploadForm2" method="post" enctype="multipart/form-data" style=" display: none">
             <input type="file" name="final_upload" id="final_upload" class="file-upload"/>
         </form>
         <script>
@@ -56,7 +56,7 @@
                 $('form#uploadForm').submit();
             });
         </script>
-        <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
+        <form id="uploadForm3" method="post" enctype="multipart/form-data" style=" display: none">
             <input type="file" name="thesis_file_upload" id="thesis_file_upload" class="file-upload"/>
         </form>
         <script>

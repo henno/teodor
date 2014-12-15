@@ -64,19 +64,21 @@ class thesises extends Controller
             echo "Sorry, your file was not uploaded.";
             // if everything is ok, try to upload file
         } else {
+            global $db;
             $fp      = fopen($f["tmp_name"], 'r');
             $content = fread($fp, filesize($f["tmp_name"]));
-            $content = mysql_real_escape_string($content);
+            $content = mysqli_real_escape_string($db, $content);
             $size = 1;
             fclose($fp);
 
             if(!get_magic_quotes_gpc())
             {
-                $f["name"] = mysql_real_escape_string($f["name"]);
+                $f["name"] = mysqli_real_escape_string($db, $f["name"]);
             }
 
-            $query = "INSERT INTO thesis_file (thesis_file_name, thesis_size, thesis_type, thesis_file_content ) ".
+            $query = "INSERT INTO thesis_file (thesis_file_name, thesis_file_size, thesis_file_type, thesis_file_content ) ".
                 "VALUES ('$f[name]', '$size', '$f[type]', '$content')";
+            q ($query);
             if (move_uploaded_file($f["tmp_name"], $target_dir)) {
                 echo "The file " . basename($f["name"]) . " has been uploaded.";
 
@@ -98,12 +100,13 @@ class thesises extends Controller
                                    FROM thesis
                                    JOIN person instructor ON thesis.person_id_instructor = instructor.person_id
                                    JOIN person author ON thesis.person_id_author = author.person_id
-                                   WHERE thesis_id = '$thesis_id' ");
+                                   WHERE thesis_id = '$this->thesis_id' ");
     }
 
     function edit_post() { 
         $thesis = $_POST['thesis'];
-        update('thesis', $thesis, "thesis_id = {$thesis_id}");
+        $this->thesis_id = $this->params[0];
+        update('thesis', $thesis, "thesis_id = {$this->thesis_id}");
 
     }
 
