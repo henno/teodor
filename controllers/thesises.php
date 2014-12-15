@@ -64,6 +64,19 @@ class thesises extends Controller
             echo "Sorry, your file was not uploaded.";
             // if everything is ok, try to upload file
         } else {
+            $fp      = fopen($f["tmp_name"], 'r');
+            $content = fread($fp, filesize($f["tmp_name"]));
+            $content = mysql_real_escape_string($content);
+            $size = 1;
+            fclose($fp);
+
+            if(!get_magic_quotes_gpc())
+            {
+                $f["name"] = mysql_real_escape_string($f["name"]);
+            }
+
+            $query = "INSERT INTO thesis_file (thesis_file_name, thesis_size, thesis_type, thesis_file_content ) ".
+                "VALUES ('$f[name]', '$size', '$f[type]', '$content')";
             if (move_uploaded_file($f["tmp_name"], $target_dir)) {
                 echo "The file " . basename($f["name"]) . " has been uploaded.";
 
