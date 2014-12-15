@@ -1,13 +1,23 @@
 <h3><? __('Õpetaja päevik') ?></h3>
 
-<ul class="nav nav-pills">
-    <li class="active"><a href="#">Päevik</a></li>
-    <li><a href="#">Tunniplaan</a></li>
-    <li><a href="#">Teated</a></li>
-    <li><a href="#">Arengukava</a></li>
-    <li><a href="#">Koosolekud</a></li>
-</ul>
 <br>
+<select id="period_id" name="period[period_id]" class="chosen-select">
+    <? foreach ($periods as $period): ?>
+        <option
+            value="<?= $period['period_id'] ?>" <?= $period_id == $period['period_id'] ? 'selected="selected"' : '' ?>><?= $period['period_name'] ?></option>
+    <? endforeach ?>
+</select>
+<script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
+<script>
+    $(function () {
+        $(".chosen-select").chosen({width: "100%"});
+        $('.chosen-select-deselect').chosen({allow_single_deselect: true});
+        $(".chosen-select").change(function(){
+            window.location="<?= BASE_URL ?>journal/teacher?period_id="+ this.value;
+            console.log("<?= BASE_URL ?>journal/teacher?period_id="+ this.value);
+        });
+    });
+</script>
 
 <table class="table table-bordered">
     <tr>
@@ -20,7 +30,7 @@
     </tr>
     <? foreach($period_courses as $period_course): ?>
     <tr class="header">
-        <td><b><a><input type="image" src="assets/pic/plus.jpg" name="saveForm" class="btTxt submit" id="saveForm" style="height:17px; width:17px"/></a><?= $period_course['group_name']?></b></td>
+        <td><b><?= $period_course['group_name']?></b></td>
         <td><?= $period_course['subject_name']?></td>
         <td><?= $period_course['planned_lessons']?></td>
         <td><?= $period_course['year_name']?></td>
@@ -36,24 +46,4 @@
         $(this).next('.subrow').toggle();
     });
 </script>
-
-<br>
-<table class="table table-bordered">
-    <tr>
-        <td><b>Õpilase nimi</b></td>
-        <td><b>01.10</b></td> <td><b>02.10</b></td> <td><b>03.10</b></td> <td><b>04.10</b></td> <td><b>05.10</b></td><td><b>08.10</b></td>
-        <td><b>Perioodi-, aastahinded</b></td>
-    </tr>
-    <tr>
-        <td>Kristi Henno</td>
-        <td>5</td> <td>-</td> <td>4</td> <td>4</td> <td>5</td> <td>IT</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Anneli Loo</td>
-        <td>4</td> <td>+</td> <td>5</td> <td>5</td> <td>4</td> <td>IT</td>
-        <td></td>
-    </tr>
-
-</table>
 
