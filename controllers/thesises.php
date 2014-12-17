@@ -7,6 +7,12 @@ class thesises extends Controller
     {
         $this->thesises = get_all("SELECT * FROM `thesis`");
         $this->instructors = get_all("SELECT * FROM `person`");
+        $('#myTab a').click(function () {
+            $('#myTab a[href="thesis_index"]').tab('show');
+            $('#myTab a[href="thesises_in_progress_"]').tab('show');
+            $('#myTab a[href="thesises_approval"]').tab('show');
+            $('#myTab a[href="thesises_archive"]').tab('show');
+        });
     }
 
     function index_post()
