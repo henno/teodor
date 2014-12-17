@@ -8,11 +8,21 @@ $(this).tab('show')
     $('#myTab a:last').tab('show') // Select last tab
     $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)</script>
 
-<div class="btn-group" role="group" aria-label="...">
-    <button type="button" class="btn btn-default"><a href="thesises_index" >Väljapakutud ideed</a></button>
-    <a href="thesises_approval"><button type="button" class="btn btn-default"> Kinnitamisel</button></a>
-    <button type="button" class="btn btn-default"><a href="thesises_in_progress"> Teostamisel</a></button>
-    <button type="button" class="btn btn-default"><a href="thesises_archive"> Eelnevate aastate lõputööd</a></button>
+<div role="tabpanel">
+    <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+            <a href="thesises_index" >Väljapakutud ideed</a>
+        </li>
+        <li role="presentation" class="active">
+            <a href="thesises_approval"> Kinnitamisel</a>
+        </li>
+        <li role="presentation" class="active">
+            <a href="thesises_in_progress"> Teostamisel</a>
+        </li>
+        <li role="presentation" class="active">
+            <a href="thesises_archive"> Eelnevate aastate lõputööd</a>
+        </li>
+    </ul>
 </div>
     <? if (empty($thesises)): ?>
         <div class="alert alert-info"><? __('Hetkel lõputööde andmebaas on tühi.') ?></div>
