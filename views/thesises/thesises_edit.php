@@ -1,9 +1,9 @@
 <h1><i><input type="text" name="thesis[thesis_title]" value="<?= $thesis['thesis_title'] ?>"/></i></h1>
 <form id="form" method="post">
     <p><textarea name="thesis[thesis_description]"><?= $thesis['thesis_description'] ?></textarea></p>
-    <h4><input type="text" name="thesis[thesis_client_info]" value="<?= $thesis['thesis_client_info'] ?>"/></h4>
-    <h4><input type="text" name="thesis[author_name]" value="<?= $thesis['author_name'] ?>"/></h4>
-    <h4><input type="text" name="thesis[instructor_name]" value="<?= $thesis['instructor_name'] ?>"/></h4>
+    <h4><textarea name="thesis[thesis_client_info]"><?= $thesis['thesis_client_info'] ?></textarea></h4>
+    <h4><textarea name="thesis[author_name]" ><?= $thesis['author_name'] ?></textarea></h4>
+    <h4><textarea name="thesis[instructor_name]"> <?= $thesis['instructor_name'] ?></textarea></h4>
 </form>
 
 <!-- BUTTONS -->
