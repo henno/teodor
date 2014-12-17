@@ -23,6 +23,34 @@ class tests extends Controller
         $this->subjects = get_all("SELECT * FROM subject");
     }
 
+    function view_ajax()
+    {
+
+        $test_id = $this->params[0];
+
+        // Set shortcut
+        $question = $_POST['question'];
+
+        // Save to database
+        if (!empty($question['test_question']['test_question_text'])) {
+
+            // Insert question
+            $question_id = insert('test_question', $question['test_question'] + array('test_id' => $test_id));
+
+            // Insert answers
+            foreach ($question['test_question_answer'] as $test_question_answer) {
+
+                // Skip empty answers
+                if (!empty($test_question_answer['test_question_answer_text'])) {
+                    $test_question_answer['test_question_answer_correct'] = isset($test_question_answer['test_question_answer_correct']) ? 1 : 0;
+                    insert('test_question_answer', $test_question_answer + array('test_question_id' => $question_id));
+                }
+            }
+
+            exit('OK');
+        }
+    }
+
     function index_post()
     {
         $data = $_POST['data'];
@@ -43,22 +71,9 @@ class tests extends Controller
             update('test', $test, "test_id = {$test_id}");
             header('Location: ' . BASE_URL . 'tests/' . $test_id);
 
-            // Add question
-        } elseif (isset($_POST['question'])) {
-
-            // Set shortcut
-            $question = $_POST['question'];
-
-            // Insert question
-            $question_id = insert('test_question', $question['test_question'] + array('test_id' => $test_id));
-
-            // Insert answers
-            foreach ($question['test_question_answer'] as $test_question_answer) {
-                $test_question_answer['test_question_answer_correct'] = isset($test_question_answer['test_question_answer_correct']) ? 1 : 0;
-                insert('test_question_answer', $test_question_answer + array('test_question_id' => $question_id));
-            }
 
         }
-    }
 
+
+    }
 }

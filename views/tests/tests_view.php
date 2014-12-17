@@ -1,3 +1,6 @@
+<script>
+    var maxQ = 1;
+</script>
 <h1><? __('Test') ?> <i><?= $test['test_name'] ?></i></h1>
 
 <form role="form" class="form-horizontal" method="post" action="tests/<?= $test['test_id'] ?>">
@@ -56,7 +59,7 @@
         <form>
             <div class="pull-right">
                 <button class="btn btn-primary">
-                    Salvesta
+                    Salvesta test
                 </button>
             </div>
         </form>
@@ -77,8 +80,11 @@
     foreach ($questions as $question): $n++ ?>
         <tr>
             <td><?= $n ?>.</td>
-            <td><a href="<?=BASE_URL?>test_questions/<?=$question['test_question_id']?>"><?= $question['test_question_text'] ?></a></td> 
-            <td><?= $question['test_question_score']." punkti" ?></td>
+            <td>
+                <a href="<?= BASE_URL ?>test_questions/<?= $question['test_question_id'] ?>"><?= $question['test_question_text'] ?></a>
+            </td>
+             
+            <td><?= $question['test_question_score'] . " punkti" ?></td>
         </tr>
     <? endforeach ?>
 </table>
@@ -94,7 +100,8 @@
             </div>
             <div class="modal-body">
 
-                <form role="form" class="form-horizontal" method="post" action="tests/<?= $test['test_id'] ?>">
+                <form id="addQuestion" role="form" class="form-horizontal" method="post"
+                      action="tests/<?= $test['test_id'] ?>">
 
                     <div class="form-group">
                         <label class="col-sm-5 control-label"
@@ -126,34 +133,14 @@
 
                         <div class="col-sm-7">
 
-                            <p><input type="checkbox"
-                                      name="question[test_question_answer][0][test_question_answer_correct]"/>
-                                <input type="text" class="form-control"
-                                       name="question[test_question_answer][0][test_question_answer_text]"
-                                       id="test_question_answer_text" placeholder="Vastusevariant 1"></p>
-
-                            <p><input type="checkbox"
-                                      name="question[test_question_answer][1][test_question_answer_correct]"/>
-                                <input type="text" class="form-control"
+                            <p class="answer">
+                                <input type="checkbox"
+                                       name="question[test_question_answer][1][test_question_answer_correct]"/>
+                                <input type="text" class="form-control answer"
                                        name="question[test_question_answer][1][test_question_answer_text]"
-                                       id="test_question_answer_text" placeholder="Vastusevariant 2"></p>
-
-                            <p><input type="checkbox" 
-                                      name="question[test_question_answer][2][test_question_answer_correct]"/> 
-                                <input type="text" class="form-control" 
-                                       name="question[test_question_answer][2][test_question_answer_text]" 
-                                       id="test_question_answer_text" placeholder="Vastusevariant 3"></p>  
-
-                            <p><input type="checkbox" 
-                                       name="question[test_question_answer][3][test_question_answer_correct]"/> 
-                                <input type="text" class="form-control" 
-                                       name="question[test_question_answer][3][test_question_answer_text]" 
-                                       id="test_question_answer_text" placeholder="Vastusevariant 4"></p>
-
-                            <p>
-                                <button onclick="return false"
-                                        class="btn btn-default pull-right"><? __('Lisa uus vastusevariant') ?></button>
+                                       id="test_question_answer_text" placeholder="Vastusevariant 1">
                             </p>
+
 
                         </div>
                     </div>
@@ -162,20 +149,33 @@
                                for="test_question_score">Mitu punkti</label>
 
                         <div class="col-sm-7">
-                             <p><input type="text" class="form-control"
-                                       name="question[test_question][test_question_score]"
-                                       id="test_question_score" placeholder="Punkti"></p>
+                            <p><input type="text" class="form-control"
+                                      name="question[test_question][test_question_score]"
+                                      id="test_question_score" placeholder="Punkti"></p>
                         </div>
                     </div>
 
 
-
-
                     <!-- EDIT BUTTON -->
+                    <script>
+                        function saveQuestion() {
+                            $.post("<?=BASE_URL?>tests/view/<?=$test['test_id']?>", $("form#addQuestion").serialize()).done(function (data) {
+                                if (data != 'OK') {
+                                    alert('<?__('Salvestamine ebaõnnestus')?>');
+                                    console.debug(data);
+                                    return false;
+                                }
+
+                                alert("Data Loaded: " + data);
+                            });
+                            return false;
+                        }
+
+                    </script>
                     <? if ($auth->is_admin): ?>
                         <div class="pull-right">
-                            <button class="btn btn-primary">
-                                Salvesta
+                            <button type="button" id="save_Question" class="btn btn-primary" onclick="saveQuestion()">
+                                Salvesta küsimus
                             </button>
                         </div>
                     <? endif; ?>
@@ -193,5 +193,15 @@
     $(function () {
         $(".chosen-select").chosen({width: "100%"});
         $('.chosen-select-deselect').chosen({allow_single_deselect: true});
+
+        function klaabu(){
+            maxQ++;
+            $('p.answer').parent().children("p.answer:last").after('' +
+            '<p class="answer" id="answer' + maxQ + '">' +
+            '<input type="checkbox" name="question[test_question_answer][' + maxQ + '][test_question_answer_correct]"/> ' +
+            '<input onchange="klaabu();" class="answer" type="text" class="form-control" name="question[test_question_answer][' + maxQ + '][test_question_answer_text]" id="test_question_answer_text" placeholder="Vastusevariant ' + (maxQ) + '">' +
+            '</p>');
+        }
+        $('input.answer').change(klaabu() );
     });
 </script>
