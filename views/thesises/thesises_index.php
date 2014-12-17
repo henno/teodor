@@ -1,6 +1,16 @@
+<script>$('#myTab a').click(function (e) {
+e.preventDefault()
+$(this).tab('show')
+})
+
+    $('#myTab a[href="thesis_approval"]').tab('show') // Select tab by name
+    $('#myTab a:first').tab('show') // Select first tab
+    $('#myTab a:last').tab('show') // Select last tab
+    $('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)</script>
+
 <div class="btn-group" role="group" aria-label="...">
     <button type="button" class="btn btn-default"><a href="thesises_index" >Väljapakutud ideed</a></button>
-    <button type="button" class="btn btn-default"><a href="thesises_approval"> Kinnitamisel</a></button>
+    <a href="thesises_approval"><button type="button" class="btn btn-default"> Kinnitamisel</button></a>
     <button type="button" class="btn btn-default"><a href="thesises_in_progress"> Teostamisel</a></button>
     <button type="button" class="btn btn-default"><a href="thesises_archive"> Eelnevate aastate lõputööd</a></button>
 </div>

@@ -1,4 +1,4 @@
-<h1><i><input type="text" name="thesis[thesis_title]" value="<?= $thesis['thesis_title'] ?>"/></i></h1>
+<h1><i><textarea name="thesis[thesis_title]"> <?= $thesis['thesis_title'] ?></textarea></i></h1>
 <form id="form" method="post">
     <p><textarea name="thesis[thesis_description]"><?= $thesis['thesis_description'] ?></textarea></p>
     <h4><textarea name="thesis[thesis_client_info]"><?= $thesis['thesis_client_info'] ?></textarea></h4>
