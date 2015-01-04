@@ -1,1 +1,0 @@
-<td><?= $thesis['thesis_defended_at'] ?></td>
