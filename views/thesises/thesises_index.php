@@ -97,3 +97,9 @@
 </div>
 
 
+<script>$('#myTab a').click(function () {
+        $('#myTab a[href="thesis_index"]').tab('show');
+        $('#myTab a[href="thesises_in_progress_"]').tab('show');
+        $('#myTab a[href="thesises_approval"]').tab('show');
+        $('#myTab a[href="thesises_archive"]').tab('show');
+    });</script>
