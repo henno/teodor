@@ -20,12 +20,13 @@
 			padding-top: 70px;
 		}
 
-       .dl-horizontal dt{
+        .dl-horizontal dt{
             text-align: left;
             margin-bottom: 1em;
             width: auto;
             padding-right: 1em;
         }
+
    	</style>
     <link rel="stylesheet" href="assets/css/application.css"/>
     <link rel="stylesheet" href="assets/components/chosen/chosen.css"/>
