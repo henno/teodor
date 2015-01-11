@@ -54,42 +54,25 @@
             <td><?= $thesis['thesis_defended_at'] ?></td>
         </div>
         <div role="tabpanel" class="tab-pane" id="thesises_archive">
-            <table id="table2" cellpadding="0" cellspacing="0">
+            <table class="table table-bordered">
+                <thead>
                 <tr>
-                    <th>Osakond</th>
-                    <th>Eriala</th>
-                    <th>Aasta</th>
-                    <th>Teema</th>
+                    <th class="col-md-1">#</th>
+                    <th class="col-md-5">Teema</th>
+                    <th class="col-md-3">Eriala</th>
+                    <th class="col-md-3">Osakond</th>
                 </tr>
-                <tr>
-                    <td>IKT</td>
-                    <td>Infosüsteemid</td>
-                    <td>2015</td>
-                    <td>Midagi infosüsteemidest</td>
-                </tr>
-                <tr>
-                    <td>Puidutehnoloogia</td>
-                    <td>Puusepp</td>
-                    <td>2013</td>
-                    <td>Eriti peen trepp</td>
-                </tr>
-                <tr>
-                    <td>Toiduainetetööstus</td>
-                    <td>Pagar-kondiiter</td>
-                    <td>2014</td>
-                    <td>Vastlakuklid</td>
-                </tr>
+                </thead>
+                <tbody>
+                <? foreach ($thesises as $thesis): ?>
+                    <tr>
+                        <td><?= $thesis['thesis_id'] ?></td>
+                        <td><?= $thesis['thesis_title'] ?>  </td>
+                        <td><a href="thesises/view/<?= $thesis['thesis_id'] ?>/<?= $thesis['thesis_title'] ?>"
+                    </tr>
+                <? endforeach ?>
+                </tbody>
             </table>
-
-            <script>
-                var table2 = {
-                    col_0: "select",
-                    col_4: "none",
-                    display_all_text: " [ Show all ] ",
-                    sort_select: true
-                };
-                /* var tf2 = setFilterGrid("table2", table2);*/
-            </script>
         </div>
     </div>
 
