@@ -1,21 +1,20 @@
 <div role="tabpanel">
-    <ul id="myTab" class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-            <a href="thesises_index" aria-controls="thesises_index" role="tab" data-toggle="tab">Väljapakutud ideed</a>
+    <ul class="nav nav-tabs" role="tablist" id="myTab">
+        <li role="presentation" class="active"><a href="#thesises_index" aria-controls="thesises_index" role="tab"
+                                                  data-toggle="tab">Väljapakutud
+                ideed</a></li>
+        <li role="presentation"><a href="#thesises_approval" aria-controls="thesises_approval" role="tab"
+                                   data-toggle="tab">Kinnitamisel</a>
         </li>
-        <li role="presentation" class="active">
-            <a href="thesises_approval" aria-controls="thesises_approval" role="tab" data-toggle="tab"> Kinnitamisel</a>
-        </li>
-        <li role="presentation" class="active">
-            <a href="thesises_in_progress" aria-controls="thesises_in_progress" role="tab" data-toggle="tab"> Teostamisel</a>
-        </li>
-        <li role="presentation" class="active">
-            <a href="thesises_archive" aria-controls="thesises_archive" role="tab" data-toggle="tab"> Eelnevate aastate lõputööd</a>
-        </li>
+        <li role="presentation"><a href="#thesises_in_progress" aria-controls="thesises_in_progress" role="tab"
+                                   data-toggle="tab">Teostamisel</a></li>
+        <li role="presentation"><a href="#thesises_archive" aria-controls="thesises_archive" role="tab"
+                                   data-toggle="tab">Eelnevate
+                aastate lõputööd</a></li>
     </ul>
+
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="thesises_index">
-            <? if (empty($thesises)): ?>
+        <div role="tabpanel" class="tab-pane active" id="thesises_index"><? if (empty($thesises)): ?>
                 <div class="alert alert-info"><? __('Hetkel lõputööde andmebaas on tühi.') ?></div>
             <? else: ?>
 
@@ -46,8 +45,7 @@
                         Sisesta uus
                     </button>
                 </div>
-            <?php endif; ?>
-        </div>
+            <?php endif; ?></div>
         <div role="tabpanel" class="tab-pane" id="thesises_approval">
             <td><?= $thesis['thesis_title_confirmed_at'] ?></td>
             <td><?= $thesis['thesis_instructor_confirmed_at'] ?></td>
@@ -90,10 +88,14 @@
                     display_all_text: " [ Show all ] ",
                     sort_select: true
                 };
-                var tf2 = setFilterGrid("table2", table2);
+                /* var tf2 = setFilterGrid("table2", table2);*/
             </script>
         </div>
     </div>
+
+    <script>
+        $(function () {
+            $('#myTab a:last').tab('show')
+        })
+    </script>
 </div>
-
-
