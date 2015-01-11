@@ -1,10 +1,17 @@
 <h1><i><?= $thesis['thesis_title'] ?></i></h1>
-<form id="form" method="post">
-    <p><?= $thesis['thesis_description'] ?></p>
-    <h4><?= $thesis['thesis_client_info'] ?></h4>
-    <h4><?= $thesis['author_name'] ?></h4>
-    <h4><?= $thesis['instructor_name'] ?></h4>
-</form>
+
+<dl class="dl-horizontal">
+    <dt>Lõputöö kirjeldus:</dt>
+    <dd><?= $thesis['thesis_description'] ?></dd>
+    <dt>Lõputöö tellija:</dt>
+    <dd><?= $thesis['thesis_client_info'] ?></dd>
+    <dt>Lõputöö autor:</dt>
+    <dd><?= $thesis['author_name'] ?></dd>
+    <dt>Juhendaja:</dt>
+    <dd><?= $thesis['instructor_name'] ?></dd>
+</dl>
+
+
 <? if ($auth->is_admin): ?>
     <form action="thesises/edit/<?= $thesis['thesis_id'] ?>">
         <div class="pull-right">
