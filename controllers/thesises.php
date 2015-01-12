@@ -5,7 +5,10 @@ class thesises extends Controller
 
     function index()
     {
-        $this->thesises = get_all("SELECT * FROM `thesis`");
+
+        $where = isset($_GET['query'])? "where thesis_title LIKE '%{$_GET['query']}%'": null ;
+        $sql = "SELECT * FROM `thesis` $where";
+        $this->thesises = get_all($sql);
         $this->instructors = get_all("SELECT * FROM `person`");
 
 
@@ -57,10 +60,10 @@ class thesises extends Controller
         }
 
         // Only PDF files allowed
-       /* if (!($f['type'] == "application/pdf")) {
-            __('upload ebaõnnestus');
-            $uploadOk = 0;
-        }*/
+        /* if (!($f['type'] == "application/pdf")) {
+             __('upload ebaõnnestus');
+             $uploadOk = 0;
+         }*/
 
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
@@ -68,19 +71,18 @@ class thesises extends Controller
             // if everything is ok, try to upload file
         } else {
             global $db;
-            $fp      = fopen($f["tmp_name"], 'r');
+            $fp = fopen($f["tmp_name"], 'r');
             $content = fread($fp, filesize($f["tmp_name"]));
             $content = mysqli_real_escape_string($db, $content);
             $size = 1262;
             fclose($fp);
 
-            if(!get_magic_quotes_gpc())
-            {
+            if (!get_magic_quotes_gpc()) {
                 $f["name"] = mysqli_real_escape_string($db, $f["name"]);
             }
-            $query = "INSERT INTO thesis_file (thesis_file_name, thesis_id, thesis_file_size, thesis_file_type, thesis_file_content ) ".
+            $query = "INSERT INTO thesis_file (thesis_file_name, thesis_id, thesis_file_size, thesis_file_type, thesis_file_content ) " .
                 "VALUES ('$f[name]', $thesis_id, '$size', '$f[type]', '$content')";
-            q ($query);
+            q($query);
             if (move_uploaded_file($f["tmp_name"], $target_dir)) {
                 echo "The file " . basename($f["name"]) . " has been uploaded.";
 
@@ -89,7 +91,9 @@ class thesises extends Controller
             }
         }
     }
-    function file () {
+
+    function file()
+    {
         // clean the output buffer
         ob_end_clean();
         $thesis_file_id = $this->params[0];
@@ -99,10 +103,12 @@ class thesises extends Controller
         header("Content-Disposition: attachment; filename=$file[thesis_file_name]");
         exit($file['thesis_file_content']);
     }
-    function add ()
-    {}
 
-    function edit ()
+    function add()
+    {
+    }
+
+    function edit()
     {
         $this->thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *,
@@ -114,16 +120,12 @@ class thesises extends Controller
                                    WHERE thesis_id = '$this->thesis_id' ");
     }
 
-    function edit_post() { 
+    function edit_post()
+    {
         $thesis = $_POST['thesis'];
         $this->thesis_id = $this->params[0];
         update('thesis', $thesis, "thesis_id = {$this->thesis_id}");
 
     }
 
-    function approval ()
-    {}
-
-    function in_progress()
-    {}
 }

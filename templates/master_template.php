@@ -40,7 +40,6 @@
     
     <script src="assets/components/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
-
 </head>
 
 <body>

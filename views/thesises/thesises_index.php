@@ -54,6 +54,11 @@
             <td><?= $thesis['thesis_defended_at'] ?></td>
         </div>
         <div role="tabpanel" class="tab-pane" id="thesises_archive">
+            <form role="search" id="searchForm" method="GET">
+                <input type="text" name="query" value="<?=$_GET['query']?>"/>
+                <input type="submit" value="Otsi" />
+                <input type="button" onClick="this.form.reset()" value="Lähtesta" />
+            </form>
             <table class="table table-bordered">
                 <thead>
                 <tr>
