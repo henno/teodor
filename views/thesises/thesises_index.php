@@ -59,7 +59,7 @@
                 <input type="submit" value="Otsi" />
                 <input type="button" onClick="this.form.reset()" value="Lähtesta" />
             </form>
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="table1">
                 <thead>
                 <tr>
                     <th class="col-md-1">#</th>
@@ -80,10 +80,9 @@
             </table>
         </div>
     </div>
-
     <script>
-        $(function () {
-            $('#myTab a:last').tab('show')
-        })
+    $(document).ready(function() {
+    $('#table1').tableFilter();
+    });
     </script>
 </div>

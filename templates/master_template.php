@@ -37,7 +37,7 @@
 	<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 	<![endif]-->
     <script src="assets/components/jquery/1.10.2/jquery-1.10.2.min.js"></script>
-    
+    <script type="text/javascript" language="javascript" src="../assets/js/picnet.table.filter.min.js"></script>
     <script src="assets/components/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
 </head>
