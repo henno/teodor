@@ -30,8 +30,8 @@ class thesises extends Controller
                                    author.person_name as author_name,
                                    instructor.person_name as instructor_name
                                    FROM thesis
-                                   JOIN person instructor ON thesis.person_id_instructor = instructor.person_id
-                                   JOIN person author ON thesis.person_id_author = author.person_id
+                                  LEFT JOIN person instructor ON thesis.person_id_instructor = instructor.person_id
+                                   LEFT JOIN person author ON thesis.person_id_author = author.person_id
                                    WHERE thesis_id = '$thesis_id' ");
         $this->files = get_all("SELECT * FROM thesis_file WHERE thesis_id = '$thesis_id' ");
     }
@@ -112,20 +112,24 @@ class thesises extends Controller
     {
         $this->thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *,
-                                   author.person_name as author_name,
-                                   instructor.person_name as instructor_name
-                                   FROM thesis
-                                   JOIN person instructor ON thesis.person_id_instructor = instructor.person_id
-                                   JOIN person author ON thesis.person_id_author = author.person_id
-                                   WHERE thesis_id = '$this->thesis_id' ");
-    }
+                                    author.person_name as author_name
 
+                                   FROM thesis
+                                   JOIN person as author ON person_id_author = author.person_id
+
+                                   WHERE thesis_id = '$this->thesis_id' ");
+
+    }
     function edit_post()
     {
         $thesis = $_POST['thesis'];
         $this->thesis_id = $this->params[0];
-        update('thesis', $thesis, "thesis_id = {$this->thesis_id}");
+        update('thesis', $thesis, "thesis_id = '$this->thesis_id}'");
 
     }
 
-}
+
+    }
+
+
+

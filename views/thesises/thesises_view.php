@@ -11,7 +11,11 @@
     <dd><?= $thesis['instructor_name'] ?></dd>
 </dl>
 
-
+<div class="pull-right">
+    <button class="btn btn-primary">
+       Soovin teostada
+    </button>
+</div>
 <? if ($auth->is_admin): ?>
     <form action="thesises/edit/<?= $thesis['thesis_id'] ?>">
         <div class="pull-right">
@@ -24,11 +28,9 @@
 <div class="row upload_files">
     <div class="col-md-6">
         <span class="lead">Laadi üles:</span>
-        <div class="pull-right">
+        <div class=" hnvh">
             <div class="btn-group btn-group-lg">
-                <h3><?= $thesis['thesis_file_id_draft'] ?></h3>
                 <button type="button" class="btn btn-default" id="thesis-draft">Eelkaitsmine</button>
-                <h3><?= $thesis['thesis_file_id_final'] ?></h3>
                 <button type="button" class="btn btn-default" id="thesis-final">Lõputöö</button>
                 <button type="button" class="btn btn-default" id="thesis_file_upload">Lisamaterjalid</button>
             </div>
@@ -37,7 +39,7 @@
             <input type="file" name="draft_upload" id="draft_upload" class="file-upload"/>
         </form>
 
-        <?php var_dump($_FILES) ?>
+
         <script>
             $('#thesis-draft').click(function (event) {
                 $('#draft_upload').click();
