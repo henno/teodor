@@ -36,7 +36,7 @@ class persons extends Controller
         $data = $_POST['data'];
         $data['person_id'] = $this->params[0];
         $data['active'] = isset($data['active']) ? 1 : 0;
-        ('person', $data);
+        insert('person', $data);
         header('Location: '.BASE_URL .'persons/view/'.$this->params[0]);
     }
     function delete_post(){
