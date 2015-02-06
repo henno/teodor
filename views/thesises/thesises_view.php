@@ -11,9 +11,10 @@
     <dd><?= $thesis['instructor_name'] ?></dd>
 </dl>
 
+
 <div class="pull-right">
     <button class="btn btn-primary">
-       Soovin teostada
+        Soovin teostada
     </button>
 </div>
 <? if ($auth->is_admin): ?>

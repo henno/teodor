@@ -154,6 +154,10 @@ class Application
             $this->controller = 'journal_student';
             $this->action = empty($this->params[0]) ? 'index' : $this->params[0];
         }
+        if ($this->controller == 'thesises' && $this->action == 'manage') {
+            $this->controller = 'thesises_manage';
+            $this->action = empty($this->params[0]) ? 'index' : $this->params[0];
+        }
         if ($this->controller == 'tests' && $this->action == 'view') {
             if (!empty($this->params[1]) && is_numeric($this->params[1])) {
 

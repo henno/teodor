@@ -22,6 +22,8 @@
     <div class="pull-right">
         <button class="btn btn-primary" id="thesis_title">Salvesta
         </button>
+        <button class="btn btn-primary" id="thesis_title">Saada
+        </button>
     </div>
 </form>
 

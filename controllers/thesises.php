@@ -17,7 +17,7 @@ class thesises extends Controller
     function index_post()
     {
         $data = $_POST['thesis'];
-        $data['person_id_author'] = $this->auth->person_id;
+        $data['person_id_author'] = NULL;
         $data['person_id_instructor'] = empty($data['selected_person_id_instructor']) ? 1 : $data['selected_person_id_instructor'];
         $thesis_id = insert('thesis', $data);
         header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
@@ -104,19 +104,13 @@ class thesises extends Controller
         exit($file['thesis_file_content']);
     }
 
-    function add()
-    {
-    }
-
     function edit()
     {
         $this->thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *,
-                                    author.person_name as author_name
-
+                                   author.person_name as author_name
                                    FROM thesis
-                                   JOIN person as author ON person_id_author = author.person_id
-
+                                   JOIN person as author ON thesis.person_id_author = author.person_id
                                    WHERE thesis_id = '$this->thesis_id' ");
 
     }
@@ -124,8 +118,19 @@ class thesises extends Controller
     {
         $thesis = $_POST['thesis'];
         $this->thesis_id = $this->params[0];
-        update('thesis', $thesis, "thesis_id = '$this->thesis_id}'");
+        update('thesis', $thesis, "thesis_id = '{$this->thesis_id}'");
 
+    }
+
+    function add() {}
+
+    function delete_ajax(){
+
+        $person_id = $_GET['person_id'];
+        $department_id = $_GET['department_id'];
+        $result = q("delete from thesis_admins WHERE person_id={$person_id} AND department_id={$department_id}");
+        echo $result ? 'Ok' : 'Fail';
+        exit("1");
     }
 
 

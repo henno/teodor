@@ -1,3 +1,6 @@
+<div class="row">
+    <div class="pull-right"><a href="thesises/manage"><span class="glyphicon glyphicon-cog"></span></a></div>
+</div>
 <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist" id="myTab">
         <li role="presentation" class="active"><a href="#thesises_index" aria-controls="thesises_index" role="tab"
@@ -72,8 +75,8 @@
                 <? foreach ($thesises as $thesis): ?>
                     <tr>
                         <td><?= $thesis['thesis_id'] ?></td>
-                        <td><?= $thesis['thesis_title'] ?>  </td>
-                        <td><a href="thesises/view/<?= $thesis['thesis_id'] ?>/<?= $thesis['thesis_title'] ?>"
+                        <td><?= $thesis['thesis_title'] ?> </td>
+                        <td><a href="thesises/view/<?= $thesis['thesis_id'] ?>/<?= $thesis['thesis_title'] ?>" </td>
                     </tr>
                 <? endforeach ?>
                 </tbody>
