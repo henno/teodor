@@ -134,7 +134,7 @@ class thesises extends Controller
     }
 
 
-    }
+}
 
 
 
