@@ -36,8 +36,6 @@
     </div>
 </div>
 
-<pre><? print_r($admins) ?></pre>
-
 
 <script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
 <script>
@@ -49,8 +47,8 @@
         $(".glyphicon-remove").click(function (){
             var person_id=$(this).parents('tr').data('id');
             console.log(person_id);
-            $.get("thesises/delete/admin", {person_id: person_id,department_id: <?=$selected_department['department_id']?>}, function (data) {
-                if(data == '1'){
+            $.get("thesises/manage/delete_admin", {person_id: person_id,department_id: <?=$selected_department['department_id']?>}, function (data) {
+                if(data == 'Ok'){
                     window.location.replace(window.location.pathname);
                 }else{
                     alert('Fail');
@@ -64,7 +62,7 @@
 
     function add_admin(){
         $.get("thesises/manage/add_admin", {person_id: $('#person_id').val(),department_id: <?=$selected_department['department_id']?>}, function (data) {
-            if(data == '1'){
+            if(data == 'Ok'){
                 window.location.replace(window.location.pathname);
             }else{
                 alert('Fail');

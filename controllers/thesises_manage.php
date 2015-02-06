@@ -25,17 +25,15 @@ class thesises_manage extends Controller
 
     function add_admin()
     {
-        $row_id = insert('thesis_admins', $_GET);
-        print_r($_GET);
-        # exit(insert('thesis_admins', $_GET) > 0 ? '1' : '0');
-        var_dump($row_id); die();
+        insert('thesis_admins', $_GET);
+        exit('Ok');
     }
 
     function delete_admin() {
         $person_id = $_GET['person_id'];
         $department_id = $_GET['department_id'];
-        $result = q("delete from thesis_admins WHERE person_id={$person_id} AND department_id={$department_id}");
-        echo $result ? 'Ok' : 'Fail';
+        q("delete from thesis_admins WHERE person_id={$person_id} AND department_id={$department_id}");
+        exit('Ok');
     }
 
 }
