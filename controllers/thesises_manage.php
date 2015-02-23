@@ -31,10 +31,17 @@ class thesises_manage extends Controller
 
     function delete_admin() {
         $person_id = $_GET['person_id'];
+        if(is_array($person_id)) {
+            $person_id = implode(",", $person_id);
+        }
         $department_id = $_GET['department_id'];
-        q("delete from thesis_admins WHERE person_id={$person_id} AND department_id={$department_id}");
+        q("delete from thesis_admins WHERE person_id IN ({$person_id}) AND department_id={$department_id}");
         exit('Ok');
     }
 
-}
+
+   }
+
+
+
 
