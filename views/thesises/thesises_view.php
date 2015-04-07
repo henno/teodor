@@ -6,17 +6,19 @@
     <dt>Lõputöö tellija:</dt>
     <dd><?= $thesis['thesis_client_info'] ?></dd>
     <dt>Lõputöö autor:</dt>
-    <dd><?= $thesis['author_name'] ?></dd>
+    <dd>
+        <select multiple style="width: 300px">
+            <? foreach ($thesis['thesis_authors'] as $author): ?>
+                <option value=""><?= $author['person_name'] ?></option>
+            <? endforeach ?>
+        </select>
+    </dd>
     <dt>Juhendaja:</dt>
     <dd><?= $thesis['instructor_name'] ?></dd>
 </dl>
 
 
-<div class="pull-right">
-    <button class="btn btn-primary">
-        Soovin teostada
-    </button>
-</div>
+
 <? if ($auth->is_admin): ?>
     <form action="thesises/edit/<?= $thesis['thesis_id'] ?>">
         <div class="pull-right">
@@ -25,10 +27,28 @@
             </button>
         </div>
     </form>
+    <? if (!$thesis['thesis_title_confirmed_at']): ?>
+        <form action="thesises/confirm/<?= $thesis['thesis_id'] ?>">
+            <div class="pull-right">
+                <button class="btn btn-primary">
+                    Kinnita
+                </button>
+            </div>
+        </form>
+    <? endif; ?>
+<? else: ?>
+    <form action="thesises/confirmation_request/<?= $thesis['thesis_id'] ?>">
+        <div class="pull-right">
+            <button class="btn btn-primary">
+                Soovin teostada
+            </button>
+        </div>
+    </form>
 <? endif; ?>
 <div class="row upload_files">
     <div class="col-md-6">
         <span class="lead">Laadi üles:</span>
+
         <div class=" hnvh">
             <div class="btn-group btn-group-lg">
                 <button type="button" class="btn btn-default" id="thesis-draft">Eelkaitsmine</button>
@@ -48,7 +68,7 @@
 
             //capture selected filename
             $('#draft_upload').change(function (click) {
-            //$('#file-name').val(this.value);
+                //$('#file-name').val(this.value);
                 $('form#uploadForm').submit();
             });
         </script>
@@ -88,8 +108,18 @@
 
     <? foreach ($files as $file): ?>
         <tr>
-            <td><a href="<?=BASE_URL?>thesises/file/<?=$file['thesis_file_id']?>"><?= $file['thesis_file_name'] ?></a></td> 
+            <td>
+                <a href="<?= BASE_URL ?>thesises/file/<?= $file['thesis_file_id'] ?>"><?= $file['thesis_file_name'] ?></a>
+            </td>
+             
             <td><?= $file['thesis_file_size'] ?></td>
         </tr>
     <? endforeach ?>
 </table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('select').select2({
+            tags: true
+        });
+    });
+</script>

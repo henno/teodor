@@ -6,7 +6,7 @@ class thesises extends Controller
     function index()
     {
 
-        $where = isset($_GET['query'])? "where thesis_title LIKE '%{$_GET['query']}%'": null ;
+        $where = isset($_GET['query']) ? "where thesis_title LIKE '%{$_GET['query']}%'" : null;
         $sql = "SELECT * FROM `thesis` $where";
         $this->thesises = get_all($sql);
         $this->instructors = get_all("SELECT * FROM `person`");
@@ -34,6 +34,7 @@ class thesises extends Controller
                                    LEFT JOIN person author ON thesis.person_id_author = author.person_id
                                    WHERE thesis_id = '$thesis_id' ");
         $this->files = get_all("SELECT * FROM thesis_file WHERE thesis_id = '$thesis_id' ");
+        $this->thesis ['thesis_authors'] = get_all("SELECT * FROM thesis_authors NATURAL JOIN person");
     }
 
     function view_upload()
@@ -114,6 +115,7 @@ class thesises extends Controller
                                    WHERE thesis_id = '$this->thesis_id' ");
 
     }
+
     function edit_post()
     {
         $thesis = $_POST['thesis'];
@@ -122,9 +124,20 @@ class thesises extends Controller
 
     }
 
-    function add() {}
+    function confirmation_request()
+    {
+        $thesis_id = $this->params[0];
+        update('thesis', array('thesis_person_id'=>$auth->person_id), "thesis_id = '{$thesis_id}'");
+        header('Location: ' . BASE_URL. "thesises/view/$thesis_id");
 
-    function delete_ajax(){
+    }
+
+    function add()
+    {
+    }
+
+    function delete_ajax()
+    {
 
         $person_id = $_GET['person_id'];
         $department_id = $_GET['department_id'];
@@ -132,7 +145,6 @@ class thesises extends Controller
         echo $result ? 'Ok' : 'Fail';
         exit("1");
     }
-
 
 
 }
