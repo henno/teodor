@@ -16,13 +16,13 @@
             <th>Aegub</th>
         </tr>
 
-    <? foreach ($virtual_machines as $virtual_machine): ?>
+    <? foreach ($tasks as $task): ?>
         <tr data-status="active" data-ip="178.62.224.61" data-id="4678950" data-name="is114-jurgennarits-cacti"
             data-created="2015-04-01T09:05:18Z" class="Ready">
 
             <td><input type="checkbox" class="selection" name="droplets[4678950]"></td>
             <td><?= $n++ ?>.</td>
-            <td><?= $virtual_machine['virtual_machine_name'] ?></td>
+            <td><?= $task['task_name'] ?></td>
             <td><a target="_blank" href="http://178.62.224.61">178.62.224.61</a>
             </td>
             <td class="runtime">

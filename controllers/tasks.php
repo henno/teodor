@@ -10,7 +10,7 @@ use DigitalOceanV2\Adapter\BuzzAdapter;
 use DigitalOceanV2\DigitalOceanV2;
 
 
-class virtual_machines extends Controller {
+class tasks extends Controller {
     function index()
     {
         require 'vendor/autoload.php';
@@ -29,7 +29,10 @@ class virtual_machines extends Controller {
         // return a collection of Droplet entity
         $droplets = $droplet->getAll();
         var_dump($droplets);
-        $this->virtual_machines = get_all("SELECT * FROM virtual_machine");
+        $this->tasks = get_all("SELECT * FROM task");
         $this->n=1;
+    }
+    function create_ajax(){
+
     }
 }
