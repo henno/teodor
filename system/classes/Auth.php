@@ -28,31 +28,78 @@ class Auth
     function require_auth()
     {
         global $errors;
+        $cookie_login = false;
+        $username = '';
+        $password = '';
 
         // If person has already logged in...
         if ($this->logged_in) {
             return TRUE;
         }
 
+        // Authenticate by cookie
+        //var_dump($_COOKIE);
+        //die();
+        if (isset($_COOKIE['teodor_SID'])) {
+            $username = get_one("SELECT username FROM person WHERE person_SID='{$_COOKIE['teodor_SID']}'");
+            if (!empty($username)) $cookie_login = true;
+        }
+
+        $username = $cookie_login ? $username : (isset($_POST['username']) ? $_POST['username'] : NULL);
+        $password = isset($_POST['password']) ? $_POST['password'] : NULL;
+        $remember_me = isset($_POST['remember_me']) && $_POST['remember_me'] == 'on' ? 1 : 0;
+
         // Authenticate by POST data
-        if (isset($_POST['username'])) {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            if ($this->login($username, $password)) {
-                $person = get_first("SELECT person_id, is_admin FROM person
-                                WHERE username = '$username'
-                                  AND  deleted = 0");
+        if ($cookie_login or isset($_POST['username'])) {
+
+            // Authenticate user against Google
+            if ($cookie_login or $this->login($username, $password)) {
+
+                // Check if person already exsists in db
+                $person = get_first("SELECT person_id, is_admin, person_first_visit, person_last_visit FROM person
+                                     WHERE username = '$username'
+                                     AND deleted = 0");
+
                 if (empty($person['person_id'])) {
+
+                    // Person did not exsist, insert this person and log the person in
                     $now = date('Y-m-d H:i:s');
-                    $_SESSION['person_id'] = insert('person', array('username' => $username, 'person_first_visit' => $now, 'person_last_visit' => $now));
+                    $person = array('username' => $username, 'is_admin' => 0, 'person_first_visit' => $now, 'person_last_visit' => $now);
+                    $person['person_id'] = insert('person', $person);
+
                 } else {
+
+                    // Person existed, update person's last visit time
                     q("UPDATE person SET person_last_visit=NOW() WHERE username = '$username'");
-                    $_SESSION['person_id'] = $person['person_id'];
                 }
+
+                // Log the person in
+                $_SESSION['person_id'] = $person['person_id'];
+
+                // Set remember me cookie
+                if ($remember_me) {
+
+                    // Generate 7 char random string
+                    $SID = substr(md5(rand()), 0, 7);
+
+                    // Set cookie to expire in January 2038
+                    $time = 2147483647;
+
+                    // Associate that random string with this user
+                    update('person', array('person_SID' => $SID), "username = '$username'");
+
+                    // Write that random string to cookie
+                    setcookie("teodor_SID", $SID, $time, '/');
+                }
+
+                //Load user data and return
                 $this->load_user_data($person);
                 return true;
+
             } else {
-                $errors[] = "Vale kasutajanimi või parool";
+
+                // Login failed - set error
+                $errors[] = __('Wrong username or password', true);
             }
         }
 

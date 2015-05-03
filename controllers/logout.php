@@ -8,6 +8,7 @@
 
 class logout extends Controller {
 	function index(){
+        setcookie("teodor_SID", '', 1, '/');
 		session_destroy();
 		header('Location: '.BASE_URL);
 	}

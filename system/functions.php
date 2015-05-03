@@ -24,10 +24,15 @@ function __autoload($className)
  * @param $text string Text to translate
  * @return string
  */
-function __($text)
+function __($text, $return=false)
 {
 	//TODO: Write your own translation code here
-	echo $text;
+	if($return){
+        return $text;
+    }
+    else {
+        echo $text;
+    }
 }
 
 function debug($msg)
