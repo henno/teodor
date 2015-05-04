@@ -45,7 +45,7 @@
 
                 <div class="pull-left">
                     <button class="btn btn-primary" onclick="window.location.href = 'thesises/add'">
-                        Sisesta uus
+                        Sisesta
                     </button>
                 </div>
             <?php endif; ?></div>
@@ -58,7 +58,7 @@
         </div>
         <div role="tabpanel" class="tab-pane" id="thesises_archive">
             <form role="search" id="searchForm" method="GET">
-                <input type="text" name="query" value="<?=$_GET['query']?>"/>
+                <input type="text" name="query" value="<?=$query?>"/>
                 <input type="submit" value="Otsi" />
                 <input type="button" onClick="this.form.reset()" value="Lähtesta" />
             </form>

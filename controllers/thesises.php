@@ -10,7 +10,7 @@ class thesises extends Controller
         $sql = "SELECT * FROM `thesis` $where";
         $this->thesises = get_all($sql);
         $this->instructors = get_all("SELECT * FROM `person`");
-
+        $this->query = isset($_GET['query']) ? $_GET['query'] : null;
 
     }
 

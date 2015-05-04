@@ -14,9 +14,9 @@
     </div>
     <div class="row">
         <label class="col-sm-5 control-label" for="instructor">Juhendaja nimi ja ettevõte</label>
-        <div class="col-sm-7">
+        <div class="col-sm-5">
             <input type="text" class="form-control" name="data[person_id_instructor]" id="test_name"
-                   placeholder="Siia kirjuta juhendaja kui ei leidnud valikust sobivat" value="<?= $test['test_name'] ?>">
+                   placeholder="Siia kirjuta juhendaja kui ei leidnud valikust sobivat" value="<?= $thesis['person_id_instructor'] ?>">
         </div>
     </div>
     <div class="pull-right">
