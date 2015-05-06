@@ -4,7 +4,7 @@
     <div class="col-md-3 col-sm-6">
         <div class="btn-group-vertical" role="group" aria-label="...">
             <? foreach ($departments as $department): ?>
-                <button type="button" class="btn btn-default"><?= $department['department_name'] ?></button>
+                <a class="btn btn-default" href="thesises/manage/view/<?=$department['department_id']?>"><?=$department['department_name']?></a>
             <? endforeach ?>
         </div>
     </div>
