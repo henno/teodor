@@ -10,14 +10,14 @@
     </div>
     <div class="col-md-9 col-sm-6">
         <h1><?= $selected_department['department_name'] ?></h1>
-        <table id="tblAdmins" class="table table-bordered">
-            <tr>
-                <th><input type="checkbox" id="select-all-admins"/></th>
-                <th>#</th>
-                <th style="width:100%">Nimi</th>
-                <th></th>
-            </tr>
-            <form class="selection" action="thesises" method="post">
+        <form class="selection" action="thesises" method="post">
+            <table id="tblAdmins" class="table table-bordered">
+                <tr>
+                    <th><input type="checkbox" id="select-all-admins"/></th>
+                    <th>#</th>
+                    <th style="width:100%">Nimi</th>
+                    <th></th>
+                </tr>
                 <? $n = 0;
                 foreach ($admins as $admin): $n++ ?>
                     <tr data-id="<?= $admin['person_id'] ?>">
@@ -27,8 +27,9 @@
                         <td><?= $admin['person_name'] ?></td>
                         <td><span style="cursor:pointer" class="glyphicon glyphicon-remove"></span></td>
                     </tr>
-                <? endforeach ?></form>
-        </table>
+                <? endforeach ?>
+            </table>
+        </form>
         <img
             src="http://diarainfra.com/pma/themes/pmahomme/img/arrow_ltr.png"
             alt=""/>
