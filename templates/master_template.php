@@ -16,7 +16,6 @@
 	<!-- Custom styles for this template -->
 	<style>
 		body {
-			min-height: 2000px !important;
 			padding-top: 70px;
 		}
 
@@ -62,7 +61,7 @@
 			<ul class="nav navbar-nav">
 				<li <?= $controller == 'groups' ? 'class="active"' : ''?>><a href="groups"><?__('Grupid')?></a></li>
                 <li <?= $controller == 'thesises' ? 'class="active"' : ''?>><a href="thesises"><?__('Lõputööd')?></a></li>
-                <li <?= $controller == 'tasks' ? 'class="active"' : ''?>><a href="virtual_machines"><?__('Virtuaalmasinad')?></a></li>
+                <li <?= $controller == 'tasks' ? 'class="active"' : ''?>><a href="tasks"><?__('Virtuaalmasinad')?></a></li>
                 <li <?= $controller == 'tests' ? 'class="active"' : ''?>><a href="tests"><?__('Testid')?></a></li>
                 <li <?= $controller == 'timetable' ? 'class="active"' : ''?>><a href="timetable"><?__('Tunniplaan')?></a></li>
                 <li <?= $controller == 'journal_student' ? 'class="active"' : ''?>><a href="journal/student"><?__('Päevik')?></a></li>

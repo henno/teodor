@@ -11,7 +11,12 @@ use DigitalOceanV2\DigitalOceanV2;
 
 
 class tasks extends Controller {
-    function index()
+    function index() {
+        $this->tasks=array(array('subject_name' => 'veebitehnoloogiad','task_name' => 'jenkins_docker','task_due' => '2014-04-12', 'task_status_name' =>'tehtud', 'task_time_required'=>'15'));
+        //$this->tasks=get_all("SELECT * FROM task NATURAL JOIN subject ");
+    }
+
+    function klaabu()
     {
         require 'vendor/autoload.php';
 
