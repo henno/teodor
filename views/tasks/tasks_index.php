@@ -1,3 +1,9 @@
+<style>
+    td {
+        text-align: center;
+    }
+</style>
+<h1><?__('Minu ülesanded')?></h1>
 <table class="table table-bordered" style="width: auto;">
     <tbody>
     <tr>
@@ -18,7 +24,7 @@
             <td><?= $task['task_due'] ?></td>
             <td><?= $task['task_status_name'] ?></td>
             <td><?= $task['task_time_required'] ?></td>
-            <td></td>
+            <td><a href="#"><?__('Lahenda')?></a></td>
         </tr>
     <? endforeach ?>
 

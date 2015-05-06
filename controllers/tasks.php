@@ -12,8 +12,15 @@ use DigitalOceanV2\DigitalOceanV2;
 
 class tasks extends Controller {
     function index() {
-        $this->tasks=array(array('subject_name' => 'veebitehnoloogiad','task_name' => 'jenkins_docker','task_due' => '2014-04-12', 'task_status_name' =>'tehtud', 'task_time_required'=>'15'));
-        //$this->tasks=get_all("SELECT * FROM task NATURAL JOIN subject ");
+        $this->tasks=get_all("SELECT * FROM person
+                              NATURAL JOIN group_persons
+                              NATURAL JOIN `group`
+                              JOIN course USING (group_id)
+                              NATURAL JOIN `course_tasks`
+                              NATURAL JOIN subject
+                              NATURAL JOIN task
+                              NATURAL JOIN task_status
+                              WHERE person.person_id={$this->auth->person_id}");
     }
 
     function klaabu()
