@@ -24,7 +24,7 @@
             <td><?= $task['task_due'] ?></td>
             <td><?= $task['task_status_name'] ?></td>
             <td><?= $task['task_time_required'] ?></td>
-            <td><a href="#"><?__('Lahenda')?></a></td>
+            <td><a href="tasks/<?=$task['task_id']?>"><?__('Ava')?></a></td>
         </tr>
     <? endforeach ?>
 

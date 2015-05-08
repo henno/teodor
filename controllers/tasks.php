@@ -10,15 +10,17 @@ use DigitalOceanV2\Adapter\BuzzAdapter;
 use DigitalOceanV2\DigitalOceanV2;
 
 
-class tasks extends Controller {
-    function index() {
-        $this->tasks=get_all("SELECT * FROM person
+class tasks extends Controller
+{
+    function index()
+    {
+        $this->tasks = get_all("SELECT *FROM person
                               NATURAL JOIN group_persons
                               NATURAL JOIN `group`
                               JOIN course USING (group_id)
                               NATURAL JOIN `course_tasks`
                               NATURAL JOIN subject
-                              NATURAL JOIN task
+                              JOIN task USING (task_id)
                               NATURAL JOIN task_status
                               WHERE person.person_id={$this->auth->person_id}");
     }
@@ -42,9 +44,43 @@ class tasks extends Controller {
         $droplets = $droplet->getAll();
         var_dump($droplets);
         $this->tasks = get_all("SELECT * FROM task");
-        $this->n=1;
+        $this->n = 1;
     }
-    function create_ajax(){
+
+    function view()
+    {
+        $comments = array();
+        $task_id = $this->params[0];
+        $this->task = get_first("SELECT * FROM task
+                                 NATURAL JOIN task_status
+                                 NATURAL JOIN person
+                                 WHERE task.task_id={$task_id}");
+        $comments_raw = get_all("SELECT * FROM task_comment
+                                 NATURAL JOIN person
+                                 WHERE task_id={$task_id}");
+
+        // Rename anynonomous members with comment id
+        foreach ($comments_raw as $comment) {
+            $comments[$comment['task_comment_id']]=$comment;
+        }
+
+        // Move comment replies under parent
+        foreach ($comments as &$comment) {
+
+            // Check if this comment is a reply
+            if ($comment['task_comment_parent_id']) {
+
+                // Copy this comment into its parent's replies array
+                $comments[$comment['task_comment_parent_id']]['replies'][] = $comment;
+
+                // Remove this comment from comments array
+                unset($comments[$comment['task_comment_id']]);
+            }
+        } $this -> comments=$comments;
+    }
+
+    function create_ajax()
+    {
 
     }
 }
