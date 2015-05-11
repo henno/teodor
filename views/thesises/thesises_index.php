@@ -57,11 +57,14 @@
             <td><?= $thesis['thesis_defended_at'] ?></td>
         </div>
         <div role="tabpanel" class="tab-pane" id="thesises_archive">
-            <form role="search" id="searchForm" method="GET">
-                <input type="text" name="query" value="<?=$query?>"/>
-                <input type="submit" value="Otsi" />
-                <input type="button" onClick="this.form.reset()" value="Lähtesta" />
-            </form>
+              <form class="form-inline" role="search" id="searchForm" method="GET">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="query" value="<?=$query?>"/>
+                </div>
+                <input type="submit" class="btn btn-default" value="Otsi">
+                  <input type="button" class="reset-search btn btn-default" value="Lähtesta" />
+              </form>
+
             <table class="table table-bordered" id="table1">
                 <thead>
                 <tr>
@@ -87,7 +90,7 @@
     $(document).ready(function() {
     $('#table1').tableFilter();
 
-        $(document).ready(function() {
+
             if(location.hash) {
                 $('a[href=' + location.hash + ']').tab('show');
             }
@@ -98,7 +101,8 @@
         $(window).on('popstate', function() {
             var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
             $('a[href=' + anchor + ']').tab('show');
-        });
+
+
     });
     </script>
 </div>

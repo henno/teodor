@@ -40,6 +40,11 @@
     <form action="thesises/confirmation_request/<?= $thesis['thesis_id'] ?>">
         <div class="pull-right">
             <button class="btn btn-primary">
+                Soovin liituda
+            </button>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-primary">
                 Soovin teostada
             </button>
         </div>
