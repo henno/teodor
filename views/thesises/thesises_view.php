@@ -15,6 +15,7 @@
     </dd>
     <dt>Juhendaja:</dt>
     <dd><?= $thesis['instructor_name'] ?></dd>
+
 </dl>
 
 

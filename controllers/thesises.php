@@ -133,7 +133,13 @@ class thesises extends Controller
     }
 
     function add()
+    {$this->instructors = get_all("SELECT * FROM thesis_instructors");
+    }
+
+    function add_instructor()
     {
+        insert('thesis_instructors', $_GET);
+        exit('Ok');
     }
 
     function delete_ajax()

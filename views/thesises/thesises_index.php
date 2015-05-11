@@ -1,4 +1,9 @@
 <div class="row">
+    <div class="col-md-12">
+        <button class="btn btn-primary pull-right" onclick="window.location.href = 'thesises/add'">
+            Sisesta lõputöö
+        </button>
+    </div>
     <div class="pull-right"><a href="thesises/manage"><span class="glyphicon glyphicon-cog"></span></a></div>
 </div>
 <div role="tabpanel">
@@ -41,14 +46,7 @@
                 <tbody>
                 <? endif ?>
             </table>
-            <?php if ($auth->is_admin): ?>
-
-                <div class="pull-left">
-                    <button class="btn btn-primary" onclick="window.location.href = 'thesises/add'">
-                        Sisesta
-                    </button>
-                </div>
-            <?php endif; ?></div>
+        </div>
         <div role="tabpanel" class="tab-pane" id="thesises_approval">
             <td><?= $thesis['thesis_title_confirmed_at'] ?></td>
             <td><?= $thesis['thesis_instructor_confirmed_at'] ?></td>
@@ -57,13 +55,13 @@
             <td><?= $thesis['thesis_defended_at'] ?></td>
         </div>
         <div role="tabpanel" class="tab-pane" id="thesises_archive">
-              <form class="form-inline" role="search" id="searchForm" method="GET">
+            <form class="form-inline" role="search" id="searchForm" method="GET">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="query" value="<?=$query?>"/>
+                    <input type="text" class="form-control" name="query" value="<?= $query ?>"/>
                 </div>
                 <input type="submit" class="btn btn-default" value="Otsi">
-                  <input type="button" class="reset-search btn btn-default" value="Lähtesta" />
-              </form>
+                <input type="button" class="reset-search btn btn-default" value="Lähtesta"/>
+            </form>
 
             <table class="table table-bordered" id="table1">
                 <thead>
@@ -79,7 +77,7 @@
                     <tr>
                         <td><?= $thesis['thesis_id'] ?></td>
                         <td><?= $thesis['thesis_title'] ?> </td>
-                        <td><a href="thesises/view/<?= $thesis['thesis_id'] ?>/<?= $thesis['thesis_title'] ?>" </td>
+                        <td><a href="thesises/view/<?= $thesis['thesis_id'] ?>/<?= $thesis['thesis_title'] ?>"</td>
                     </tr>
                 <? endforeach ?>
                 </tbody>
@@ -87,22 +85,22 @@
         </div>
     </div>
     <script>
-    $(document).ready(function() {
-    $('#table1').tableFilter();
+        $(document).ready(function () {
+            $('#table1').tableFilter();
 
 
-            if(location.hash) {
+            if (location.hash) {
                 $('a[href=' + location.hash + ']').tab('show');
             }
-            $(document.body).on("click", "a[data-toggle]", function(event) {
+            $(document.body).on("click", "a[data-toggle]", function (event) {
                 location.hash = this.getAttribute("href");
             });
         });
-        $(window).on('popstate', function() {
+        $(window).on('popstate', function () {
             var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
             $('a[href=' + anchor + ']').tab('show');
 
 
-    });
+        });
     </script>
 </div>
