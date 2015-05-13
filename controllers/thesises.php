@@ -133,12 +133,12 @@ class thesises extends Controller
     }
 
     function add()
-    {$this->instructors = get_all("SELECT * FROM thesis_instructors");
+    {$this->instructors = get_all("SELECT * FROM thesis_instructor");
     }
 
     function add_instructor()
     {
-        insert('thesis_instructors', $_GET);
+        insert('thesis_instructor', $_GET);
         exit('Ok');
     }
 

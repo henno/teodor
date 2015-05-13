@@ -56,6 +56,7 @@
             </div>
             <div class="modal-body">
                 <form role="form" name="ajaxform" id="ajaxform" class="form-horizontal">
+
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="formGroupInputLarge">Juhendaja nimi:</label>
 
@@ -72,6 +73,7 @@
                         </div>
 
                     </div>
+
                 </form>
             </div>
             <div class="modal-footer">
