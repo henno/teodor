@@ -1,5 +1,5 @@
 <h1><? __('Lõputöö sisestamine') ?></h1>
-<form role="form" class="form-horizontal" method="post" action="thesises/<?= $thesis['thesis_title'] ?>">
+<form role="form" class="form-horizontal" method="post">
     <div class="form-group form-group-lg">
         <label class="col-sm-2 control-label" for="formGroupInputLarge">Sisesta lõputöö pealkiri</label>
 
@@ -22,7 +22,7 @@
     <label class="col-sm-2 control-label" for="formGroupInputLarge">Juhendaja ja ettevõte</label>
 
     <div class="col-sm-10">
-        <select id="instructor_id" name="instructor[instructor_id]" class="chosen-select">
+        <select id="instructor_id" name="instructor_select" class="chosen-select">
             <? foreach ($instructors as $instructor): ?>
                 <option
                     value="<?= $instructor['instructor_id'] ?>" <?= $instructor['instructor_name'] == $instructor['instructor_name'] ? 'selected="selected"' : '' ?>><?= $instructor['instructor_name']. " (" . $instructor['instructor_company'] . ")" ?></option>
@@ -34,13 +34,13 @@
     <label class="col-sm-2 control-label" for="formGroupInputLarge">Lõputöö idee:</label>
 
     <div class="col-sm-10">
-        <input class=" pull-left" type="checkbox"/>
+        <input class=" pull-left" name="thesis_idea" type="checkbox" value="1"/>
     </div>
 
     <div class="pull-right">
         <button class="btn btn-primary" id="thesis_title">Salvesta
         </button>
-        <button class="btn btn-primary" id="thesis_title">Saada
+        <button class="btn btn-primary">Saada
         </button>
     </div>
 </form>

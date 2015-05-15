@@ -7,7 +7,7 @@ class thesises extends Controller
     {
 
         $where = isset($_GET['query']) ? "where thesis_title LIKE '%{$_GET['query']}%'" : null;
-        $sql = "SELECT * FROM `thesis` $where";
+        $sql = "SELECT *, department.department_name FROM `thesis` LEFT JOIN department ON thesis.department_id=department.department_id $where";
         $this->thesises = get_all($sql);
         $this->instructors = get_all("SELECT * FROM `person`");
         $this->query = isset($_GET['query']) ? $_GET['query'] : null;
@@ -28,9 +28,9 @@ class thesises extends Controller
         $thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *,
                                    author.person_name as author_name,
-                                   instructor.person_name as instructor_name
+                                   instructor.instructor_name as instructor_name
                                    FROM thesis
-                                  LEFT JOIN person instructor ON thesis.person_id_instructor = instructor.person_id
+                                  LEFT JOIN thesis_instructor instructor ON thesis.instructor_id = instructor.instructor_id
                                    LEFT JOIN person author ON thesis.person_id_author = author.person_id
                                    WHERE thesis_id = '$thesis_id' ");
         $this->files = get_all("SELECT * FROM thesis_file WHERE thesis_id = '$thesis_id' ");
@@ -127,7 +127,7 @@ class thesises extends Controller
     function confirmation_request()
     {
         $thesis_id = $this->params[0];
-        update('thesis', array('thesis_person_id'=>$auth->person_id), "thesis_id = '{$thesis_id}'");
+        update('thesis', array('person_id_author'=>$auth->person_id), "thesis_id = '{$thesis_id}'");
         header('Location: ' . BASE_URL. "thesises/view/$thesis_id");
 
     }
@@ -140,6 +140,17 @@ class thesises extends Controller
     {
         insert('thesis_instructor', $_GET);
         exit('Ok');
+    }
+
+    function add_post()
+    {
+        $data = $_POST['thesis'];
+        $data['person_id_author'] = NULL;
+        $data['instructor_id'] = $_POST['instructor_select'];
+        $data['thesis_idea'] = $_POST['thesis_idea'];
+        $data['person_id_instructor'] = empty($data['selected_person_id_instructor']) ? 1 : $data['selected_person_id_instructor'];
+        $thesis_id = insert('thesis', $data);
+        header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
     }
 
     function delete_ajax()

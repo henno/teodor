@@ -6,13 +6,7 @@
     <dt>Lõputöö tellija:</dt>
     <dd><?= $thesis['thesis_client_info'] ?></dd>
     <dt>Lõputöö autor:</dt>
-    <dd>
-        <select multiple style="width: 300px">
-            <? foreach ($thesis['thesis_authors'] as $author): ?>
-                <option value=""><?= $author['person_name'] ?></option>
-            <? endforeach ?>
-        </select>
-    </dd>
+    <dd><?= $thesis['author_name'] ?></dd>
     <dt>Juhendaja:</dt>
     <dd><?= $thesis['instructor_name'] ?></dd>
 
