@@ -146,6 +146,19 @@ class Application
             $this->action = 'view';
         }
 
+        // Translate controller name from Estonian to English
+        $translations['controllers'] = array(
+            'tunniplaan' => 'timetable',
+            'ained' => 'subjects',
+            'grupid' => 'groups'
+
+        );
+        $translations['actions'] = array(
+            'add' => 'lisa'
+        );
+        if(isset($translations['controllers'][$this->controller]))
+            $this->controller = $translations['controllers'][$this->controller];
+
         if ($this->controller == 'thesises' && $this->action == 'manage') {
             $this->controller = 'thesises_manage';
             $this->action = empty($this->params[0]) ? 'index' : $this->params[0];
