@@ -5,13 +5,12 @@
  * Date: 13.10.14
  * Time: 10:23
  */
-class journal_teacher extends Controller
+class subjects extends Controller
 {
     function index()
     {
         $my_id = $this->auth->person_id;
-        $this->period_id = empty($_GET["period_id"])? $this->get_current_period_id() : $_GET["period_id"];
-        $time_window = "period_id = $this->period_id";
+
         $sql = "SELECT *
                 FROM period_courses
                   natural join `year`
@@ -19,7 +18,7 @@ class journal_teacher extends Controller
                   natural join subject
                   natural join period
                   natural join `group`
-                WHERE course.person_id = $my_id AND $time_window";
+                WHERE course.person_id = $my_id";
         $this->period_courses = get_all($sql);
         $this->periods = get_all("SELECT * FROM period");
     }

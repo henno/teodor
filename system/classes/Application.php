@@ -146,14 +146,6 @@ class Application
             $this->action = 'view';
         }
 
-        if ($this->controller == 'journal' && $this->action == 'teacher') {
-            $this->controller = 'journal_teacher';
-            $this->action = empty($this->params[0]) ? 'index' : $this->params[0];
-        }
-        if ($this->controller == 'journal' && $this->action == 'student') {
-            $this->controller = 'journal_student';
-            $this->action = empty($this->params[0]) ? 'index' : $this->params[0];
-        }
         if ($this->controller == 'thesises' && $this->action == 'manage') {
             $this->controller = 'thesises_manage';
             $this->action = empty($this->params[0]) ? 'index' : $this->params[0];
