@@ -11,7 +11,7 @@
 	<title><?=PROJECT_NAME?></title>
 
 	<!-- Bootstrap core CSS -->
-	<link href="assets/components/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/components/bootstrap/3.3.4-spacelab/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
 	<style>
@@ -37,7 +37,7 @@
 	<![endif]-->
     <script src="assets/components/jquery/1.10.2/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" language="javascript" src="assets/js/picnet.table.filter.min.js"></script>
-    <script src="assets/components/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="assets/components/bootstrap/3.3.4-spacelab/js/bootstrap.min.js"></script>
     <!--select 2 -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/js/select2.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/css/select2.min.css" rel="stylesheet" />
