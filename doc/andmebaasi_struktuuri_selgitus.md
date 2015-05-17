@@ -8,7 +8,7 @@ person_id
 person:
 person_id
 person_phone
-person_name
+person_lastname
 
 teacher_subjects
 person_id
@@ -47,7 +47,7 @@ test_started_at timestamp DEFAULT CURRENT_TIMESTAMP
 test_ended_at
 
 -- Kes milliseid teste on teinud:
-SELECT person_name, test_name COUNT(*)
+SELECT person_lastname, test_name COUNT(*)
 FROM test_participants
   NATURAL JOIN person
   NATURAL JOIN test

@@ -67,7 +67,7 @@ class tests extends Controller
         if (isset($_POST['test'])) {
             $test = $_POST['test'];
             unset($test['person_id']);
-            unset($test['person_name']);
+            unset($test['person_lastname']);
             update('test', $test, "test_id = {$test_id}");
             header('Location: ' . BASE_URL . 'tests/' . $test_id);
 

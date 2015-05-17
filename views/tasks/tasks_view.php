@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th><? __('Looja') ?></th>
-                <td><?= $task['person_name'] ?></td>
+                <td><?= $task['person_lastname'] ?></td>
             </tr>
         </table>
     </div>
@@ -80,7 +80,7 @@ foreach ($comments as $comment): $n++ ?>
         </a>
 
         <div class="media-body">
-            <h4 class="media-heading"><?= $comment['person_name'] ?>
+            <h4 class="media-heading"><?= $comment['person_lastname'] ?>
                 <small><?= $comment['task_comment_date_created'] ?></small>
             </h4>
             <?= $comment['task_comment_text'] ?> <br/> <a href="#" class="label label-danger" data-toggle="modal" data-target="#myModal"><? __('Vasta') ?></a>
@@ -92,7 +92,7 @@ foreach ($comments as $comment): $n++ ?>
                         </a>
 
                         <div class="media-body">
-                            <h4 class="media-heading"><?= $comment_reply['person_name'] ?>
+                            <h4 class="media-heading"><?= $comment_reply['person_lastname'] ?>
                                 <small><?= $comment_reply['task_comment_date_created'] ?></small>
                             </h4>
                             <?= $comment_reply['task_comment_text'] ?> <br/> <a href="#" class="label label-danger"  data-toggle="modal" data-target="#myModal"><? __('Vasta') ?></a>

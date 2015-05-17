@@ -225,7 +225,7 @@ INSERT INTO `period_courses` (`period_id`, `course_id`, `planned_lessons`) VALUE
 DROP TABLE IF EXISTS `person`;
 CREATE TABLE IF NOT EXISTS `person` (
   `person_id` int(10) unsigned NOT NULL,
-  `person_name` varchar(70) NOT NULL,
+  `person_lastname` varchar(70) NOT NULL,
   `username` varchar(25) NOT NULL,
   `is_admin` tinyint(4) NOT NULL DEFAULT '0',
   `password` varchar(255) NOT NULL,
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `person` (
 -- Dumping data for table `person`
 --
 
-INSERT INTO `person` (`person_id`, `person_name`, `username`, `is_admin`, `password`, `active`, `email`, `deleted`, `department_id`, `person_first_visit`, `person_last_visit`, `person_SID`) VALUES
+INSERT INTO `person` (`person_id`, `person_lastname`, `username`, `is_admin`, `password`, `active`, `email`, `deleted`, `department_id`, `person_first_visit`, `person_last_visit`, `person_SID`) VALUES
   (1, 'Sammal Habe', 'sammal.habe', 1, 'sammal', 0, '', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', ''),
   (2, 'King Pool', 'king.pool', 1, 'king', 0, '', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', ''),
   (3, 'Muh V', 'muh.v', 0, 'muh', 0, '', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', ''),

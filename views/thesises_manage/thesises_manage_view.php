@@ -24,7 +24,7 @@
                         <td><input class="selection" name="admins[]" value="<?= $admin['person_id'] ?>"
                                    type="checkbox"/></td>
                         <td><?= $n ?>.</td>
-                        <td><?= $admin['person_name'] ?></td>
+                        <td><?= $admin['person_lastname'] ?></td>
                         <td><span style="cursor:pointer" class="glyphicon glyphicon-remove"></span></td>
                     </tr>
                 <? endforeach ?>
@@ -38,7 +38,7 @@
         <select id="person_id" name="person[person_id]" class="chosen-select">
             <? foreach ($persons as $person): ?>
                 <option
-                    value="<?= $person['person_id'] ?>" <?= $person['person_name'] == $person['person_name'] ? 'selected="selected"' : '' ?>><?= $person['person_name'] ?></option>
+                    value="<?= $person['person_id'] ?>" <?= $person['person_lastname'] == $person['person_lastname'] ? 'selected="selected"' : '' ?>><?= $person['person_lastname'] ?></option>
             <? endforeach ?>
         </select><input class="btn btn-default" onclick="add_admin()" type="button" value="Lisa">
     </div>

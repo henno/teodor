@@ -35,8 +35,8 @@
         <label class="col-sm-5 control-label" for="person_id">Testi looja</label>
 
         <div class="col-sm-7">
-            <input type="text" class="form-control" name="test[person_name]" id="person_id" placeholder="Keemia"
-                   value="<?= $test['person_name'] ?>"> <input type="hidden" class="form-control"
+            <input type="text" class="form-control" name="test[person_lastname]" id="person_id" placeholder="Keemia"
+                   value="<?= $test['person_lastname'] ?>"> <input type="hidden" class="form-control"
                                                                name="test[person_id]" id="person_id"
                                                                value="<?= $test['person_id'] ?>">
         </div>

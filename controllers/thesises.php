@@ -27,7 +27,7 @@ class thesises extends Controller
     {
         $thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *,
-                                   author.person_name as author_name,
+                                   author.person_lastname as author_name,
                                    instructor.instructor_name as instructor_name
                                    FROM thesis
                                   LEFT JOIN thesis_instructor instructor ON thesis.instructor_id = instructor.instructor_id
@@ -109,7 +109,7 @@ class thesises extends Controller
     {
         $this->thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *,
-                                   author.person_name as author_name
+                                   author.person_lastname as author_name
                                    FROM thesis
                                    JOIN person as author ON thesis.person_id_author = author.person_id
                                    WHERE thesis_id = '$this->thesis_id' ");

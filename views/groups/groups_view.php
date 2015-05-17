@@ -2,7 +2,7 @@
 <table class="table table-bordered">
     <tr>
         <th><?__('Kursusevanem')?></th>
-        <td><input name="data[group_representative]" type="text"/></td>
+        <td><input name="data[group_representative]" type="text" value="<?=$group['person_lastname']?>"/></td>
     </tr>
     <tr>
         <th><?__('Kursusejuhataja')?></th>
@@ -39,7 +39,7 @@
     </tr>
     <? foreach($members as $member): ?>
     <tr>
-        <td><?=$member['person_name'] ?></td>
+        <td><?=$member['person_lastname'] ?></td>
         <td><?=$member['person_image'] ?></td>
     </tr>
     <? endforeach ?>
