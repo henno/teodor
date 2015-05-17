@@ -5,15 +5,26 @@ class groups extends Controller
 
     function index()
     {
-        $this->groups = get_all("SELECT * FROM `group` g
-                                 JOIN person p ON p.person_id = g.person_id_representative");
+        $this->groups = get_all("SELECT *
+                                 FROM `group` g
+                                   JOIN person p ON p.person_id = g.person_id_representative");
     }
 
     function view()
     {
         $group_id = $this->params[0];
-        $this->group = get_first("SELECT * FROM `group` WHERE group_id = '{$group_id}'");
-        $this->members = get_all("SELECT * FROM `group_persons` NATURAL JOIN person WHERE group_id = '{$group_id}'");
+
+        $this->group = get_first("SELECT *
+                                  FROM `group` g
+                                    JOIN person p ON p.person_id = g.person_id_representative
+                                  WHERE group_id = '{$group_id}'");
+
+        $this->members = get_all("SELECT
+                                    person_id,
+                                    concat(person_firstname,' ',person_lastname) person_name
+                                  FROM `group_persons`
+                                    NATURAL JOIN person
+                                  WHERE group_id = '{$group_id}'");
     }
 
     function edit()

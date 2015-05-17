@@ -2,7 +2,16 @@
 <table class="table table-bordered">
     <tr>
         <th><?__('Kursusevanem')?></th>
-        <td><input name="data[group_representative]" type="text" value="<?=$group['person_lastname']?>"/></td>
+        <td>
+
+            <select id="person_id_representative" name="data[group_representative]" class="chosen-select">
+                <option value="NULL"></option>
+                <? foreach ($members as $person): ?>
+                    <option
+                        value="<?= $person['person_id'] ?>" <?= $person['person_id'] === $group['person_id_representative'] ? 'selected="selected"' : '' ?>><?= $person['person_name'] ?></option>
+                <? endforeach ?>
+            </select>
+
     </tr>
     <tr>
         <th><?__('Kursusejuhataja')?></th>
@@ -44,3 +53,10 @@
     </tr>
     <? endforeach ?>
 </table>
+
+<!-- JS -->
+<script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
+<script>
+    // Initialize dropdown for adding new admins
+    $(".chosen-select").chosen();
+</script>
