@@ -1,4 +1,4 @@
-<h3><? __('Ained') ?></h3>
+<h1><? __('Ained') ?></h1>
 
 
 <ul class="nav nav-pills">
@@ -46,7 +46,7 @@
 
 <!-- TEACHER -->
 
-<h3><? __('Õpetaja päevik') ?></h3>
+<h1><? __('Õpetaja päevik') ?></h1>
 
 <br>
 <select id="period_id" name="period[period_id]" class="chosen-select">

@@ -1,4 +1,4 @@
-<h3><?__('Grupid')?></h3>
+<h1><?__('Grupid')?></h1>
 
 <ul class="nav nav-pills">
     <li role="presentation" class="active"><a href="groups?period=current">Jooksev periood</a></li>

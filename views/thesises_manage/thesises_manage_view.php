@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="col-md-9 col-sm-6">
-        <h1><?= $selected_department['department_name'] ?></h1>
+        <h3><?= $selected_department['department_name'] ?></h3>
         <form class="selection" action="thesises" method="post">
             <table id="tblAdmins" class="table table-bordered">
                 <tr>

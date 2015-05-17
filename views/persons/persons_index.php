@@ -1,4 +1,4 @@
-<h3>Persons</h3>
+<h1>Persons</h1>
 <ul class="list-group">
     <? foreach ($persons as $person): ?>
         <li class="list-group-item"><a

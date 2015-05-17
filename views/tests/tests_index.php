@@ -1,4 +1,4 @@
-<h3><? __('Testid') ?></h3>
+<h1><? __('Testid') ?></h1>
 
 <?php if ($auth->is_admin): ?>
 

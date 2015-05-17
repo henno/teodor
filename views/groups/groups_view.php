@@ -31,7 +31,7 @@
     </form>
 <? endif; ?>
 
-<h1><?__('Liikmed')?></h1>
+<h3><?__('Liikmed')?></h3>
 <table class="table table-bordered">
     <tr>
         <th><?__('Nimi')?></th>
