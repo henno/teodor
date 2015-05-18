@@ -35,11 +35,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <? foreach ($thesises as $thesis): ?>
+                <? foreach ($thesis_ideas as $thesis_idea): ?>
                     <tr>
-                        <td><?= $thesis['thesis_id'] ?></td>
-                        <td><?= $thesis['thesis_title'] ?>  </td>
-                        <td><a href="thesises/view/<?= $thesis['thesis_id'] ?>/<?= $thesis['thesis_title'] ?>"
+                        <td><?= $thesis_idea['thesis_id'] ?></td>
+                        <td><?= $thesis_idea['thesis_title'] ?>  </td>
+                        <td><a href="thesises/view/<?= $thesis_idea['thesis_id'] ?>/<?= $thesis_idea['thesis_title'] ?>"
                                class="btn btn-default" role="button">Vaatan lähemalt</a></td>
                     </tr>
                 <? endforeach ?>
@@ -88,12 +88,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <? foreach ($thesises as $thesis): ?>
+                <? foreach ($confirmed_thesises as $confirmed_thesis): ?>
                     <tr>
-                        <td><?= $thesis['thesis_id'] ?></td>
-                        <td><?= $thesis['thesis_title'] ?>  </td>
-                        <td><?= $thesis['thesis_title_confirmed_at'] ?></td>
-                        <td><a href="thesises/view/<?= $thesis['thesis_id'] ?>/<?= $thesis['thesis_title'] ?>"
+                        <td><?= $confirmed_thesis['thesis_id'] ?></td>
+                        <td><?= $confirmed_thesis['thesis_title'] ?>  </td>
+                        <td><?= $confirmed_thesis['thesis_title_confirmed_at'] ?></td>
+                        <td><a href="thesises/view/<?= $confirmed_thesis['thesis_id'] ?>/<?= $confirmed_thesis['thesis_title'] ?>"
                                class="btn btn-default" role="button">Vaatan lähemalt</a></td>
                     </tr>
                 <? endforeach ?>
@@ -122,13 +122,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <? foreach ($thesises as $thesis): ?>
+                <? foreach ($archived_thesises as $archived_thesis): ?>
                     <tr>
-                        <td><?= $thesis['thesis_id'] ?></td>
-                        <td><?= $thesis['thesis_title'] ?> </td>
+                        <td><?= $archived_thesis['thesis_id'] ?></td>
+                        <td><?= $archived_thesis['thesis_title'] ?> </td>
                         <td>eriala </td>
-                        <td><?= $thesis['department_name'] ?> </td>
-                        <td><a href="thesises/view/<?= $thesis['thesis_id'] ?>/<?= $thesis['thesis_title'] ?>"
+                        <td><?= $archived_thesis['department_name'] ?> </td>
+                        <td><a href="thesises/view/<?= $archived_thesis['thesis_id'] ?>/<?= $archived_thesis['thesis_title'] ?>"
                                class="btn btn-default" role="button">Vaatan lähemalt</a></td>
                     </tr>
                 <? endforeach ?>

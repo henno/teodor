@@ -7,9 +7,12 @@ class thesises extends Controller
     {
 
         $where = isset($_GET['query']) ? "where thesis_title LIKE '%{$_GET['query']}%'" : null;
-        $sql = "SELECT *, department.department_name FROM `thesis` LEFT JOIN department ON thesis.department_id=department.department_id $where";
+        $sql = "SELECT * FROM `thesis` LEFT JOIN department ON thesis.department_id=department.department_id WHERE thesis_idea!=1 AND thesis_title_confirmed_at IS NULL";
         $this->thesises = get_all($sql);
         $this->instructors = get_all("SELECT * FROM `person`");
+        $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE thesis_idea=1");
+        $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL");
+        $this->archived_thesises = get_all("SELECT *, department.department_name FROM `thesis`LEFT JOIN department ON thesis.department_id=department.department_id WHERE thesis_defended_at IS NOT NULL");
         $this->query = isset($_GET['query']) ? $_GET['query'] : null;
 
     }
