@@ -7,11 +7,11 @@ class thesises extends Controller
     {
 
         $where = isset($_GET['query']) ? "where thesis_title LIKE '%{$_GET['query']}%'" : null;
-        $sql = "SELECT * FROM `thesis` LEFT JOIN department ON thesis.department_id=department.department_id WHERE thesis_idea!=1 AND thesis_title_confirmed_at IS NULL";
+        $sql = "SELECT * FROM `thesis` LEFT JOIN department ON thesis.department_id=department.department_id WHERE person_id_author IS NOT NULL AND thesis_title_confirmed_at IS NULL";
         $this->thesises = get_all($sql);
         $this->instructors = get_all("SELECT * FROM `person`");
-        $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE thesis_idea=1");
-        $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL");
+        $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE person_id_author IS NULL AND thesis_idea=1");
+        $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL");
         $this->archived_thesises = get_all("SELECT *, department.department_name FROM `thesis`LEFT JOIN department ON thesis.department_id=department.department_id WHERE thesis_defended_at IS NOT NULL");
         $this->query = isset($_GET['query']) ? $_GET['query'] : null;
 
@@ -130,10 +130,19 @@ class thesises extends Controller
     function confirmation_request()
     {
         $thesis_id = $this->params[0];
-        update('thesis', array('person_id_author'=>$auth->person_id), "thesis_id = '{$thesis_id}'");
+        update('thesis', array('person_id_author'=>$this->auth->person_id), "thesis_id = '{$thesis_id}'");
         header('Location: ' . BASE_URL. "thesises/view/$thesis_id");
 
     }
+
+    function confirm()
+    {
+        $thesis_id = $this->params[0];
+        update('thesis', array('thesis_title_confirmed_at'=>date('Y-m-d')), "thesis_id = '{$thesis_id}'");
+        header('Location: ' . BASE_URL. "thesises/view/$thesis_id");
+
+    }
+
 
     function add()
     {$this->instructors = get_all("SELECT * FROM thesis_instructor");

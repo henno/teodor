@@ -32,12 +32,13 @@
         </form>
     <? endif; ?>
 <? else: ?>
+    <div class="pull-right">
+        <button class="btn btn-primary">
+            Soovin liituda
+        </button>
+    </div>
     <form action="thesises/confirmation_request/<?= $thesis['thesis_id'] ?>">
-        <div class="pull-right">
-            <button class="btn btn-primary">
-                Soovin liituda
-            </button>
-        </div>
+
         <div class="pull-right">
             <button class="btn btn-primary">
                 Soovin teostada
@@ -45,6 +46,15 @@
         </div>
     </form>
 <? endif; ?>
+<!-- kinnitamisfunkstiooni testimiseks -->
+<form action="thesises/confirm/<?= $thesis['thesis_id'] ?>">
+    <div class="pull-right">
+        <button class="btn btn-primary">
+            Kinnita
+        </button>
+    </div>
+</form>
+
 <div class="row upload_files">
     <div class="col-md-6">
         <span class="lead">Laadi üles:</span>
@@ -53,13 +63,11 @@
             <div class="btn-group btn-group-lg">
                 <button type="button" class="btn btn-default" id="thesis-draft">Eelkaitsmine</button>
                 <button type="button" class="btn btn-default" id="thesis-final">Lõputöö</button>
-                <button type="button" class="btn btn-default" id="thesis_file_upload">Lisamaterjalid</button>
             </div>
         </div>
         <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
             <input type="file" name="draft_upload" id="draft_upload" class="file-upload"/>
         </form>
-
 
         <script>
             $('#thesis-draft').click(function (event) {
