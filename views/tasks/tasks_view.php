@@ -27,9 +27,11 @@
     </div>
     <div class="col-sm-7 col-md-9">
         <p><?= $task['task_text'] ?></p>
-        <button class="btn btn-primary">
-            <? __('Loo virtuaalmasin') ?>
-        </button>
+        <? if ($task['uses_virtual_machines']&& !$task['virtual_machine_id']): ?>
+            <button class="btn btn-primary">
+                <? __('Loo virtuaalmasin') ?>
+            </button>
+        <? endif ?>
     </div>
 </div>
 

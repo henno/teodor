@@ -51,9 +51,21 @@ class tasks extends Controller
     {
         $comments = array();
         $task_id = $this->params[0];
-        $this->task = get_first("SELECT * FROM task
+
+        $this->task = get_first("SELECT
+                                    `task_name`,
+                                    `task_text`,
+                                    `task_due`,
+                                    `task_time_required`,
+                                    `task_date_added`,
+                                    `person_lastname`,
+                                    `uses_virtual_machines`,
+                                    `virtual_machine_id`
+                                 FROM task
                                  NATURAL JOIN task_status
                                  NATURAL JOIN person
+                                 LEFT JOIN person_tasks_statuses s ON s.task_id=task.task_id AND s.person_id = {$this->auth->person_id}
+                                 LEFT JOIN virtual_machine v ON v.task_id=task.task_id AND v.person_id = {$this->auth->person_id}
                                  WHERE task.task_id={$task_id}");
         $comments_raw = get_all("SELECT * FROM task_comment
                                  NATURAL JOIN person
