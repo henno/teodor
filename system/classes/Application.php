@@ -153,7 +153,8 @@ class Application
             'kontrolltööd' => 'tests',
             'lõputööd' => 'thesises',
             'tunniplaan' => 'timetable',
-            'ülesanded' => 'tasks'
+            'ülesanded' => 'tasks',
+            'õppekavad' => 'curricula'
 
         );
         $translations['actions'] = array(
