@@ -9,7 +9,7 @@ class thesises extends Controller
         $where = isset($_GET['query']) ? "where thesis_title LIKE '%{$_GET['query']}%'" : null;
         $sql = "SELECT * FROM `thesis` LEFT JOIN department ON thesis.department_id=department.department_id WHERE person_id_author IS NOT NULL AND thesis_title_confirmed_at IS NULL";
         $this->thesises = get_all($sql);
-        $this->instructors = get_all("SELECT * FROM `person`");
+        $this->instructors = get_all("SELECT * FROM thesis_instructor");
         $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE person_id_author IS NULL AND thesis_idea=1");
         $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL");
         $this->archived_thesises = get_all("SELECT *, department.department_name FROM `thesis`LEFT JOIN department ON thesis.department_id=department.department_id WHERE thesis_defended_at IS NOT NULL");
@@ -38,6 +38,7 @@ class thesises extends Controller
                                    WHERE thesis_id = '$thesis_id' ");
         $this->files = get_all("SELECT * FROM thesis_file WHERE thesis_id = '$thesis_id' ");
         $this->thesis ['thesis_authors'] = get_all("SELECT * FROM thesis_authors NATURAL JOIN person");
+        $this->instructors = get_all("SELECT * FROM thesis_instructor");
     }
 
     function view_upload()
@@ -130,15 +131,27 @@ class thesises extends Controller
     function confirmation_request()
     {
         $thesis_id = $this->params[0];
-        update('thesis', array('person_id_author'=>$this->auth->person_id), "thesis_id = '{$thesis_id}'");
+        $instructor_id = $_POST['instructor_select'];
+        var_dump($instructor_id);
+        update('thesis', array('person_id_author'=>$this->auth->person_id, 'instructor_id'=>$instructor_id), "thesis_id = '{$thesis_id}'");
         header('Location: ' . BASE_URL. "thesises/view/$thesis_id");
 
     }
 
+
+
     function confirm()
     {
         $thesis_id = $this->params[0];
-        update('thesis', array('thesis_title_confirmed_at'=>date('Y-m-d')), "thesis_id = '{$thesis_id}'");
+        update('thesis', array('thesis_title_confirmed_at'=>date('Y-m-d'), 'thesis_idea'=>'1'), "thesis_id = '{$thesis_id}'");
+        header('Location: ' . BASE_URL. "thesises/view/$thesis_id");
+
+    }
+
+    function defended()
+    {
+        $thesis_id = $this->params[0];
+        update('thesis', array('thesis_defended_at'=>date('Y-m-d')), "thesis_id = '{$thesis_id}'");
         header('Location: ' . BASE_URL. "thesises/view/$thesis_id");
 
     }
@@ -156,13 +169,22 @@ class thesises extends Controller
 
     function add_post()
     {
-        $data = $_POST['thesis'];
-        $data['person_id_author'] = NULL;
-        $data['instructor_id'] = $_POST['instructor_select'];
-        $data['thesis_idea'] = $_POST['thesis_idea'];
-        $data['person_id_instructor'] = empty($data['selected_person_id_instructor']) ? 1 : $data['selected_person_id_instructor'];
-        $thesis_id = insert('thesis', $data);
-        header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
+            $data = $_POST['thesis'];
+            $person_id_author = $this->auth->person_id;
+            $data['person_id_author'] = $person_id_author;
+            $data['instructor_id'] = $_POST['instructor_select'];
+            $data['thesis_idea'] = $_POST['thesis_idea'];
+            $thesis_id = insert('thesis', $data);
+            header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
+    }
+    function suggested_thesis()
+    {
+            $data = $_POST['thesis'];
+            $data['person_id_author'] = NULL;
+            $data['instructor_id'] = NULL;
+            $data['thesis_idea'] = 1;
+            $thesis_id = insert('thesis', $data);
+            header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
     }
 
     function delete_ajax()

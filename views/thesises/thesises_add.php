@@ -1,49 +1,53 @@
 <h1><? __('Lõputöö sisestamine') ?></h1>
+
 <form role="form" class="form-horizontal" method="post">
-    <div class="form-group form-group-lg">
-        <label class="col-sm-2 control-label" for="formGroupInputLarge">Sisesta lõputöö pealkiri</label>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="inputdefault">Sisesta lõputöö pealkiri</label>
 
         <div class="col-sm-10">
-            <input class="form-control" type="text" id="formGroupInputLarge" name="thesis[thesis_title]"
+            <input class="form-control" type="text" id="inputdefault title" name="thesis[thesis_title]"
                    placeholder="Sisesta lõputöö pealkiri">
         </div>
     </div>
+
+    <div class="form-group">
     <div class="col-sm-10 col-sm-offset-2">
-        <textarea class="form-control" rows="5" placeholder="Valitud teema lühikirjeldus"
+        <textarea class="form-control" rows="5" id="description" placeholder="Valitud teema lühikirjeldus"
                   name="thesis[thesis_description]"></textarea>
     </div>
-    <label class="col-sm-2 control-label" for="formGroupInputLarge">Tellija</label>
+    </div>
+    <div class="form-group">
+
+        <label class="col-sm-2 control-label" for="inputdefault">Tellija</label>
 
     <div class="col-sm-10">
-        <input class="form-control" type="text" id="formGroupInputLarge" placeholder="Tellija nimi"
+        <input class="form-control" type="text" id="inputdefault client" placeholder="Tellija nimi"
                name="thesis[thesis_client_info]">
     </div>
-
-    <label class="col-sm-2 control-label" for="formGroupInputLarge">Juhendaja ja ettevõte</label>
+    </div>
+    <label class="col-sm-2 control-label" for="inputdefault">Juhendaja ja ettevõte</label>
 
     <div class="col-sm-10">
         <select id="instructor_id" name="instructor_select" class="chosen-select">
             <? foreach ($instructors as $instructor): ?>
                 <option
-                    value="<?= $instructor['instructor_id'] ?>" <?= $instructor['instructor_name'] == $instructor['instructor_name'] ? 'selected="selected"' : '' ?>><?= $instructor['instructor_name']. " (" . $instructor['instructor_company'] . ")" ?></option>
+                    value="<?= $instructor['instructor_id'] ?>" <?= $instructor['instructor_name'] == $instructor['instructor_name'] ? 'selected="selected"' : '' ?>><?= $instructor['instructor_name'] . " (" . $instructor['instructor_company'] . ")" ?></option>
             <? endforeach ?>
-        </select> <span class="glyphicon glyphicon-plus" style="cursor:pointer" data-toggle="modal"
-                        data-target="#myModal"></span>
+        </select>  <span class="glyphicon glyphicon-plus" style="cursor:pointer" data-toggle="modal"
+                        data-target="#myModal"></span> Lisa juhendaja, kui teda rippmenüüst ei leidnud!
     </div>
 
-    <label class="col-sm-2 control-label" for="formGroupInputLarge">Lõputöö idee:</label>
 
-    <div class="col-sm-10">
-        <input class=" pull-left" name="thesis_idea" type="checkbox" value="1"/>
-    </div>
+
 
     <div class="pull-right">
-        <button class="btn btn-primary" id="thesis_title">Salvesta
+        <button class="btn btn-primary" formaction="thesises/add_post/" value="student_thesis" id="thesis_insert">Esita
         </button>
-        <button class="btn btn-primary">Saada
+        <button class="btn btn-primary" formaction="thesises/suggested_thesis/" value="thesis_idea" id="thesis_idea">Salvesta
         </button>
     </div>
 </form>
+
 
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -61,7 +65,8 @@
                         <label class="col-sm-2 control-label" for="formGroupInputLarge">Juhendaja nimi:</label>
 
                         <div class="col-sm-10">
-                            <input class="instructor_name form-control" name="instructor_name" type="text" id="formGroupInputLarge" placeholder="nimi">
+                            <input class="instructor_name form-control" name="instructor_name" type="text"
+                                   id="formGroupInputLarge" placeholder="nimi">
                         </div>
 
                     </div>
@@ -69,7 +74,8 @@
                         <label class="col-sm-2 control-label" for="formGroupInputLarge">Ettevõte:</label>
 
                         <div class="col-sm-10">
-                            <input class="instructor_company form-control" name="instructor_company" type="text" id="formGroupInputLarge" placeholder="ettevõte">
+                            <input class="instructor_company form-control" name="instructor_company" type="text"
+                                   id="formGroupInputLarge" placeholder="ettevõte">
                         </div>
 
                     </div>
@@ -78,7 +84,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" id="cancel" data-dismiss="modal">Sulge</button>
-                <button type="submit" class="btn btn-primary" onclick="add_instructor()" id="savecomment">Sisesta</button>
+                <button type="submit" class="btn btn-primary" onclick="add_instructor()" id="savecomment">Sisesta
+                </button>
             </div>
         </div>
     </div>
@@ -111,6 +118,7 @@
                 alert('Fail');
                 console.log(data);
             }
-        }); }
+        });
+    }
 
 </script>
