@@ -9,22 +9,34 @@
     <dd><?= $thesis['author_name'] ?></dd>
     <dt>Juhendaja:</dt>
     <dd><?= $thesis['instructor_name'] ?></dd>
+    <dt>Staatus:</dt>
+    <dd><?php
 
+        if ($thesis['thesis_title_confirmed_at'] != NULL) {
+            echo "Kinnitatud";
+        } elseif ($thesis['thesis_defended_at'] != NULL) {
+            echo "Kaitstud";
+        } elseif ($thesis['person_id_author'] != NULL && $thesis['instructor_id'] != NULL) {
+            echo "Kinnitamisel";
+        } else {
+            echo "Lõputöö pakkumine";
+        }
+        ?> </dd>
 </dl>
 
-
+<? if ($thesis['thesis_title_confirmed_at'] == NULL && $thesis['person_id_author'] == NULL): ?>
     <h3>Vali juhendaja:</h3>
-<form role="form" class="form-horizontal" method="post" action="thesises/confirmation_request/<?= $thesis['thesis_id'] ?>">
-    <div class="col-sm-12">
-        <select id="instructor_id" name="instructor_select" class="chosen-select">
-            <? foreach ($instructors as $instructor): ?>
-                <option
-                    value="<?= $instructor['instructor_id'] ?>" <?= $instructor['instructor_name'] == $instructor['instructor_name'] ? 'selected="selected"' : '' ?>><?= $instructor['instructor_name']. " (" . $instructor['instructor_company'] . ")" ?></option>
-            <? endforeach ?>
-        </select> <span class="glyphicon glyphicon-plus" style="cursor:pointer" data-toggle="modal"
-                        data-target="#myModal"></span> Lisa juhendaja, kui teda rippmenüüst ei leidnud!
-    </div>
-
+    <form role="form" class="form-horizontal" method="post"
+          action="thesises/confirmation_request/<?= $thesis['thesis_id'] ?>">
+        <div class="col-sm-12">
+            <select id="instructor_id" name="instructor_select" class="chosen-select">
+                <? foreach ($instructors as $instructor): ?>
+                    <option
+                        value="<?= $instructor['instructor_id'] ?>" <?= $instructor['instructor_name'] == $instructor['instructor_name'] ? 'selected="selected"' : '' ?>><?= $instructor['instructor_name'] . " (" . $instructor['instructor_company'] . ")" ?></option>
+                <? endforeach ?>
+            </select> <span class="glyphicon glyphicon-plus" style="cursor:pointer" data-toggle="modal"
+                            data-target="#myModal"></span> Lisa juhendaja, kui teda rippmenüüst ei leidnud!
+        </div>
 
         <div class="pull-right">
             <button class="btn btn-primary">
@@ -32,8 +44,9 @@
             </button>
         </div>
     </form>
+<? endif; ?>
 
-
+<? if ($auth->is_admin && $thesis['thesis_title_confirmed_at'] != NULL): ?>
 <form action="thesises/defended/<?= $thesis['thesis_id'] ?>">
     <div class="pull-right">
         <button class="btn btn-primary">
@@ -50,7 +63,8 @@
             </button>
         </div>
     </form>
-    <? if (!$thesis['thesis_title_confirmed_at']): ?>
+    <? endif; ?>
+    <? if ($auth->is_admin && $thesis['thesis_title_confirmed_at'] != NULL): ?>
         <form action="thesises/confirm/<?= $thesis['thesis_id'] ?>">
             <div class="pull-right">
                 <button class="btn btn-primary">
@@ -59,95 +73,81 @@
             </div>
         </form>
     <? endif; ?>
-    <form action="thesises/defended/<?= $thesis['thesis_id'] ?>">
-        <div class="pull-right">
-            <button class="btn btn-primary">
-                Kaitstud
-            </button>
-        </div>
-    </form>
 <? else: ?>
 
+<? endif; ?>
+
+
+<? if ($thesis['thesis_title_confirmed_at'] != NULL && $thesis['person_id_author']== $this->auth->person_id && $thesis['thesis_defended_at'] == NULL): ?>
+    <div class="row upload_files">
+        <div class="col-md-6">
+            <span class="lead">Laadi üles:</span>
+            <div class=" hnvh">
+                <div class="btn-group btn-group-lg">
+                    <button type="button" class="btn btn-default" id="thesis-draft">Eelkaitsmine</button>
+                    <button type="button" class="btn btn-default" id="thesis-final">Lõputöö</button>
+                </div>
+            </div>
+            <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
+                <input type="file" name="draft_upload" id="draft_upload" class="file-upload"/>
+            </form>
+            <script>
+                $('#thesis-draft').click(function (event) {
+                    $('#draft_upload').click();
+                });
+                //capture selected filename
+                $('#draft_upload').change(function (click) {
+                    //$('#file-name').val(this.value);
+                    $('form#uploadForm').submit();
+                });
+            </script>
+            <form id="uploadForm2" method="post" enctype="multipart/form-data" style=" display: none">
+                <input type="file" name="final_upload" id="final_upload" class="file-upload"/>
+            </form>
+            <script>
+                $('#thesis-final').click(function (event) {
+                    $('#final_upload').click();
+                });
+                //capture selected filename
+                $('#final_upload').change(function (click) {
+//  $('#file-name').val(this.value);
+                    $('form#uploadForm').submit();
+                });
+            </script>
+            <form id="uploadForm3" method="post" enctype="multipart/form-data" style=" display: none">
+                <input type="file" name="thesis_file_upload" id="thesis_file_upload" class="file-upload"/>
+            </form>
+            <script>
+                $('#thesis_files').click(function (event) {
+                    $('#files_upload').click();
+                });
+                //capture selected filename
+                $('#files_upload').change(function (click) {
+//  $('#file-name').val(this.value);
+                    $('form#uploadForm').submit();
+                });
+            </script>
+        </div>
+    </div>
 
 <? endif; ?>
-<!-- kinnitamisfunkstiooni testimiseks -->
-<form action="thesises/confirm/<?= $thesis['thesis_id'] ?>">
-    <div class="pull-right">
-        <button class="btn btn-primary">
-            Kinnita
-        </button>
-    </div>
-</form>
 
-<div class="row upload_files">
-    <div class="col-md-6">
-        <span class="lead">Laadi üles:</span>
 
-        <div class=" hnvh">
-            <div class="btn-group btn-group-lg">
-                <button type="button" class="btn btn-default" id="thesis-draft">Eelkaitsmine</button>
-                <button type="button" class="btn btn-default" id="thesis-final">Lõputöö</button>
-            </div>
-        </div>
-        <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
-            <input type="file" name="draft_upload" id="draft_upload" class="file-upload"/>
-        </form>
-
-        <script>
-            $('#thesis-draft').click(function (event) {
-                $('#draft_upload').click();
-            });
-
-            //capture selected filename
-            $('#draft_upload').change(function (click) {
-                //$('#file-name').val(this.value);
-                $('form#uploadForm').submit();
-            });
-        </script>
-        <form id="uploadForm2" method="post" enctype="multipart/form-data" style=" display: none">
-            <input type="file" name="final_upload" id="final_upload" class="file-upload"/>
-        </form>
-        <script>
-            $('#thesis-final').click(function (event) {
-                $('#final_upload').click();
-            });
-
-            //capture selected filename
-            $('#final_upload').change(function (click) {
-//  $('#file-name').val(this.value);
-                $('form#uploadForm').submit();
-            });
-        </script>
-        <form id="uploadForm3" method="post" enctype="multipart/form-data" style=" display: none">
-            <input type="file" name="thesis_file_upload" id="thesis_file_upload" class="file-upload"/>
-        </form>
-        <script>
-            $('#thesis_files').click(function (event) {
-                $('#files_upload').click();
-            });
-
-            //capture selected filename
-            $('#files_upload').change(function (click) {
-//  $('#file-name').val(this.value);
-                $('form#uploadForm').submit();
-            });
-        </script>
-    </div>
-</div>
-
+<? if ($thesis['thesis_title_confirmed_at'] != NULL && $auth->is_admin ||  $thesis['thesis_title_confirmed_at'] != NULL && $thesis['person_id_author']== $this->auth->person_id || $thesis['thesis_defended_at'] != NULL):?>
 <h2>Üleslaaditud failid</h2>
 <table class="table table-bordered">
-
     <? foreach ($files as $file): ?>
         <tr>
             <td>
                 <a href="<?= BASE_URL ?>thesises/file/<?= $file['thesis_file_id'] ?>"><?= $file['thesis_file_name'] ?></a>
             </td>
              
-            <td><?= $file['thesis_file_size'] ?></td>
+            <td><?= $file['thesis_file_uploaded_at'] ?></td>
         </tr>
     <? endforeach ?>
 </table>
+
+<? endif; ?>
 
 <script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
 <script type="text/javascript">

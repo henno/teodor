@@ -1,5 +1,13 @@
 <div class="row">
     <div class="col-md-12">
+        <form class="form-inline pull-left" role="search" id="searchForm" method="GET">
+            <div class="form-group">
+                <input type="text" class="form-control" name="query" value="<?= $query ?>"/>
+            </div>
+            <input type="submit" class="btn btn-default" value="Otsi">
+            <input type="button" class="reset-search btn btn-default" value="Lähtesta"/>
+        </form>
+
         <button class="btn btn-primary pull-right" onclick="window.location.href = 'thesises/add'">
             Sisesta lõputöö
         </button>
@@ -19,10 +27,13 @@
         <li role="presentation"><a href="#thesises_archive" aria-controls="thesises_archive" role="tab"
                                    data-toggle="tab">Eelnevate
                 aastate lõputööd</a></li>
+        <li role="presentation"><a href="#thesises_doing" aria-controls="thesises_doing" role="tab"
+                                   data-toggle="tab">Minu lõputöö</a></li>
     </ul>
 
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="thesises_index"><? if (empty($thesises)): ?>
+        <div role="tabpanel" class="tab-pane active" id="thesises_index">
+            <? if (empty($thesises)): ?>
                 <div class="alert alert-info"><? __('Hetkel lõputööde andmebaas on tühi.') ?></div>
             <? else: ?>
 
@@ -93,7 +104,8 @@
                         <td><?= $confirmed_thesis['thesis_id'] ?></td>
                         <td><?= $confirmed_thesis['thesis_title'] ?>  </td>
                         <td><?= $confirmed_thesis['thesis_title_confirmed_at'] ?></td>
-                        <td><a href="thesises/view/<?= $confirmed_thesis['thesis_id'] ?>/<?= $confirmed_thesis['thesis_title'] ?>"
+                        <td>
+                            <a href="thesises/view/<?= $confirmed_thesis['thesis_id'] ?>/<?= $confirmed_thesis['thesis_title'] ?>"
                                class="btn btn-default" role="button">Vaatan lähemalt</a></td>
                     </tr>
                 <? endforeach ?>
@@ -103,13 +115,6 @@
 
         </div>
         <div role="tabpanel" class="tab-pane" id="thesises_archive">
-            <form class="form-inline" role="search" id="searchForm" method="GET">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="query" value="<?= $query ?>"/>
-                </div>
-                <input type="submit" class="btn btn-default" value="Otsi">
-                <input type="button" class="reset-search btn btn-default" value="Lähtesta"/>
-            </form>
 
             <table class="table table-bordered" id="table1">
                 <thead>
@@ -126,13 +131,51 @@
                     <tr>
                         <td><?= $archived_thesis['thesis_id'] ?></td>
                         <td><?= $archived_thesis['thesis_title'] ?> </td>
-                        <td>eriala </td>
+                        <td>eriala</td>
                         <td><?= $archived_thesis['department_name'] ?> </td>
-                        <td><a href="thesises/view/<?= $archived_thesis['thesis_id'] ?>/<?= $archived_thesis['thesis_title'] ?>"
+                        <td>
+                            <a href="thesises/view/<?= $archived_thesis['thesis_id'] ?>/<?= $archived_thesis['thesis_title'] ?>"
                                class="btn btn-default" role="button">Vaatan lähemalt</a></td>
                     </tr>
                 <? endforeach ?>
                 </tbody>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="thesises_doing">
+            <? if (empty($thesises)): ?>
+                <div class="alert alert-info"><? __('Hetkel lõputööde andmebaas on tühi.') ?></div>
+            <? else: ?>
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="col-md-1">#</th>
+                    <th class="col-md-9">Teema</th>
+                    <th class="col-md-2">Staatus</th>
+                    <th class="col-md-2">Tegevused</th>
+                </tr>
+                </thead>
+                <tbody>
+                <? foreach ($my_thesises as $my_thesis): ?>
+                    <tr>
+                        <td><?= $my_thesis['thesis_id'] ?></td>
+                        <td><?= $my_thesis['thesis_title'] ?> </td>
+                        <td><?php
+
+                            if ($my_thesis['thesis_title_confirmed_at'] != NULL) {
+                                echo "Kinnitatud";
+                            } elseif ($my_thesis['thesis_defended_at'] != NULL) {
+                                echo "Kaitstud";
+                            } else {
+                                echo "Kinnitamisel";
+                            }
+                            ?> </td>
+                        <td><a href="thesises/view/<?= $my_thesis['thesis_id'] ?>/<?= $my_thesis['thesis_title'] ?>"
+                               class="btn btn-default" role="button">Vaatan lähemalt</a></td>
+                    </tr>
+                <? endforeach ?>
+                <tbody>
+                <? endif ?>
             </table>
         </div>
     </div>
