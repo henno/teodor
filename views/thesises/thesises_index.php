@@ -162,7 +162,7 @@
                         <td><?= $my_thesis['thesis_title'] ?> </td>
                         <td><?php
 
-                            if ($my_thesis['thesis_title_confirmed_at'] != NULL) {
+                            if ($my_thesis['thesis_title_confirmed_at'] != NULL && $my_thesis['thesis_defended_at'] == NULL) {
                                 echo "Kinnitatud";
                             } elseif ($my_thesis['thesis_defended_at'] != NULL) {
                                 echo "Kaitstud";

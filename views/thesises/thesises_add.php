@@ -11,19 +11,19 @@
     </div>
 
     <div class="form-group">
-    <div class="col-sm-10 col-sm-offset-2">
+        <div class="col-sm-10 col-sm-offset-2">
         <textarea class="form-control" rows="5" id="description" placeholder="Valitud teema lühikirjeldus"
                   name="thesis[thesis_description]"></textarea>
-    </div>
+        </div>
     </div>
     <div class="form-group">
 
         <label class="col-sm-2 control-label" for="inputdefault">Tellija</label>
 
-    <div class="col-sm-10">
-        <input class="form-control" type="text" id="inputdefault client" placeholder="Tellija nimi"
-               name="thesis[thesis_client_info]">
-    </div>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" id="inputdefault client" placeholder="Tellija nimi"
+                   name="thesis[thesis_client_info]">
+        </div>
     </div>
     <label class="col-sm-2 control-label" for="inputdefault">Juhendaja ja ettevõte</label>
 
@@ -34,17 +34,20 @@
                     value="<?= $instructor['instructor_id'] ?>" <?= $instructor['instructor_name'] == $instructor['instructor_name'] ? 'selected="selected"' : '' ?>><?= $instructor['instructor_name'] . " (" . $instructor['instructor_company'] . ")" ?></option>
             <? endforeach ?>
         </select>  <span class="glyphicon glyphicon-plus" style="cursor:pointer" data-toggle="modal"
-                        data-target="#myModal"></span> Lisa juhendaja, kui teda rippmenüüst ei leidnud!
+                         data-target="#myModal"></span> Lisa juhendaja, kui teda rippmenüüst ei leidnud!
     </div>
 
 
-
-
     <div class="pull-right">
-        <button class="btn btn-primary" formaction="thesises/add_post/" value="student_thesis" id="thesis_insert">Esita
-        </button>
-        <button class="btn btn-primary" formaction="thesises/suggested_thesis/" value="thesis_idea" id="thesis_idea">Salvesta
-        </button>
+        <? if ($auth->is_admin): ?>
+            <button class="btn btn-primary" formaction="thesises/suggested_thesis/" value="thesis_idea"
+                    id="thesis_idea">Sisesta
+            </button>
+        <? else: ?>
+            <button class="btn btn-primary" formaction="thesises/add_post/" value="student_thesis" id="thesis_insert">
+                Salvesta
+            </button>
+        <? endif; ?>
     </div>
 </form>
 

@@ -12,7 +12,7 @@
     <dt>Staatus:</dt>
     <dd><?php
 
-        if ($thesis['thesis_title_confirmed_at'] != NULL) {
+        if ($thesis['thesis_title_confirmed_at'] != NULL && $thesis['thesis_defended_at'] == NULL) {
             echo "Kinnitatud";
         } elseif ($thesis['thesis_defended_at'] != NULL) {
             echo "Kaitstud";
