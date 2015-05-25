@@ -37,6 +37,24 @@ class Auth
             return TRUE;
         }
 
+        // Authenticate by POST data
+        if (isset($_POST['username'])) {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $person = get_first("SELECT person_id, is_admin FROM person
+                                WHERE username = '$username'
+                                  AND password = '$password'
+                                  AND  deleted = 0");
+            if (! empty($person['person_id'])) {
+                $_SESSION['person_id'] = $person['person_id'];
+                $this->load_user_data($person);
+
+                return true;
+            } else {
+                $errors[] = "Vale kasutajanimi või parool";
+            }
+        }
+
         // Authenticate by cookie
         //var_dump($_COOKIE);
         //die();
