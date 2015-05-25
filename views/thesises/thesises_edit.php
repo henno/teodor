@@ -2,7 +2,7 @@
     <h1><i><textarea name="thesis[thesis_title]"> <?= $thesis['thesis_title'] ?></textarea></i></h1>
     <p><textarea name="thesis[thesis_description]"><?= $thesis['thesis_description'] ?></textarea></p>
     <h4><textarea name="thesis[thesis_client_info]"><?= $thesis['thesis_client_info'] ?></textarea></h4>
-    <h4><textarea name="thesis[person_id_author]" ><?= $thesis['author_name'] ?></textarea></h4>
+    <h4><textarea name="thesis[person_id_author]" ><?= $thesis['author_first_name'] ?></textarea></h4>
     <h4><textarea name="thesis[person_id_instructor]"><?= $thesis['person_id_instructor'] ?></textarea></h4>
 </form>
 
@@ -12,17 +12,17 @@
     <!-- CANCEL -->
     <button class="btn btn-default"
             onclick="window.location.href = 'thesises/view/<?= $thesis['thesis_id'] ?>/<?= $thesis['thesis_title'] ?>'">
-        Cancel
+        Tühista
     </button>
 
     <!-- DELETE -->
     <button class="btn btn-danger" onclick="delete_thesises(<?= $thesis['thesis_id'] ?>)">
-        Delete
+        Kustuta
     </button>
 
     <!-- SAVE -->
-    <button class="btn btn-primary" id="form" onclick="save()">
-        Save
+    <button class="btn btn-primary" id="form" onclick="save()" >
+        Salvesta
     </button>
 
 </div>
@@ -33,4 +33,6 @@
 
         $.post('<?=BASE_URL. "thesises/edit/$params[0]"?>', $("#form").serialize());
     }
+
+
 </script>

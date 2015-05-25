@@ -6,7 +6,7 @@
     <dt>Lõputöö tellija:</dt>
     <dd><?= $thesis['thesis_client_info'] ?></dd>
     <dt>Lõputöö autor:</dt>
-    <dd><?= $thesis['author_name'] ?></dd>
+    <dd><?= $thesis['author_first_name'] . " " . $thesis['author_last_name'] ?></dd>
     <dt>Juhendaja:</dt>
     <dd><?= $thesis['instructor_name'] ?></dd>
     <dt>Staatus:</dt>
@@ -45,7 +45,15 @@
         </div>
     </form>
 <? endif; ?>
-
+<? if ($thesis['person_id_author']!= NULL && $thesis['person_id_author'] != $this->auth->person_id && $thesis['thesis_title_confirmed_at'] == NULL): ?>
+<form action="thesises/join_as_coauthor/<?= $thesis['thesis_id'] ?>">
+    <div class="pull-right">
+        <button class="btn btn-primary">
+            Soovin liituda
+        </button>
+    </div>
+</form>
+<? endif; ?>
 <? if ($auth->is_admin && $thesis['thesis_title_confirmed_at'] != NULL): ?>
 <form action="thesises/defended/<?= $thesis['thesis_id'] ?>">
     <div class="pull-right">
@@ -54,8 +62,8 @@
         </button>
     </div>
 </form>
-
-<? if ($auth->is_admin): ?>
+<? endif; ?>
+<? if ($auth->is_admin && $thesis['thesis_defended_at'] == NULL): ?>
     <form action="thesises/edit/<?= $thesis['thesis_id'] ?>">
         <div class="pull-right">
             <button class="btn btn-primary">
@@ -73,9 +81,6 @@
             </div>
         </form>
     <? endif; ?>
-<? else: ?>
-
-<? endif; ?>
 
 
 <? if ($thesis['thesis_title_confirmed_at'] != NULL && $thesis['person_id_author']== $this->auth->person_id && $thesis['thesis_defended_at'] == NULL): ?>

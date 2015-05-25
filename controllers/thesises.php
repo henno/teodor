@@ -33,14 +33,15 @@ class thesises extends Controller
     {
         $thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *,
-                                   author.person_lastname as author_name,
+                                   author.person_firstname as author_first_name,
+                                   author.person_lastname as author_last_name,
                                    instructor.instructor_name as instructor_name
                                    FROM thesis
                                   LEFT JOIN thesis_instructor instructor ON thesis.instructor_id = instructor.instructor_id
                                    LEFT JOIN person author ON thesis.person_id_author = author.person_id
                                    WHERE thesis_id = '$thesis_id' ");
         $this->files = get_all("SELECT * FROM thesis_file WHERE thesis_id = '$thesis_id' ");
-        $this->thesis ['thesis_authors'] = get_all("SELECT * FROM thesis_authors NATURAL JOIN person");
+        $this->thesis_authors = get_all("SELECT * FROM thesis_authors NATURAL JOIN person WHERE thesis_id=$thesis_id");
         $this->instructors = get_all("SELECT * FROM thesis_instructor");
     }
 
@@ -114,12 +115,17 @@ class thesises extends Controller
 
     function edit()
     {
-        $this->thesis_id = $this->params[0];
+        $thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *,
-                                   author.person_lastname as author_name
+                                   author.person_firstname as author_first_name,
+                                   author.person_lastname as author_last_name,
+                                   instructor.instructor_name as instructor_name
                                    FROM thesis
-                                   JOIN person as author ON thesis.person_id_author = author.person_id
-                                   WHERE thesis_id = '$this->thesis_id' ");
+                                  LEFT JOIN thesis_instructor instructor ON thesis.instructor_id = instructor.instructor_id
+                                   LEFT JOIN person author ON thesis.person_id_author = author.person_id
+                                   WHERE thesis_id = '$thesis_id' ");
+        $this->thesis_authors = get_all("SELECT * FROM thesis_authors NATURAL JOIN person WHERE thesis_id=$thesis_id");
+        $this->instructors = get_all("SELECT * FROM thesis_instructor");
 
     }
 
@@ -127,7 +133,7 @@ class thesises extends Controller
     {
         $thesis = $_POST['thesis'];
         $this->thesis_id = $this->params[0];
-        update('thesis', $thesis, "thesis_id = '{$this->thesis_id}'");
+        update('thesis', $thesis, "thesis_id = '{$thesis_id}'");
 
     }
 
@@ -135,7 +141,6 @@ class thesises extends Controller
     {
         $thesis_id = $this->params[0];
         $instructor_id = $_POST['instructor_select'];
-        var_dump($instructor_id);
         update('thesis', array('person_id_author'=>$this->auth->person_id, 'instructor_id'=>$instructor_id), "thesis_id = '{$thesis_id}'");
         header('Location: ' . BASE_URL. "thesises/view/$thesis_id");
 
@@ -172,14 +177,15 @@ class thesises extends Controller
 
     function add_post()
     {
-            $data = $_POST['thesis'];
-            $person_id_author = $this->auth->person_id;
-            $data['person_id_author'] = $person_id_author;
-            $data['instructor_id'] = $_POST['instructor_select'];
-            $data['thesis_idea'] = $_POST['thesis_idea'];
-            $thesis_id = insert('thesis', $data);
-            header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
+        $data = $_POST['thesis'];
+        $person_id_author = $this->auth->person_id;
+        $data['person_id_author'] = $person_id_author;
+        $data['instructor_id'] = $_POST['instructor_select'];
+        $data['thesis_idea'] = $_POST['thesis_idea'];
+        $thesis_id = insert('thesis', $data);
+        header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
     }
+
     function suggested_thesis()
     {
             $data = $_POST['thesis'];
@@ -188,6 +194,16 @@ class thesises extends Controller
             $data['thesis_idea'] = 1;
             $thesis_id = insert('thesis', $data);
             header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
+    }
+
+    function join_as_coauthor()
+    {
+        $thesis_id = $this->params[0];
+        $person_id = $this->auth->person_id;
+        $data['thesis_id'] = $thesis_id;
+        $data['person_id'] = $person_id;
+        $thesis_id = insert('thesis_authors', $data);
+        header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
     }
 
     function delete_ajax()

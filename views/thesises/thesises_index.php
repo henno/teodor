@@ -12,8 +12,10 @@
             Sisesta lõputöö
         </button>
     </div>
+    <? if ($auth->is_admin): ?>
     <div class="pull-right"><a href="thesises/manage"><span class="glyphicon glyphicon-cog"></span></a></div>
 </div>
+<? endif; ?>
 <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist" id="myTab">
         <li role="presentation" class="active"><a href="#thesises_index" aria-controls="thesises_index" role="tab"
@@ -131,7 +133,7 @@
                     <tr>
                         <td><?= $archived_thesis['thesis_id'] ?></td>
                         <td><?= $archived_thesis['thesis_title'] ?> </td>
-                        <td>eriala</td>
+                        <td>n/a</td>
                         <td><?= $archived_thesis['department_name'] ?> </td>
                         <td>
                             <a href="thesises/view/<?= $archived_thesis['thesis_id'] ?>/<?= $archived_thesis['thesis_title'] ?>"
