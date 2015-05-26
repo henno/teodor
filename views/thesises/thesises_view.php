@@ -72,7 +72,7 @@
         </div>
     </form>
     <? endif; ?>
-    <? if ($auth->is_admin && $thesis['thesis_title_confirmed_at'] != NULL): ?>
+    <? if ($auth->is_admin && $thesis['person_id_author'] != NULL && $thesis['thesis_title_confirmed_at'] == NULL): ?>
         <form action="thesises/confirm/<?= $thesis['thesis_id'] ?>">
             <div class="pull-right">
                 <button class="btn btn-primary">
@@ -138,7 +138,7 @@
 <? endif; ?>
 
 
-<? if ($thesis['thesis_title_confirmed_at'] != NULL && $auth->is_admin ||  $thesis['thesis_title_confirmed_at'] != NULL && $thesis['person_id_author']== $this->auth->person_id || $thesis['thesis_defended_at'] != NULL):?>
+<? if ($thesis['thesis_title_confirmed_at'] != NULL && $auth->is_admin || $thesis['thesis_title_confirmed_at'] != NULL && $can_view_uploaded_files || $thesis['thesis_title_confirmed_at'] != NULL && $thesis['person_id_author']== $this->auth->person_id || $thesis['thesis_title_confirmed_at'] != NULL && $thesis['person_id_author']== $this->auth->person_id || $thesis['thesis_defended_at'] != NULL ):?>
 <h2>Üleslaaditud failid</h2>
 <table class="table table-bordered">
     <? foreach ($files as $file): ?>

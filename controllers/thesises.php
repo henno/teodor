@@ -43,6 +43,8 @@ class thesises extends Controller
         $this->files = get_all("SELECT * FROM thesis_file WHERE thesis_id = '$thesis_id' ");
         $this->thesis_authors = get_all("SELECT * FROM thesis_authors NATURAL JOIN person WHERE thesis_id=$thesis_id");
         $this->instructors = get_all("SELECT * FROM thesis_instructor");
+        $person_id = $this->auth->person_id;
+        $this->can_view_uploaded_files = get_all("SELECT * FROM `person_roles` WHERE person_id = {$person_id} AND role_id=1");
     }
 
     function view_upload()
@@ -188,12 +190,12 @@ class thesises extends Controller
 
     function suggested_thesis()
     {
-            $data = $_POST['thesis'];
-            $data['person_id_author'] = NULL;
-            $data['instructor_id'] = NULL;
-            $data['thesis_idea'] = 1;
-            $thesis_id = insert('thesis', $data);
-            header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
+        $data = $_POST['thesis'];
+        $data['person_id_author'] = NULL;
+        $data['instructor_id'] = NULL;
+        $data['thesis_idea'] = 1;
+        $thesis_id = insert('thesis', $data);
+        header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
     }
 
     function join_as_coauthor()
