@@ -25,7 +25,7 @@
 
         <? $n = 0;
         foreach ($curricula as $curriculum): $n++ ?>
-            <tr>
+            <tr data-id="<?= $curriculum['curriculum_id'] ?>">
                 <td><?= $n++ ?>.</td>
                 <td><?= $curriculum['curriculum_EHIS_code'] ?></td>
                 <td><?= $curriculum['curriculum_type'] ?></td>
@@ -43,3 +43,11 @@
         </tbody>
     </table>
 <? endif ?>
+
+<script>
+    $('table').on('click', 'tbody tr', function () {
+        alert(this);
+    });
+</script>
+
+
