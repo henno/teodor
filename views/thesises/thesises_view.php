@@ -6,7 +6,9 @@
     <dt>Lõputöö tellija:</dt>
     <dd><?= $thesis['thesis_client_info'] ?></dd>
     <dt>Lõputöö autor:</dt>
-    <dd><?= $thesis['author_first_name'] . " " . $thesis['author_last_name'] ?></dd>
+    <dd><? foreach ($thesis_authors as $thesis_author): ?>
+            <?=$thesis_author['person_firstname'] . " " . $thesis_author['person_lastname']?>,
+        <? endforeach ?></dd>
     <dt>Juhendaja:</dt>
     <dd><?= $thesis['instructor_name'] ?></dd>
     <dt>Staatus:</dt>
@@ -16,7 +18,7 @@
             echo "Kinnitatud";
         } elseif ($thesis['thesis_defended_at'] != NULL) {
             echo "Kaitstud";
-        } elseif ($thesis['person_id_author'] != NULL && $thesis['instructor_id'] != NULL) {
+        } elseif ($thesis_authors && $thesis['instructor_id'] != NULL) {
             echo "Kinnitamisel";
         } else {
             echo "Lõputöö pakkumine";
@@ -24,7 +26,8 @@
         ?> </dd>
 </dl>
 
-<? if ($thesis['thesis_title_confirmed_at'] == NULL && $thesis['person_id_author'] == NULL): ?>
+
+<? if ($thesis['thesis_title_confirmed_at'] == NULL && $thesis['thesis_idea'] != NULL && !$auth->is_admin): ?>
     <h3>Vali juhendaja:</h3>
     <form role="form" class="form-horizontal" method="post"
           action="thesises/confirmation_request/<?= $thesis['thesis_id'] ?>">
@@ -45,7 +48,7 @@
         </div>
     </form>
 <? endif; ?>
-<? if ($thesis['person_id_author']!= NULL && $thesis['person_id_author'] != $this->auth->person_id && $thesis['thesis_title_confirmed_at'] == NULL): ?>
+<? if ($thesis['instructor_id'] != NULL && $thesis['thesis_title_confirmed_at'] == NULL && !$auth->is_admin): ?>
 <form action="thesises/join_as_coauthor/<?= $thesis['thesis_id'] ?>">
     <div class="pull-right">
         <button class="btn btn-primary">
@@ -54,7 +57,7 @@
     </div>
 </form>
 <? endif; ?>
-<? if ($auth->is_admin && $thesis['thesis_title_confirmed_at'] != NULL): ?>
+<? if ($auth->is_admin && $thesis['thesis_title_confirmed_at'] != NULL && $thesis['thesis_defended_at'] == NULL): ?>
 <form action="thesises/defended/<?= $thesis['thesis_id'] ?>">
     <div class="pull-right">
         <button class="btn btn-primary">
@@ -72,7 +75,7 @@
         </div>
     </form>
     <? endif; ?>
-    <? if ($auth->is_admin && $thesis['person_id_author'] != NULL && $thesis['thesis_title_confirmed_at'] == NULL): ?>
+    <? if ($auth->is_admin && $thesis['instructor_id'] != NULL && $thesis['thesis_title_confirmed_at'] == NULL): ?>
         <form action="thesises/confirm/<?= $thesis['thesis_id'] ?>">
             <div class="pull-right">
                 <button class="btn btn-primary">
@@ -83,7 +86,7 @@
     <? endif; ?>
 
 
-<? if ($thesis['thesis_title_confirmed_at'] != NULL && $thesis['person_id_author']== $this->auth->person_id && $thesis['thesis_defended_at'] == NULL): ?>
+<? if ($thesis['thesis_title_confirmed_at'] != NULL && $thesis_author['person_id'] == $this->auth->person_id && $thesis['thesis_defended_at'] == NULL): ?>
     <div class="row upload_files">
         <div class="col-md-6">
             <span class="lead">Laadi üles:</span>
@@ -138,7 +141,7 @@
 <? endif; ?>
 
 
-<? if ($thesis['thesis_title_confirmed_at'] != NULL && $auth->is_admin || $thesis['thesis_title_confirmed_at'] != NULL && $can_view_uploaded_files || $thesis['thesis_title_confirmed_at'] != NULL && $thesis['person_id_author']== $this->auth->person_id || $thesis['thesis_title_confirmed_at'] != NULL && $thesis['person_id_author']== $this->auth->person_id || $thesis['thesis_defended_at'] != NULL ):?>
+<? if ($thesis['thesis_title_confirmed_at'] != NULL && $auth->is_admin || $thesis['thesis_title_confirmed_at'] != NULL && $can_view_uploaded_files || $thesis['thesis_title_confirmed_at'] != NULL && $thesis_author['person_id'] == $this->auth->person_id || $thesis['thesis_defended_at'] != NULL ):?>
 <h2>Üleslaaditud failid</h2>
 <table class="table table-bordered">
     <? foreach ($files as $file): ?>

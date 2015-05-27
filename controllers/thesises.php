@@ -8,14 +8,14 @@ class thesises extends Controller
 
         $where = isset($_GET['query']) ? "and thesis_title LIKE '%{$_GET['query']}%'" : null;
         $this->query = isset($_GET['query']) ? $_GET['query'] : null;
-        $sql = "SELECT * FROM `thesis` LEFT JOIN department ON thesis.department_id=department.department_id WHERE person_id_author IS NOT NULL AND thesis_title_confirmed_at IS NULL $where";
+        $sql = "SELECT * FROM `thesis` WHERE thesis_idea IS NULL AND instructor_id IS NOT NULL AND thesis_title_confirmed_at IS NULL $where";
         $this->thesises = get_all($sql);
         $this->instructors = get_all("SELECT * FROM thesis_instructor");
-        $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE person_id_author IS NULL AND thesis_idea=1 $where");
+        $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE thesis_idea=1 $where");
         $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL $where");
         $this->archived_thesises = get_all("SELECT *, department.department_name FROM `thesis`LEFT JOIN department ON thesis.department_id=department.department_id WHERE thesis_defended_at IS NOT NULL $where");
         $person_id_author = $this->auth->person_id;
-        $this->my_thesises = get_all("SELECT * FROM `thesis` WHERE person_id_author = {$person_id_author} $where");
+        $this->my_thesises = get_all("SELECT * FROM `thesis` NATURAL JOIN thesis_authors WHERE person_id = {$person_id_author} $where");
 
 
     }
@@ -126,7 +126,7 @@ class thesises extends Controller
                                   LEFT JOIN thesis_instructor instructor ON thesis.instructor_id = instructor.instructor_id
                                    LEFT JOIN person author ON thesis.person_id_author = author.person_id
                                    WHERE thesis_id = '$thesis_id' ");
-        $this->thesis_authors = get_all("SELECT * FROM thesis_authors NATURAL JOIN person WHERE thesis_id=$thesis_id");
+        $this->thesis_authors = get_all("SELECT *, person.person_firstname, person.person_lastname FROM thesis_authors LEFT JOIN person on thesis_authors.person_id=person.person_id WHERE thesis_id=$thesis_id");
         $this->instructors = get_all("SELECT * FROM thesis_instructor");
 
     }
@@ -143,7 +143,12 @@ class thesises extends Controller
     {
         $thesis_id = $this->params[0];
         $instructor_id = $_POST['instructor_select'];
-        update('thesis', array('person_id_author'=>$this->auth->person_id, 'instructor_id'=>$instructor_id), "thesis_id = '{$thesis_id}'");
+        $data2['thesis_id'] = $thesis_id;
+        $data2['person_id'] = $this->auth->person_id;
+		q("BEGIN");
+        update('thesis', array('instructor_id'=>$instructor_id, 'thesis_idea'=>"0"), "thesis_id = '{$thesis_id}'");
+		insert('thesis_authors', $data2);
+        q("COMMIT");
         header('Location: ' . BASE_URL. "thesises/view/$thesis_id");
 
     }
@@ -153,7 +158,7 @@ class thesises extends Controller
     function confirm()
     {
         $thesis_id = $this->params[0];
-        update('thesis', array('thesis_title_confirmed_at'=>date('Y-m-d'), 'thesis_idea'=>'1'), "thesis_id = '{$thesis_id}'");
+        update('thesis', array('thesis_title_confirmed_at'=>date('Y-m-d')), "thesis_id = '{$thesis_id}'");
         header('Location: ' . BASE_URL. "thesises/view/$thesis_id");
 
     }
@@ -179,21 +184,24 @@ class thesises extends Controller
 
     function add_post()
     {
-        $data = $_POST['thesis'];
-        $person_id_author = $this->auth->person_id;
-        $data['person_id_author'] = $person_id_author;
-        $data['instructor_id'] = $_POST['instructor_select'];
-        $data['thesis_idea'] = $_POST['thesis_idea'];
-        $thesis_id = insert('thesis', $data);
+        $data1 = $_POST['thesis'];
+        $data1['instructor_id'] = $_POST['instructor_select'];
+        $data['thesis_idea'] = 0;
+        $person_id = $this->auth->person_id;
+        q("BEGIN");
+        $thesis_id = insert('thesis', $data1);
+        $data2['person_id'] = $person_id;
+        $data2['thesis_id'] = $thesis_id;
+        insert('thesis_authors', $data2);
+        q("COMMIT");
         header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
     }
 
     function suggested_thesis()
     {
         $data = $_POST['thesis'];
-        $data['person_id_author'] = NULL;
         $data['instructor_id'] = NULL;
-        $data['thesis_idea'] = 1;
+        $data['thesis_idea'] = "1";
         $thesis_id = insert('thesis', $data);
         header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
     }
