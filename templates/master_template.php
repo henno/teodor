@@ -26,6 +26,19 @@
             padding-right: 1em;
         }
 
+		.setup {
+			max-width: 500px;
+			margin: 0 auto;
+
+		}
+
+		.setup-body {
+			max-width: 400px;
+			margin: 0 auto;
+		}
+
+		.group {margin: 0 auto;}
+
    	</style>
     <link rel="stylesheet" href="assets/css/application.css"/>
     <link rel="stylesheet" href="assets/components/chosen/chosen.css"/>
