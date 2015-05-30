@@ -73,7 +73,7 @@
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
                 <!-- <li <?= $controller == 'tunniplaan' ? 'class="active"' : ''?>><a href="tunniplaan"><?__('Tunniplaan')?></a></li> -->
-                <li <?= $controller == 'ained' ? 'class="active"' : ''?>><a href="ained"><?__('Ained')?></a></li>
+                <li <?= $controller == 'kursused' ? 'class="active"' : ''?>><a href="kursused"><?__('Kursused')?></a></li>
                 <li <?= $controller == 'ülesanded' ? 'class="active"' : ''?>><a href="ülesanded"><?__('Ülesanded')?> <sup><span class="badge"><?=$badges['tasks']?></span></sup> </a></li>
                 <!-- <li <?= $controller == 'kontrolltööd' ? 'class="active"' : ''?>><a href="kontrolltööd"><?__('Testid')?></a></li> -->
                 <li <?= $controller == 'grupid' ? 'class="active"' : ''?>><a href="grupid"><?__('Grupid')?></a></li>

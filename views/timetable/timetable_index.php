@@ -24,7 +24,7 @@
             weekends: false,
             allDaySlot: false,
             eventLimit: true, // allow "more" link when too many events
-            events: <?=$timetable ?>,
+            events: <?=$schedule ?>,
             eventBackgroundColor:"#f8f8f8",
             eventBorderColor:"#e7e7e7",
             eventColor: "#333",

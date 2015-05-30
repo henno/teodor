@@ -148,11 +148,11 @@ class Application
 
         // Translate controller name from Estonian to English
         $translations['controllers'] = array(
-            'ained' => 'subjects',
+            'kursused' => 'courses',
             'grupid' => 'groups',
             'kontrolltööd' => 'tests',
             'lõputööd' => 'thesises',
-            'tunniplaan' => 'timetable',
+            'tunniplaan' => 'schedule',
             'ülesanded' => 'tasks',
             'õppekavad' => 'curricula'
 
