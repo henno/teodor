@@ -41,15 +41,15 @@ class Auth
         if (isset($_POST['username'])) {
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $person = get_first("SELECT person_id, is_admin FROM person
+            $person = get_first("SELECT person_id, is_admin, setup FROM person
                                 WHERE username = '$username'
                                   AND password = '$password'
                                   AND  deleted = 0");
             if (! empty($person['person_id'])) {
                 $_SESSION['person_id'] = $person['person_id'];
                 $this->load_user_data($person);
-
                 return true;
+
             } else {
                 $errors[] = "Vale kasutajanimi või parool";
             }

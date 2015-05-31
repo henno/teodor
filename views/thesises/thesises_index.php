@@ -133,8 +133,8 @@
                     <tr>
                         <td><?= $archived_thesis['thesis_id'] ?></td>
                         <td><?= $archived_thesis['thesis_title'] ?> </td>
-                        <td>n/a</td>
-                        <td><?= $archived_thesis['department_name'] ?> </td>
+                        <td>Eriala</td>
+                        <td>Osakond</td>
                         <td>
                             <a href="thesises/view/<?= $archived_thesis['thesis_id'] ?>/<?= $archived_thesis['thesis_title'] ?>"
                                class="btn btn-default" role="button">Vaatan lähemalt</a></td>

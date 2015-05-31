@@ -13,8 +13,7 @@ class thesises extends Controller
         $this->instructors = get_all("SELECT * FROM thesis_instructor");
         $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE thesis_idea=1 $where");
         $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL $where");
-        $this->archived_thesises = get_all("SELECT *, department.department_name FROM `thesis`LEFT JOIN department ON thesis.department_id=department.department_id WHERE thesis_defended_at IS NOT NULL $where");
-        $person_id_author = $this->auth->person_id;
+        $this->archived_thesises = get_all("SELECT *, department.department_name FROM `thesis`LEFT JOIN department ON thesis.department_id=department.department_id WHERE thesis_defended_at IS NOT NULL $where");        $person_id_author = $this->auth->person_id;
         $this->my_thesises = get_all("SELECT * FROM `thesis` NATURAL JOIN thesis_authors WHERE person_id = {$person_id_author} $where");
 
 
@@ -146,7 +145,7 @@ class thesises extends Controller
         $data2['thesis_id'] = $thesis_id;
         $data2['person_id'] = $this->auth->person_id;
 		q("BEGIN");
-        update('thesis', array('instructor_id'=>$instructor_id, 'thesis_idea'=>"0"), "thesis_id = '{$thesis_id}'");
+        update('thesis', array('instructor_id'=>$instructor_id, 'thesis_idea'=>NULL), "thesis_id = '{$thesis_id}'");
 		insert('thesis_authors', $data2);
         q("COMMIT");
         header('Location: ' . BASE_URL. "thesises/view/$thesis_id");
@@ -186,7 +185,7 @@ class thesises extends Controller
     {
         $data1 = $_POST['thesis'];
         $data1['instructor_id'] = $_POST['instructor_select'];
-        $data['thesis_idea'] = 0;
+        $data['thesis_idea'] = NULL;
         $person_id = $this->auth->person_id;
         q("BEGIN");
         $thesis_id = insert('thesis', $data1);
