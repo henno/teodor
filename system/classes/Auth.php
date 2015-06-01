@@ -138,6 +138,7 @@ class Auth
             $this->$person_attr = $value;
         }
         $this->logged_in = TRUE;
+        $this->person_name = $this->person_firstname . ' ' . $this->person_lastname;
     }
 
     function login($username, $password)

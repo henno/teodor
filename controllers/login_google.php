@@ -103,6 +103,8 @@ class login_google extends Controller
             $this->$person_attr = $value;
         }
         $this->logged_in = TRUE;
+        $this->person_name = $this->person_firstname . ' ' . $this->person_lastname;
+
     }
 
     private function get_user_data($authObj)

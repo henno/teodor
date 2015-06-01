@@ -81,7 +81,7 @@
                 <li <?= $controller == 'õppekavad' ? 'class="active"' : ''?>><a href="õppekavad"><?__('Õppekavad')?></a></li>
             </ul>
 			<ul class="nav navbar-nav navbar-right">
-                <li><a href="<?=BASE_URL?><?= $auth->logged_in == true? 'logout' : 'login'?>"><?= $auth->logged_in == true? "Logout ({$this->auth->person_id})" : 'Login'?></a></li>
+                <li><a href="<?=BASE_URL?><?= $auth->logged_in == true? 'logout' : 'login'?>"><?= $auth->logged_in == true? __('Logi välja') . " ({$this->auth->person_name})" : 'Login'?></a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
