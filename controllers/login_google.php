@@ -89,7 +89,9 @@ class login_google extends Controller
 
                 //Load user data and return
                 $this->load_user_data($person);
-                return true;
+
+                // Redirect to home page
+                header('Location: ' . BASE_URL);
 
         }
 
