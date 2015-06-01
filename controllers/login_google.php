@@ -5,7 +5,7 @@ class login_google extends Controller
     public $requires_auth = false;
     public $client_id = '28075904854-6p39ip0384qu666guf243v9rt3rbu4fl.apps.googleusercontent.com';
     public $client_secret = 'pC2SuVCB6m8wSxS0nhuHfKmi';
-    public $redirect_uri = 'http://diarainfra.com/khk/vs13/henno/teodor/google_login/callback';
+    public $redirect_uri = 'http://diarainfra.com/khk/vs13/henno/teodor/login_google/callback';
 
     function index()
     {
