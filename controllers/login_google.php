@@ -5,7 +5,7 @@ class login_google extends Controller
     public $requires_auth = false;
     public $client_id = '28075904854-6p39ip0384qu666guf243v9rt3rbu4fl.apps.googleusercontent.com';
     public $client_secret = 'pC2SuVCB6m8wSxS0nhuHfKmi';
-    public $redirect_uri = 'http://diarainfra.com/khk/vs13/henno/teodor/login_google/callback';
+    public $redirect_uri = 'login_google/callback';
 
     function index()
     {
@@ -13,10 +13,10 @@ class login_google extends Controller
         $request_params = array(
             "response_type" => "code",
             "client_id" => "$this->client_id",
-            "redirect_uri" => "$this->redirect_uri",
+            "redirect_uri" => BASE_URL."$this->redirect_uri",
             "access_type" => "offline",
             "approval_prompt" => "force",
-            "scope" => "https://www.googleapis.com/auth/userinfo.email",
+            "scope" => "openid profile email",
             "hd" => 'khk.ee'
         );
         $url = "https://accounts.google.com/o/oauth2/auth?" . http_build_query($request_params);
@@ -58,7 +58,7 @@ class login_google extends Controller
 
                     // Person did not exsist, insert this person and log the person in
                     $now = date('Y-m-d H:i:s');
-                    $person = array('username' => $username, 'is_admin' => 0, 'person_first_visit' => $now, 'person_last_visit' => $now);
+                    $person = array('person_firstname' => $user->given_name,'person_lastname' => $user->family_name,'username' => $username, 'is_admin' => 0, 'person_first_visit' => $now, 'person_last_visit' => $now);
                     $person['person_id'] = insert('person', $person);
 
                 } else {
@@ -139,7 +139,7 @@ class login_google extends Controller
             "code" => $_GET['code'],
             "client_id" => "$this->client_id",
             "client_secret" => "$this->client_secret",
-            "redirect_uri" => "$this->redirect_uri",
+            "redirect_uri" => BASE_URL."$this->redirect_uri",
             "grant_type" => "authorization_code"
         );
         $curl = curl_init('https://accounts.google.com/o/oauth2/token');
