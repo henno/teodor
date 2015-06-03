@@ -96,7 +96,7 @@
                     <button type="button" class="btn btn-default" id="thesis-final">Lõputöö</button>
                 </div>
             </div>
-            <form id="uploadForm" method="post" enctype="multipart/form-data" style=" display: none">
+            <form id="draftForm" method="post" enctype="multipart/form-data" style=" display: none">
                 <input type="file" name="draft_upload" id="draft_upload" class="file-upload"/>
             </form>
             <script>
@@ -105,11 +105,10 @@
                 });
                 //capture selected filename
                 $('#draft_upload').change(function (click) {
-                    //$('#file-name').val(this.value);
-                    $('form#uploadForm').submit();
+                    $('form#draftForm').submit();
                 });
             </script>
-            <form id="uploadForm2" method="post" enctype="multipart/form-data" style=" display: none">
+            <form id="finalForm" method="post" enctype="multipart/form-data" style=" display: none">
                 <input type="file" name="final_upload" id="final_upload" class="file-upload"/>
             </form>
             <script>
@@ -118,8 +117,7 @@
                 });
                 //capture selected filename
                 $('#final_upload').change(function (click) {
-//  $('#file-name').val(this.value);
-                    $('form#uploadForm').submit();
+                    $('form#finalForm').submit();
                 });
             </script>
             <form id="uploadForm3" method="post" enctype="multipart/form-data" style=" display: none">
@@ -131,7 +129,6 @@
                 });
                 //capture selected filename
                 $('#files_upload').change(function (click) {
-//  $('#file-name').val(this.value);
                     $('form#uploadForm').submit();
                 });
             </script>
