@@ -7,10 +7,19 @@
             <input type="submit" class="btn btn-default" value="Otsi">
             <input type="button" class="reset-search btn btn-default" value="Lähtesta"/>
         </form>
+        <? if ($auth->is_admin): ?>
+        <form action="thesises/insert_dates">
+            Failide üleslaadimise algus:<br>
+            <input type="date" name="upload_at"><br><br>
+            Failide üleslaadimise lõpp:<br>
+            <input type="date" name="upload_at" ><br><br>
+            <input type="submit">
+        </form>
 
         <button class="btn btn-primary pull-right" onclick="window.location.href = 'thesises/add'">
             Sisesta lõputöö
         </button>
+        <? endif ?>
     </div>
     <? if ($auth->is_admin): ?>
     <div class="pull-right"><a href="thesises/manage"><span class="glyphicon glyphicon-cog"></span></a></div>

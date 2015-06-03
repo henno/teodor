@@ -291,6 +291,8 @@ class thesises extends Controller
 
         return round($bytes/pow(1024, $e), 2).$s[$e];
     }
+
+    function
 }
 
 

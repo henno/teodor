@@ -84,7 +84,15 @@
             </div>
         </form>
     <? endif; ?>
-
+<? if ($auth->is_admin):  ?>
+<form action="action_page.php">
+    Failide üleslaadimise algus:<br>
+    <input type="date" name="upload_at"><br><br>
+    Failide üleslaadimise lõpp:<br>
+    <input type="date" name="upload_at" ><br><br>
+    <input type="submit">
+</form>
+<? endif; ?>
 
 <? if ($thesis['thesis_title_confirmed_at'] != NULL && $thesis_author['person_id'] == $this->auth->person_id && $thesis['thesis_defended_at'] == NULL): ?>
     <div class="row upload_files">
