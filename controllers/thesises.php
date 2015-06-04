@@ -8,12 +8,15 @@ class thesises extends Controller
 
         $where = isset($_GET['query']) ? "and thesis_title LIKE '%{$_GET['query']}%'" : null;
         $this->query = isset($_GET['query']) ? $_GET['query'] : null;
-        $sql = "SELECT * FROM `thesis` WHERE thesis_idea IS NULL AND instructor_id IS NOT NULL AND thesis_title_confirmed_at IS NOT NULL $where";
-        $this->thesises = get_all($sql);
-        $this->instructors = get_all("SELECT * FROM thesis_instructor");
-        $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE thesis_idea=1 $where");
-        $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL $where");
-        $this->archived_thesises = get_all("SELECT *, department.department_name FROM `thesis`LEFT JOIN department ON thesis.department_id=department.department_id WHERE thesis_defended_at IS NOT NULL $where");
+        // thesises to be confirmed
+        $this->thesises = get_all("SELECT * FROM `thesis` WHERE thesis_idea IS NULL AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL $where");
+        // ideas for thesises
+        $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE thesis_idea=1 AND thesis_deleted IS NULL $where");
+        // thesises that have been confirmed
+        $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL AND thesis_deleted IS NULL $where");
+        // archived thesises
+        $this->archived_thesises = get_all("SELECT *, department.department_name FROM `thesis`LEFT JOIN department ON thesis.department_id=department.department_id WHERE thesis_defended_at IS NOT NULL AND thesis_deleted IS NULL $where");
+        // thesis related to currently logged in user
         $person_id_author = $this->auth->person_id;
         $this->my_thesises = get_all("SELECT * FROM `thesis` NATURAL JOIN thesis_authors WHERE person_id = {$person_id_author} $where");
 
@@ -24,7 +27,6 @@ class thesises extends Controller
     {
         $data = $_POST['thesis'];
         $data['person_id_author'] = NULL;
-        $data['person_id_instructor'] = empty($data['selected_person_id_instructor']) ? 1 : $data['selected_person_id_instructor'];
         $thesis_id = insert('thesis', $data);
         header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
     }
@@ -32,17 +34,12 @@ class thesises extends Controller
     function view()
     {
         $thesis_id = $this->params[0];
-        $this->thesis = get_first("SELECT *,
-                                   author.person_firstname as author_first_name,
-                                   author.person_lastname as author_last_name,
-                                   instructor.instructor_name as instructor_name
+        $this->thesis = get_first("SELECT *, thesis_instructor.instructor_name
                                    FROM thesis
-                                  LEFT JOIN thesis_instructor instructor ON thesis.instructor_id = instructor.instructor_id
-                                   LEFT JOIN person author ON thesis.person_id_author = author.person_id
+                                   NATURAL JOIN thesis_instructor
                                    WHERE thesis_id = '$thesis_id' ");
         $this->files = get_all("SELECT * FROM thesis_file WHERE thesis_id = '$thesis_id' ");
         $this->thesis_authors = get_all("SELECT * FROM thesis_authors NATURAL JOIN person WHERE thesis_id=$thesis_id");
-        $this->instructors = get_all("SELECT * FROM thesis_instructor");
         $person_id = $this->auth->person_id;
         $this->can_view_uploaded_files = get_all("SELECT * FROM `person_roles` WHERE person_id = {$person_id} AND role_id=1");
     }
@@ -52,17 +49,17 @@ class thesises extends Controller
         $maximumFileUploadSize = $this->getMaximumFileUploadSize();
 
         $errors = array(
-        0 => "There is no error, the file uploaded with success. ",
-        1 => "failisuurus peab olema v&auml;iksem kui " . $this->byteConvert($maximumFileUploadSize),
-        2 => "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form. ",
-        3 => "The uploaded file was only partially uploaded",
-        4 => "No file was uploaded. ",
-        5 => "Missing a temporary folder. Introduced in PHP 5.0.3. ",
-        6 => "Failed to write file to disk. Introduced in PHP 5.1.0. ",
-        7 => "A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop; examining the list of loaded extensions with phpinfo() may help. Introduced in PHP 5.2.0. ",
-    );
+            0 => "There is no error, the file uploaded with success. ",
+            1 => "failisuurus peab olema v&auml;iksem kui " . $this->byteConvert($maximumFileUploadSize),
+            2 => "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form. ",
+            3 => "The uploaded file was only partially uploaded",
+            4 => "No file was uploaded. ",
+            5 => "Missing a temporary folder. Introduced in PHP 5.0.3. ",
+            6 => "Failed to write file to disk. Introduced in PHP 5.1.0. ",
+            7 => "A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop; examining the list of loaded extensions with phpinfo() may help. Introduced in PHP 5.2.0. ",
+        );
 
-         $thesis_id = $this->params[0];
+        $thesis_id = $this->params[0];
 
         if (isset($_FILES["draft_upload"])) {
             $f = $_FILES["draft_upload"];
@@ -145,24 +142,30 @@ class thesises extends Controller
     function edit()
     {
         $thesis_id = $this->params[0];
-        $this->thesis = get_first("SELECT *,
-                                   author.person_firstname as author_first_name,
-                                   author.person_lastname as author_last_name,
-                                   instructor.instructor_name as instructor_name
+        $this->thesis = get_first("SELECT *, thesis_instructor.instructor_name
                                    FROM thesis
-                                  LEFT JOIN thesis_instructor instructor ON thesis.instructor_id = instructor.instructor_id
-                                   LEFT JOIN person author ON thesis.person_id_author = author.person_id
+                                   NATURAL JOIN thesis_instructor
                                    WHERE thesis_id = '$thesis_id' ");
         $this->thesis_authors = get_all("SELECT *, person.person_firstname, person.person_lastname FROM thesis_authors LEFT JOIN person on thesis_authors.person_id=person.person_id WHERE thesis_id=$thesis_id");
-        $this->instructors = get_all("SELECT * FROM thesis_instructor");
+        $this->person = get_all("SELECT * FROM person");
 
     }
+
 
     function edit_post()
     {
         $thesis = $_POST['thesis'];
         $this->thesis_id = $this->params[0];
-        update('thesis', $thesis, "thesis_id = '{$thesis_id}'");
+        var_dump($thesis);
+        update('thesis', $thesis, "thesis_id = '{$this->thesis_id}'");
+
+    }
+
+    function delete_thesis()
+    {
+        $thesis_id = $this->params[0];
+        update('thesis', array('thesis_deleted' => 1), "thesis_id = '{$thesis_id}'");
+        header('Location: ' . BASE_URL . 'thesises/');
 
     }
 
@@ -289,10 +292,12 @@ class thesises extends Controller
         $s = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
         $e = floor(log($bytes, 1024));
 
-        return round($bytes/pow(1024, $e), 2).$s[$e];
+        return round($bytes / pow(1024, $e), 2) . $s[$e];
     }
 
-    function
+    function insert_dates()
+    {
+    }
 }
 
 

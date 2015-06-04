@@ -1,38 +1,58 @@
+<h1><? __('Lõputöö muutmine') ?></h1>
+
 <form id="form" method="post">
-    <h1><i><textarea name="thesis[thesis_title]"> <?= $thesis['thesis_title'] ?></textarea></i></h1>
-    <p><textarea name="thesis[thesis_description]"><?= $thesis['thesis_description'] ?></textarea></p>
-    <h4><textarea name="thesis[thesis_client_info]"><?= $thesis['thesis_client_info'] ?></textarea></h4>
-    <h4><textarea name="thesis[person_id_author]" ><?= $thesis['author_first_name'] ?></textarea></h4>
-    <h4><textarea name="thesis[person_id_instructor]"><?= $thesis['person_id_instructor'] ?></textarea></h4>
+
+    <p><textarea rows="2" cols="50" name="thesis[thesis_title]"><?= $thesis['thesis_title'] ?></textarea>
+    <p><textarea rows="4" cols="50" name="thesis[thesis_description]"><?= $thesis['thesis_description'] ?></textarea>
+    <p><textarea rows="2" cols="50" name="thesis[thesis_client_info]"><?= $thesis['thesis_client_info'] ?></textarea>
+    <p><select id="person_id" name="author_select" class="chosen-select" multiple="true">
+            <? foreach ($thesis_authors as $thesis_author): ?>
+                <option
+                    value="<?= $thesis_author['person_id'] ?>" <?= $thesis_author['person_firstname'] == $thesis_author['person_firstname'] ? 'selected="selected"' : '' ?>><?= $thesis_author['person_firstname'] . " " . $thesis_author['person_lastname'] ?></option>
+            <? endforeach ?>
+        </select>
+    <p><textarea rows="2" cols="50" name="thesis[instructor_id]"><?= $thesis['instructor_name'] ?></textarea>
 </form>
 
 <!-- BUTTONS -->
-<div class="pull-right">
 
-    <!-- CANCEL -->
+
+<!-- CANCEL -->
+<div class="pull-right">
     <button class="btn btn-default"
             onclick="window.location.href = 'thesises/view/<?= $thesis['thesis_id'] ?>/<?= $thesis['thesis_title'] ?>'">
         Tühista
     </button>
-
-    <!-- DELETE -->
+</div>
+<!-- DELETE
     <button class="btn btn-danger" onclick="delete_thesises(<?= $thesis['thesis_id'] ?>)">
         Kustuta
     </button>
-
-    <!-- SAVE -->
-    <button class="btn btn-primary" id="form" onclick="save()" >
+-->
+<div class="pull-right">
+    <form action="thesises/delete_thesis/<?= $thesis['thesis_id'] ?>">
+        <button class="btn btn-danger">
+            Kustuta
+        </button>
+    </form>
+</div>
+<!-- SAVE -->
+<div class="pull-right">
+    <button class="btn btn-primary" id="form" onclick="save()">
         Salvesta
     </button>
-
 </div>
+
 <!-- END BUTTONS -->
+
+
 <script>
     function save() {
 
 
         $.post('<?=BASE_URL. "thesises/edit/$params[0]"?>', $("#form").serialize());
-    }
+    };
 
+    $('select').select2();
 
 </script>

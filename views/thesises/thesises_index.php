@@ -15,11 +15,14 @@
             <input type="date" name="upload_at" ><br><br>
             <input type="submit">
         </form>
+        <? endif ?>
+
+        <!--- Võtsin vormi nupu ümber ära praegu - mitteadmin ei saa muidu sisestada! -->
 
         <button class="btn btn-primary pull-right" onclick="window.location.href = 'thesises/add'">
             Sisesta lõputöö
         </button>
-        <? endif ?>
+
     </div>
     <? if ($auth->is_admin): ?>
     <div class="pull-right"><a href="thesises/manage"><span class="glyphicon glyphicon-cog"></span></a></div>
