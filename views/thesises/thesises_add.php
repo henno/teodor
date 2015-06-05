@@ -33,6 +33,7 @@
                 <option
                     value="<?= $instructor['instructor_id'] ?>" <?= $instructor['instructor_name'] == $instructor['instructor_name'] ? 'selected="selected"' : '' ?>><?= $instructor['instructor_name'] . " (" . $instructor['instructor_company'] . ")" ?></option>
             <? endforeach ?>
+
         </select>  <span class="glyphicon glyphicon-plus" style="cursor:pointer" data-toggle="modal"
                          data-target="#myModal"></span> Lisa juhendaja, kui teda rippmenüüst ei leidnud!
     </div>

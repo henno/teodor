@@ -26,7 +26,6 @@
         ?> </dd>
 </dl>
 
-
 <? if ($thesis['thesis_title_confirmed_at'] == NULL && $thesis['thesis_idea'] != NULL): ?>
     <h3>Vali juhendaja:</h3>
     <form role="form" class="form-horizontal" method="post"

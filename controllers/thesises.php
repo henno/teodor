@@ -36,7 +36,7 @@ class thesises extends Controller
         $thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *, thesis_instructor.instructor_name
                                    FROM thesis
-                                   NATURAL JOIN thesis_instructor
+                                   NATURAL LEFT JOIN thesis_instructor
                                    WHERE thesis_id = '$thesis_id' ");
         $this->files = get_all("SELECT * FROM thesis_file WHERE thesis_id = '$thesis_id' ");
         $this->thesis_authors = get_all("SELECT * FROM thesis_authors NATURAL JOIN person WHERE thesis_id=$thesis_id");
