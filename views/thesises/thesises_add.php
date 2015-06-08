@@ -40,15 +40,15 @@
 
 
     <div class="pull-right">
-        <? if ($auth->is_admin): ?>
-            <button class="btn btn-primary" formaction="thesises/suggested_thesis/" value="thesis_idea"
-                    id="thesis_idea">Sisesta
+
+            <button class="btn btn-default" formaction="thesises/suggested_thesis/" value="thesis_idea"
+                    id="thesis_idea">Sisesta teema
             </button>
-        <? else: ?>
+
             <button class="btn btn-primary" formaction="thesises/add_post/" value="student_thesis" id="thesis_insert">
-                Salvesta
+                Sisesta lõputöö
             </button>
-        <? endif; ?>
+
     </div>
 </form>
 

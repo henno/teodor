@@ -9,17 +9,21 @@ class thesises extends Controller
         $where = isset($_GET['query']) ? "and thesis_title LIKE '%{$_GET['query']}%'" : null;
         $this->query = isset($_GET['query']) ? $_GET['query'] : null;
         // thesises to be confirmed
-        $this->thesises = get_all("SELECT * FROM `thesis` WHERE thesis_idea IS NULL AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL $where");
+        $this->thesises = get_all("SELECT * FROM `thesis` WHERE thesis_idea IS NULL AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL OR thesis_idea=0 AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL  $where");
         // ideas for thesises
         $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE thesis_idea=1 AND thesis_deleted IS NULL $where");
         // thesises that have been confirmed
         $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL AND thesis_deleted IS NULL $where");
         // archived thesises
-        $this->archived_thesises = get_all("SELECT *, department.department_name FROM `thesis`LEFT JOIN department ON thesis.department_id=department.department_id WHERE thesis_defended_at IS NOT NULL AND thesis_deleted IS NULL $where");
+        $this->archived_thesises = get_all("SELECT * FROM `thesis` NATURAL JOIN thesis_authors LEFT JOIN group_persons ON
+thesis_authors.person_id=group_persons.person_id LEFT JOIN curriculum_groups
+ON group_persons.group_id=curriculum_groups.group_id LEFT JOIN curriculum ON
+curriculum_groups.curriculum_id=curriculum.curriculum_id LEFT JOIN department
+on curriculum.department_id=department.department_id WHERE thesis_defended_at
+IS NOT NULL AND thesis_deleted IS NULL $where");
         // thesis related to currently logged in user
         $person_id_author = $this->auth->person_id;
         $this->my_thesises = get_all("SELECT * FROM `thesis` NATURAL JOIN thesis_authors WHERE person_id = {$person_id_author} $where");
-
 
     }
 
@@ -42,6 +46,8 @@ class thesises extends Controller
         $this->thesis_authors = get_all("SELECT * FROM thesis_authors NATURAL JOIN person WHERE thesis_id=$thesis_id");
         $person_id = $this->auth->person_id;
         $this->can_view_uploaded_files = get_all("SELECT * FROM `person_roles` WHERE person_id = {$person_id} AND role_id=1");
+        $this->instructors = get_all("SELECT * FROM thesis_instructor");
+        $this->is_author = get_all("SELECT * FROM thesis_authors NATURAL JOIN thesis WHERE person_id=$person_id AND thesis_id=$thesis_id");
     }
 
     function view_upload()
@@ -144,11 +150,19 @@ class thesises extends Controller
         $thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *, thesis_instructor.instructor_name
                                    FROM thesis
-                                   NATURAL JOIN thesis_instructor
+                                   NATURAL LEFT JOIN thesis_instructor
                                    WHERE thesis_id = '$thesis_id' ");
         $this->thesis_authors = get_all("SELECT *, person.person_firstname, person.person_lastname FROM thesis_authors LEFT JOIN person on thesis_authors.person_id=person.person_id WHERE thesis_id=$thesis_id");
         $this->person = get_all("SELECT * FROM person");
 
+    }
+
+    function autocomplete()
+    {
+        $query = $this->params[0];
+        $persons = get_all("SELECT person_id, CONCAT(person_firstname, ' ', person_lastname, ' (', group_name, ')') AS person_name FROM person NATURAL JOIN group_persons NATURAL JOIN `group` WHERE `group_name` LIKE '%$query' OR person_lastname LIKE '%$query'");
+        header('Content-Type: application/json');
+        exit(json_encode($persons));
     }
 
 
@@ -216,7 +230,6 @@ class thesises extends Controller
     {
         $data1 = $_POST['thesis'];
         $data1['instructor_id'] = $_POST['instructor_select'];
-        $data['thesis_idea'] = NULL;
         $person_id = $this->auth->person_id;
         q("BEGIN");
         $thesis_id = insert('thesis', $data1);

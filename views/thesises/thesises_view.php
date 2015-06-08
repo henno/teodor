@@ -47,7 +47,7 @@
         </div>
     </form>
 <? endif; ?>
-<? if ($thesis['instructor_id'] != NULL && $thesis['thesis_title_confirmed_at'] == NULL && !$auth->is_admin): ?>
+<? if ($thesis['instructor_id'] != NULL && $thesis['thesis_title_confirmed_at'] == NULL && !$is_author && !$auth->is_admin): ?>
 <form action="thesises/join_as_coauthor/<?= $thesis['thesis_id'] ?>">
     <div class="pull-right">
         <button class="btn btn-primary">
@@ -93,7 +93,7 @@
 </form>
 <? endif; ?>
 
-<? if ($thesis['thesis_title_confirmed_at'] != NULL && $thesis_author['person_id'] == $this->auth->person_id && $thesis['thesis_defended_at'] == NULL): ?>
+<? if ($thesis['thesis_title_confirmed_at'] != NULL && $is_author && $thesis['thesis_defended_at'] == NULL): ?>
     <div class="row upload_files">
         <div class="col-md-6">
             <span class="lead">Laadi üles:</span>
@@ -145,7 +145,7 @@
 <? endif; ?>
 
 
-<? if ($thesis['thesis_title_confirmed_at'] != NULL && $auth->is_admin || $thesis['thesis_title_confirmed_at'] != NULL && $can_view_uploaded_files || $thesis['thesis_title_confirmed_at'] != NULL && $thesis_author['person_id'] == $this->auth->person_id || $thesis['thesis_defended_at'] != NULL ):?>
+<? if ($thesis['thesis_title_confirmed_at'] != NULL && $auth->is_admin || $thesis['thesis_title_confirmed_at'] != NULL && $can_view_uploaded_files || $thesis['thesis_title_confirmed_at'] != NULL && $is_author || $thesis['thesis_defended_at'] != NULL ):?>
 <h2>Üleslaaditud failid</h2>
 <table class="table table-bordered">
     <? foreach ($files as $file): ?>
