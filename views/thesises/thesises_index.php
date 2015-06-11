@@ -97,7 +97,7 @@
                 <tbody>
                 <? endif ?>
             </table>
-            <button type='button' class="btn btn-default pull-right" onclick="location.href = 'pdf/thesises_approval/';"  value="thesis_pdf"
+            <button type='button' class="btn btn-default pull-right" onclick="window.open('<?=BASE_URL?>pdf/thesises_approval/');"  value="thesis_pdf"
                     id="thesis_pdf">PDF
             </button>
         </div>
