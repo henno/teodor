@@ -97,6 +97,9 @@
                 <tbody>
                 <? endif ?>
             </table>
+            <button type='button' class="btn btn-default pull-right" onclick="location.href = 'pdf/thesises_approval/';"  value="thesis_pdf"
+                    id="thesis_pdf">PDF
+            </button>
         </div>
         <div role="tabpanel" class="tab-pane" id="thesises_in_progress">
             <? if (empty($thesises)): ?>
