@@ -1,19 +1,33 @@
 <h1><? __('Lõputöö muutmine') ?></h1>
 
 
-
-<form id="form" method="post">
-
-    <p><textarea rows="2" cols="50" name="thesis[thesis_title]"><?= $thesis['thesis_title'] ?></textarea>
-    <p><textarea rows="4" cols="50" name="thesis[thesis_description]"><?= $thesis['thesis_description'] ?></textarea>
-    <p><textarea rows="2" cols="50" name="thesis[thesis_client_info]"><?= $thesis['thesis_client_info'] ?></textarea>
-    <p><div class="control-group"><select  id="select-repo" class="repositories" multiple="multiple">
+<form role="form" id="form" class="form-horizontal" method="post">
+    <div class="form-group">
+        <label for="thesis[thesis_title]">Lõputöö teema:</label>
+    <textarea class="form-control" rows="2" name="thesis[thesis_title]"><?= $thesis['thesis_title'] ?></textarea>
+    </div>
+        <div class="form-group">
+            <label for="thesis[thesis_description]">Lõputöö kirjeldus:</label>
+    <textarea class="form-control" rows="4" name="thesis[thesis_description]"><?= $thesis['thesis_description'] ?></textarea>
+        </div>
+            <div class="form-group">
+                <label for="thesis[thesis_client_info]">Lõputöö klient:</label>
+    <textarea class="form-control" rows="2" name="thesis[thesis_client_info]"><?= $thesis['thesis_client_info'] ?></textarea>
+            </div>
+    <div class="form-group">
+    <label for="thesis_authors[]">Lõputöö autor:</label>
+    <select id="select-authors" name="thesis_authors[]"  multiple="multiple">
             <? foreach ($thesis_authors as $thesis_author): ?>
                 <option
                     value="<?= $thesis_author['person_id'] ?>" <?= $thesis_author['person_firstname'] == $thesis_author['person_firstname'] ? 'selected="selected"' : '' ?>><?= $thesis_author['person_firstname'] . " " . $thesis_author['person_lastname'] ?></option>
             <? endforeach ?>
         </select></div>
-    <p><textarea rows="2" cols="50" name="thesis[instructor_id]"><?= $thesis['instructor_name'] ?></textarea>
+    <div class="form-group">
+        <label for="thesis[instructor_id]">Lõputöö juhendaja:</label>
+    <select id="select-instructor" name="thesis[instructor_id]">
+                <option
+                    value="<?= $thesis['instructor_id'] ?>" <?= $thesis['instructor_name'] == $thesis['instructor_name'] ? 'selected="selected"' : '' ?>><?= $thesis['instructor_name'] ?></option>
+        </select></div>
 </form>
 
 <!-- BUTTONS -->
@@ -52,32 +66,57 @@
 
 <script>
     function save() {
-        
-        $.post('<?=BASE_URL. "thesises/edit/$params[0]"?>', $("#form").serialize());
+
+        $.post('<?=BASE_URL. "thesises/edit/$params[0]"?>',
+            $("#form").serialize(),
+            function (data) {
+                if (data != 'Ok') {
+                    alert('Fail');
+                    console.log(data);
+                }
+            })
     };
 
-
-    $('#select-repo').selectize({
+    $('#select-authors').selectize({
         valueField: 'person_id',
         labelField: 'person_name',
         searchField: 'person_name',
         options: [],
         create: false,
-        load: function(query, callback) {
+        load: function (query, callback) {
             if (!query.length) return callback();
             $.ajax({
                 url: '<?= BASE_URL ?>thesises/autocomplete/' + encodeURIComponent(query),
                 type: 'GET',
-                error: function() {
+                error: function () {
                     callback();
                 },
-                success: function() {
-                    callback(res.repositories.slice(0, 10));
+                success: function (res) {
+                    callback(res);
                 }
             });
         }
     });
 
-
+    $('#select-instructor').selectize({
+        valueField: 'instructor_id',
+        labelField: 'instructor_name',
+        searchField: 'instructor_name',
+        options: [],
+        create: false,
+        load: function (query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: '<?= BASE_URL ?>thesises/autocomplete_instructors/' + encodeURIComponent(query),
+                type: 'GET',
+                error: function () {
+                    callback();
+                },
+                success: function (res) {
+                    callback(res);
+                }
+            });
+        }
+    });
 
 </script>

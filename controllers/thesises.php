@@ -160,19 +160,39 @@ IS NOT NULL AND thesis_deleted IS NULL $where");
     function autocomplete()
     {
         $query = $this->params[0];
-        $persons = get_all("SELECT person_id, CONCAT(person_firstname, ' ', person_lastname, ' (', group_name, ')') AS person_name FROM person NATURAL JOIN group_persons NATURAL JOIN `group` WHERE `group_name` LIKE '%$query' OR person_lastname LIKE '%$query'");
+        $persons = get_all("SELECT person_id, CONCAT(person_firstname, ' ', person_lastname, ' (', group_name, ')') AS person_name FROM person NATURAL JOIN group_persons NATURAL JOIN `group` WHERE `group_name` LIKE '%$query%' OR person_lastname LIKE '%$query%'");
         header('Content-Type: application/json');
         exit(json_encode($persons));
     }
 
+    function autocomplete_instructors()
+    {
+        $query = $this->params[0];
+        $instructors = get_all("SELECT instructor_id, instructor_name FROM thesis_instructor WHERE `instructor_name` LIKE '%$query%'");
+        header('Content-Type: application/json');
+        exit(json_encode($instructors));
+    }
 
-    function edit_post()
+    function edit_ajax()
     {
         $thesis = $_POST['thesis'];
         $this->thesis_id = $this->params[0];
-        var_dump($thesis);
+
+        // Update thesis properties
         update('thesis', $thesis, "thesis_id = '{$this->thesis_id}'");
 
+        // Delete existing authors
+        q("DELETE FROM thesis_authors WHERE thesis_id='{$this->thesis_id}'");
+
+        // Insert new authors
+        q("BEGIN");
+        foreach ($_POST['thesis_authors'] as $author) {
+            insert('thesis_authors', array('person_id' => $author, 'thesis_id' => $this->thesis_id));
+        }
+        q("COMMIT");
+
+        // Respond positively
+        exit("Ok");
     }
 
     function delete_thesis()

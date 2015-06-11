@@ -26,7 +26,7 @@
         ?> </dd>
 </dl>
 
-<? if ($thesis['thesis_title_confirmed_at'] == NULL && $thesis['thesis_idea'] != NULL): ?>
+<? if ($thesis['thesis_title_confirmed_at'] == NULL && $thesis['thesis_idea'] != NULL && $thesis['thesis_idea'] != "0"): ?>
     <h3>Vali juhendaja:</h3>
     <form role="form" class="form-horizontal" method="post"
           action="thesises/confirmation_request/<?= $thesis['thesis_id'] ?>">
@@ -83,15 +83,6 @@
             </div>
         </form>
     <? endif; ?>
-<? if ($auth->is_admin):  ?>
-<form action="action_page.php">
-    Failide üleslaadimise algus:<br>
-    <input type="date" name="upload_at"><br><br>
-    Failide üleslaadimise lõpp:<br>
-    <input type="date" name="upload_at" ><br><br>
-    <input type="submit">
-</form>
-<? endif; ?>
 
 <? if ($thesis['thesis_title_confirmed_at'] != NULL && $is_author && $thesis['thesis_defended_at'] == NULL): ?>
     <div class="row upload_files">
@@ -167,7 +158,6 @@
         // Initialize dropdown for adding thesis instructors
         $(".chosen-select").chosen();
         $('.chosen-select-deselect').chosen({allow_single_deselect: true});
-
     });
 
 
