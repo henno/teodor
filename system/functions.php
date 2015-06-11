@@ -14,9 +14,13 @@ function error_out($error_file_name_or_msg)
 
 function __autoload($className)
 {
-	(include dirname(__FILE__) . '/classes/' . $className . '.php') or
-	(include dirname(__FILE__) . '/../../classes'  . $className . '.php') or
-	(error_out("Autoload of class $className failed."));
+    if(file_exists(dirname(__FILE__) . '/classes/' . $className . '.php')) {
+        include dirname(__FILE__) . '/classes/' . $className . '.php';
+    }elseif(file_exists(dirname(__FILE__) . '/../classes/'  . $className . '.php')) {
+        include dirname(__FILE__) . '/../classes/'  . $className . '.php';
+    }else {
+        error_out("Autoload of class $className failed.");
+    }
 	debug("Autoloaded " . $className);
 }
 
