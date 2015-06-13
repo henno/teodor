@@ -46,7 +46,6 @@ Page {PAGENO} of {nb}
 <sethtmlpagefooter name='myfooter' value='on' />
 mpdf-->
 
-
 <table border='1' style='width:100%'>
     <thead>
     <tr>

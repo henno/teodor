@@ -11,6 +11,7 @@ class pdf extends Controller
 {
 
     public $template = "pdf";
+    public $requires_auth = false;
 
     function thesises_approval()
     {
