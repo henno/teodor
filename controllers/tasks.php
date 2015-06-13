@@ -27,6 +27,7 @@ class tasks extends Controller
         $task_id = $this->params[0];
 
         $this->task = get_first("SELECT
+                                    task.`task_id`,
                                     `task_name`,
                                     `task_text`,
                                     `task_due`,
@@ -66,7 +67,7 @@ class tasks extends Controller
         $this->comments = $comments;
 
         // Virtual machines
-        $vms = new virtual_machine();
+        $vms = new digitalocean_api();
         $this->droplets = $vms->get_all();
         $this->virtual_machines = get_all("SELECT * FROM virtual_machine");
         $this->n = 1;
