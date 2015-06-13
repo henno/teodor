@@ -46,8 +46,7 @@ Page {PAGENO} of {nb}
 <sethtmlpagefooter name='myfooter' value='on' />
 mpdf-->
 
-<div style='text-align:center;'>HTML Form to PDF - Blog.theonlytutorials.com</div>
-<br>
+
 <table border='1' style='width:100%'>
     <thead>
     <tr>

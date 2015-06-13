@@ -38,7 +38,7 @@
         <select id="person_id" name="person[person_id]" class="chosen-select">
             <? foreach ($persons as $person): ?>
                 <option
-                    value="<?= $person['person_id'] ?>" <?= $person['person_lastname'] == $person['person_lastname'] ? 'selected="selected"' : '' ?>><?= $person['person_lastname'] ?></option>
+                    value="<?= $person['person_id'] ?>" <?= $person['person_lastname'] == $person['person_lastname'] ? 'selected="selected"' : '' ?>><?= $person['person_firstname'] . " " . $person['person_lastname'] ?></option>
             <? endforeach ?>
         </select><input class="btn btn-default" onclick="add_admin()" type="button" value="Lisa">
     </div>

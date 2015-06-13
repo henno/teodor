@@ -7,17 +7,20 @@
             <input type="submit" class="btn btn-default" value="Otsi">
             <input type="button" class="reset-search btn btn-default" value="Lähtesta"/>
         </form>
+
+
         <? if ($auth->is_admin): ?>
+
+        <!-- Lõputöö tähtaegade sisestamise vorm
+
         <form action="thesises/insert_dates">
             Failide üleslaadimise algus:<br>
             <input type="date" name="upload_at"><br><br>
             Failide üleslaadimise lõpp:<br>
             <input type="date" name="upload_at" ><br><br>
             <input type="submit">
-        </form>
+        </form> -->
         <? endif ?>
-
-        <!--- Võtsin vormi nupu ümber ära praegu - mitteadmin ei saa muidu sisestada! -->
 
         <button class="btn btn-primary pull-right" onclick="window.location.href = 'thesises/add'">
             Sisesta lõputöö
@@ -97,9 +100,11 @@
                 <tbody>
                 <? endif ?>
             </table>
+            <? if ($auth->is_admin): ?>
             <button type='button' class="btn btn-default pull-right" onclick="window.open('<?=BASE_URL?>pdf/thesises_approval/');"  value="thesis_pdf"
                     id="thesis_pdf">PDF
             </button>
+            <? endif ?>
         </div>
         <div role="tabpanel" class="tab-pane" id="thesises_in_progress">
             <? if (empty($thesises)): ?>

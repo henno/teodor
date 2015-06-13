@@ -73,6 +73,8 @@
                 if (data != 'Ok') {
                     alert('Fail');
                     console.log(data);
+                } else {
+                    window.alert("Muudatused on salvestatud!");
                 }
             })
     };

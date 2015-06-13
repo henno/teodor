@@ -118,18 +118,6 @@
                     $('form#finalForm').submit();
                 });
             </script>
-            <form id="uploadForm3" method="post" enctype="multipart/form-data" style=" display: none">
-                <input type="file" name="thesis_file_upload" id="thesis_file_upload" class="file-upload"/>
-            </form>
-            <script>
-                $('#thesis_files').click(function (event) {
-                    $('#files_upload').click();
-                });
-                //capture selected filename
-                $('#files_upload').change(function (click) {
-                    $('form#uploadForm').submit();
-                });
-            </script>
         </div>
     </div>
 
