@@ -9,9 +9,7 @@
 
 class pdf extends Controller
 {
-
     public $template = "pdf";
-    public $requires_auth = false;
 
     function thesises_approval()
     {
@@ -37,7 +35,7 @@ class pdf extends Controller
         $html = ob_get_clean();
 
         // Generate PDF from HTML
-        include 'assets/components/mpdf/5.7/mpdf.php';
+        include 'assets/components/mpdf/6.0/mpdf.php';
         $mpdf=new mPDF();
         $mpdf->WriteHTML($html);
         $mpdf->SetDisplayMode('fullwidth');
