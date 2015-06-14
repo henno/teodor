@@ -1,12 +1,8 @@
 <div class="row">
     <div class="col-md-12">
-        <form class="form-inline pull-left" role="search" id="searchForm" method="GET">
-            <div class="form-group">
-                <input type="text" class="form-control" name="query" value="<?= $query ?>"/>
+            <div class="col-md-3">
+                <input id="search" type="search" class="form-control" placeholder="Otsi...">
             </div>
-            <input type="submit" class="btn btn-default" value="Otsi">
-            <input type="button" class="reset-search btn btn-default" value="Lähtesta"/>
-        </form>
 
 
         <? if ($auth->is_admin): ?>
@@ -62,7 +58,7 @@
                     <th class="col-md-2">Tegevused</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="lookup">
                 <? foreach ($thesis_ideas as $thesis_idea): ?>
                     <tr>
                         <td><?= $thesis_idea['thesis_id'] ?></td>
@@ -88,7 +84,7 @@
                     <th class="col-md-2">Tegevused</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="lookup">
                 <? foreach ($thesises as $thesis): ?>
                     <tr>
                         <td><?= $thesis['thesis_id'] ?></td>
@@ -120,7 +116,7 @@
                     <th class="col-md-2">Tegevused</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="lookup">
                 <? foreach ($confirmed_thesises as $confirmed_thesis): ?>
                     <tr>
                         <td><?= $confirmed_thesis['thesis_id'] ?></td>
@@ -148,7 +144,7 @@
                     <th class="col-md-2">Tegevused</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="lookup">
                 <? foreach ($archived_thesises as $archived_thesis): ?>
                     <tr>
                         <td><?= $archived_thesis['thesis_id'] ?></td>
@@ -177,7 +173,7 @@
                     <th class="col-md-2">Tegevused</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="lookup">
                 <? foreach ($my_thesises as $my_thesis): ?>
                     <tr>
                         <td><?= $my_thesis['thesis_id'] ?></td>
@@ -219,5 +215,18 @@
 
 
         });
+
+        // table search filter
+        (function ($) {
+
+            $('#search').keyup(function () {
+                var find = new RegExp($(this).val(), 'i');
+                $('.lookup tr').hide();
+                $('.lookup tr').filter(function () {
+                    return find.test($(this).text());
+                }).show();
+            })
+        }(jQuery));
+
     </script>
 </div>
