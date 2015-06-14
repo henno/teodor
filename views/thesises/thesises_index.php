@@ -138,9 +138,10 @@
                 <thead>
                 <tr>
                     <th class="col-md-1">#</th>
-                    <th class="col-md-5">Teema</th>
+                    <th class="col-md-3">Teema</th>
                     <th class="col-md-3">Eriala</th>
-                    <th class="col-md-3">Osakond</th>
+                    <th class="col-md-2">Osakond</th>
+                    <th class="col-md-3">Autor</th>
                     <th class="col-md-2">Tegevused</th>
                 </tr>
                 </thead>
@@ -151,6 +152,7 @@
                         <td><?= $archived_thesis['thesis_title'] ?> </td>
                         <td><?= $archived_thesis['curriculum_name'] ?></td>
                         <td><?= $archived_thesis['department_name'] ?></td>
+                        <td><?= $archived_thesis['person_firstname'] ?>  <?= $archived_thesis['person_lastname'] ?></td>
                         <td>
                             <a href="thesises/view/<?= $archived_thesis['thesis_id'] ?>/<?= $archived_thesis['thesis_title'] ?>"
                                class="btn btn-default" role="button">Vaatan lähemalt</a></td>

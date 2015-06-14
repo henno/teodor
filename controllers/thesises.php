@@ -5,35 +5,27 @@ class thesises extends Controller
 
     function index()
     {
-
-        $where = isset($_GET['query']) ? "and thesis_title LIKE '%{$_GET['query']}%'" : null;
-        $this->query = isset($_GET['query']) ? $_GET['query'] : null;
         // thesises to be confirmed
-        $this->thesises = get_all("SELECT * FROM `thesis` WHERE thesis_idea IS NULL AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL OR thesis_idea=0 AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL  $where");
+        $this->thesises = get_all("SELECT * FROM `thesis` WHERE thesis_idea IS NULL AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL OR thesis_idea=0 AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL");
         // ideas for thesises
-        $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE thesis_idea=1 AND thesis_deleted IS NULL $where");
+        $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE thesis_idea=1 AND thesis_deleted IS NULL");
         // thesises that have been confirmed
-        $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL AND thesis_deleted IS NULL $where");
+        $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL AND thesis_deleted IS NULL");
         // archived thesises
-        $this->archived_thesises = get_all("SELECT * FROM `thesis` NATURAL JOIN thesis_authors LEFT JOIN group_persons ON
-thesis_authors.person_id=group_persons.person_id LEFT JOIN curriculum_groups
-ON group_persons.group_id=curriculum_groups.group_id LEFT JOIN curriculum ON
-curriculum_groups.curriculum_id=curriculum.curriculum_id LEFT JOIN department
-on curriculum.department_id=department.department_id WHERE thesis_defended_at
-IS NOT NULL AND thesis_deleted IS NULL $where");
+        $this->archived_thesises = get_all("SELECT * FROM `thesis` t
+                             LEFT JOIN thesis_authors ta ON ta.thesis_id = t.thesis_id
+                             LEFT JOIN person a ON a.person_id = ta.person_id
+                             LEFT JOIN group_persons ON ta.person_id=group_persons.person_id
+                             LEFT JOIN `group` g ON g.group_id = group_persons.group_id
+                             LEFT JOIN curriculum_groups ON group_persons.group_id=curriculum_groups.group_id
+                             LEFT JOIN curriculum ON curriculum_groups.curriculum_id=curriculum.curriculum_id
+                             LEFT JOIN department on curriculum.department_id=department.department_id WHERE thesis_defended_at
+                             IS NOT NULL AND thesis_deleted IS NULL");
         // thesis related to currently logged in user
         $person_id_author = $this->auth->person_id;
-        $this->my_thesises = get_all("SELECT * FROM `thesis` NATURAL JOIN thesis_authors WHERE person_id = {$person_id_author} $where");
+        $this->my_thesises = get_all("SELECT * FROM `thesis` NATURAL JOIN thesis_authors WHERE person_id = {$person_id_author}");
 
     }
-
-  /*  function index_post()
-    {
-        $data = $_POST['thesis'];
-        $data['person_id'] = NULL;
-        $thesis_id = insert('thesis', $data);
-        header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
-    } */
 
     function view()
     {
