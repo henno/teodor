@@ -3,7 +3,7 @@
 use DigitalOceanV2\Adapter\BuzzAdapter;
 use DigitalOceanV2\DigitalOceanV2;
 
-class virtual_machine extends Controller
+class digitalocean_api extends Controller
 {
     private $droplet_id = 0;
 
@@ -18,6 +18,10 @@ class virtual_machine extends Controller
         $adapter = new BuzzAdapter('cd23fc6824f19fbae06104e75d8e998adedb7bd5e575849d99246c77987d59c6');
         $digitalocean = new DigitalOceanV2($adapter);
         $this->droplet_api = $digitalocean->droplet();
+
+        // Get an instance of Key API
+        $key_api = $digitalocean->key();
+        $this->ssh_key = $key_api->getById(523573);
     }
 
     function get_all()
@@ -56,5 +60,13 @@ class virtual_machine extends Controller
         q("INSERT INTO task_log (task_log_action_type_id, task_log_timestamp, person_id, virtual_machine_id)
            SELECT task_log_action_type_id, NOW(), {$this->auth->person_id}, {$this->droplet_id}
            FROM task_log_action_type WHERE task_log_action_type_name = '$action'");
+    }
+
+    public function create_droplet($droplet_name)
+    {
+        if (!(empty($droplet_name))) {
+            $droplet = $this->droplet_api->create($droplet_name, 'ams3', '1gb', 'ubuntu-14-04-x64', 0, 0, 0, array($this->ssh_key->id)) or exit ('Creating of droplet failed');
+            $droplet_id = $droplet->id;
+        }
     }
 }

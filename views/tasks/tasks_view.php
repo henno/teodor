@@ -28,9 +28,8 @@
     <div class="col-sm-7 col-md-9">
         <p><?= $task['task_text'] ?></p>
         <? if ($task['uses_virtual_machines'] && !$task['virtual_machine_id']): ?>
-            <button class="btn btn-primary">
-                <? __('Loo virtuaalmasin') ?>
-            </button>
+            <button type="submit" name="action[create]" class="btn btn-primary" onclick="createVirtualMachine()"><? __('Loo virtuaalmasin') ?></button>
+
         <? endif ?>
     </div>
 </div>
@@ -39,6 +38,9 @@
 <table class="table table-bordered" style="width: auto;">
     <tbody>
     <tr>
+        <th><input type="checkbox" id="select-all-droplets"/></th>
+        <th>#</th>
+        <th>Nimetus</th>
         <th>IP Aadress</th>
         <th>Tunnid</th>
         <th>Viimane toiming</th>
@@ -46,6 +48,8 @@
         <th>SSL</th>
         <th>Ekraanipilt</th>
         <th title="Märgi ära, kui oled ülesande valmis saanud">Valmis?</th>
+        <th>Õpilase kommentaar</th>
+        <th>Õpetaja kommentaar</th>
         <th>Aegub</th>
     </tr>
     <? $n = 0;
@@ -174,5 +178,19 @@ foreach ($comments as $comment): $n++ ?>
     $('#savecomment').on('click', function () {
         alert('To do: Write some actual code');
         $('#myModal').modal('hide')
-    })
+    });
+
+    function createVirtualMachine() {
+        $.get("<?=BASE_URL?>virtual_machines/digitalocean/create/<?=$task['task_id']?>").done(function (data) {
+            if (data != 'OK') {
+                alert('<?__('Salvestamine ebaõnnestus')?>');
+                console.debug(data);
+                return false;
+            }
+
+            alert("Data Loaded: " + data);
+        });
+        return false;
+    }
+
 </script>
