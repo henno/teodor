@@ -19,7 +19,7 @@ function index() {
                 $data2['setup'] = 1;
                 $person_id = $this->auth->person_id;
                 update('person', $data2, "person_id = '{$person_id}'");
-                header('Location: ' . BASE_URL . 'thesises/');
+                header('Location: ' . BASE_URL);
             } else {
                 $data1 = $_POST['group_persons'];
                 $data1['group_id'] = $_POST['group_select'];
@@ -30,7 +30,7 @@ function index() {
                 insert('group_persons', $data1);
                 update('person', $data2, "person_id = '{$person_id}'");
                 q("COMMIT");
-                header('Location: ' . BASE_URL . 'thesises/');
+                header('Location: ' . BASE_URL);
             }
         }
     }

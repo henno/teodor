@@ -28,13 +28,13 @@ class thesises extends Controller
 
     }
 
-    function index_post()
+  /*  function index_post()
     {
         $data = $_POST['thesis'];
         $data['person_id_author'] = NULL;
         $thesis_id = insert('thesis', $data);
         header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
-    }
+    } */
 
     function view()
     {
