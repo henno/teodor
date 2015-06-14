@@ -177,11 +177,12 @@ class thesises extends Controller
         q("DELETE FROM thesis_authors WHERE thesis_id='{$this->thesis_id}'");
 
         // Insert new authors
-        q("BEGIN");
-        foreach ($_POST['thesis_authors'] as $author) {
-            insert('thesis_authors', array('person_id' => $author, 'thesis_id' => $this->thesis_id));
-        }
-        q("COMMIT");
+        if(isset($_POST['thesis_authors'])) {
+            q("BEGIN");
+            foreach ($_POST['thesis_authors'] as $author) {
+                insert('thesis_authors', array('person_id' => $author, 'thesis_id' => $this->thesis_id));
+            }
+        q("COMMIT"); }
 
         // Respond positively
         exit("Ok");
