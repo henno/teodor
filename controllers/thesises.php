@@ -5,33 +5,32 @@ class thesises extends Controller
 
     function index()
     {
+
+        $where = isset($_GET['query']) ? "and thesis_title LIKE '%{$_GET['query']}%'" : null;
+        $this->query = isset($_GET['query']) ? $_GET['query'] : null;
         // thesises to be confirmed
-        $this->thesises = get_all("SELECT * FROM `thesis` WHERE thesis_idea IS NULL AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL OR thesis_idea=0 AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL");
+        $this->thesises = get_all("SELECT * FROM `thesis` WHERE thesis_idea IS NULL AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL OR thesis_idea=0 AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL  $where");
         // ideas for thesises
-        $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE thesis_idea=1 AND thesis_deleted IS NULL");
+        $this->thesis_ideas = get_all("SELECT * FROM `thesis` WHERE thesis_idea=1 AND thesis_deleted IS NULL $where");
         // thesises that have been confirmed
-        $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL AND thesis_deleted IS NULL");
+        $this->confirmed_thesises = get_all("SELECT * FROM `thesis` WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL AND thesis_deleted IS NULL $where");
         // archived thesises
-        $this->archived_thesises = get_all("SELECT * FROM `thesis`
-                                            NATURAL JOIN thesis_authors LEFT JOIN group_persons
-                                            ON thesis_authors.person_id=group_persons.person_id
-                                            LEFT JOIN curriculum_groups
-                                            ON group_persons.group_id=curriculum_groups.group_id
-                                            LEFT JOIN curriculum
-                                             ON curriculum_groups.curriculum_id=curriculum.curriculum_id
-                                            LEFT JOIN department
-                                            ON curriculum.department_id=department.department_id
-                                            WHERE thesis_defended_at IS NOT NULL AND thesis_deleted IS NULL");
+        $this->archived_thesises = get_all("SELECT * FROM `thesis` NATURAL JOIN thesis_authors LEFT JOIN group_persons ON
+thesis_authors.person_id=group_persons.person_id LEFT JOIN curriculum_groups
+ON group_persons.group_id=curriculum_groups.group_id LEFT JOIN curriculum ON
+curriculum_groups.curriculum_id=curriculum.curriculum_id LEFT JOIN department
+on curriculum.department_id=department.department_id WHERE thesis_defended_at
+IS NOT NULL AND thesis_deleted IS NULL $where");
         // thesis related to currently logged in user
         $person_id_author = $this->auth->person_id;
-        $this->my_thesises = get_all("SELECT * FROM `thesis` NATURAL JOIN thesis_authors WHERE person_id = {$person_id_author}");
+        $this->my_thesises = get_all("SELECT * FROM `thesis` NATURAL JOIN thesis_authors WHERE person_id = {$person_id_author} $where");
 
     }
 
   /*  function index_post()
     {
         $data = $_POST['thesis'];
-        $data['person_id_author'] = NULL;
+        $data['person_id'] = NULL;
         $thesis_id = insert('thesis', $data);
         header('Location: ' . BASE_URL . 'thesises/' . $thesis_id);
     } */
@@ -116,7 +115,7 @@ class thesises extends Controller
             $fp = fopen($f["tmp_name"], 'r');
             $content = fread($fp, filesize($f["tmp_name"]));
             $content = mysqli_real_escape_string($db, $content);
-            $size = 1262;
+            $size = filesize($f["tmp_name"]); //1262;
             fclose($fp);
 
             if (!get_magic_quotes_gpc()) {
@@ -329,8 +328,14 @@ class thesises extends Controller
         return round($bytes / pow(1024, $e), 2) . $s[$e];
     }
 
-    function insert_dates()
-    {
+    function insert_dates () {
+        echo "Test!";
+        $begin_date = $_POST['begin_date'];
+        $end_date = $_POST['end_date'];
+        echo var_dump( $begin_date );
+        q("insert into thesis_dates (department_id, thesis_date_type_id, begin_date, end_date) VALUES (1, 0, $begin_date, $end_date )");
+return;
+        header('Location: ' . BASE_URL . 'thesises');
     }
 }
 

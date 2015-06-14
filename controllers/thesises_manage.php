@@ -39,11 +39,6 @@ class thesises_manage extends Controller
         exit('Ok');
     }
 
-function insert_dates () {
-
-
-    //getting dates from thesises_index.php insert date form
-}
 }
 
 
