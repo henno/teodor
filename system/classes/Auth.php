@@ -41,7 +41,7 @@ class Auth
         if (isset($_POST['username'])) {
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $person = get_first("SELECT person_id, is_admin, setup FROM person
+            $person = get_first("SELECT * FROM person
                                 WHERE username = '$username'
                                   AND password = '$password'
                                   AND  deleted = 0");
