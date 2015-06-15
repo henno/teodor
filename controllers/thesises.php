@@ -35,7 +35,8 @@ class thesises extends Controller
                                    NATURAL LEFT JOIN thesis_instructor
                                    WHERE thesis_id = '$thesis_id' ");
         $this->files = get_all("SELECT * FROM thesis_file WHERE thesis_id = '$thesis_id' ");
-        $this->thesis_authors = get_all("SELECT * FROM thesis_authors NATURAL JOIN person WHERE thesis_id=$thesis_id");
+        $this->thesis_authors = get_all("SELECT CONCAT (person_firstname, ' ', person_lastname) as author_name FROM thesis_authors NATURAL JOIN person WHERE thesis_id=$thesis_id");
+        $this->author_name =  implode(", ", array_column($this->thesis_authors,'author_name'));
         $person_id = $this->auth->person_id;
         $this->can_view_uploaded_files = get_all("SELECT * FROM `person_roles` WHERE person_id = {$person_id} AND role_id=1");
         $this->instructors = get_all("SELECT * FROM thesis_instructor");

@@ -6,9 +6,7 @@
     <dt>Lõputöö tellija:</dt>
     <dd><?= $thesis['thesis_client_info'] ?></dd>
     <dt>Lõputöö autor:</dt>
-    <dd><? foreach ($thesis_authors as $thesis_author): ?>
-            <?=$thesis_author['person_firstname'] . " " . $thesis_author['person_lastname']?>,
-        <? endforeach ?></dd>
+    <dd><?= $author_name ?></dd>
     <dt>Juhendaja:</dt>
     <dd><?= $thesis['instructor_name'] ?></dd>
     <dt>Staatus:</dt>
@@ -142,7 +140,7 @@
                 <a href="<?= BASE_URL ?>thesises/file/<?= $file['thesis_file_id'] ?>"><?= $file['thesis_file_name'] ?></a>
             </td>
              
-            <td><?= $file['thesis_file_uploaded_at'] ?></td>
+            <td><?= date('d-m-Y G:i',strtotime($file['thesis_file_uploaded_at'])) ?></td>
         </tr>
     <? endforeach ?>
 </table>

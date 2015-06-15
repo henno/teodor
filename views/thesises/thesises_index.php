@@ -112,7 +112,7 @@
                 <tr>
                     <th class="col-md-1">#</th>
                     <th class="col-md-7">Teema</th>
-                    <th class="col-md-9">Kinnitatud</th>
+                    <th class="col-md-2">Kinnitatud</th>
                     <th class="col-md-2">Tegevused</th>
                 </tr>
                 </thead>
@@ -121,7 +121,7 @@
                     <tr>
                         <td><?= $confirmed_thesis['thesis_id'] ?></td>
                         <td><?= $confirmed_thesis['thesis_title'] ?>  </td>
-                        <td><?= $confirmed_thesis['thesis_title_confirmed_at'] ?></td>
+                        <td><?= date('d-m-Y',strtotime($confirmed_thesis['thesis_title_confirmed_at'])) ?></td>
                         <td>
                             <a href="thesises/view/<?= $confirmed_thesis['thesis_id'] ?>/<?= $confirmed_thesis['thesis_title'] ?>"
                                class="btn btn-default" role="button">Vaatan lähemalt</a></td>
@@ -170,7 +170,7 @@
                 <thead>
                 <tr>
                     <th class="col-md-1">#</th>
-                    <th class="col-md-9">Teema</th>
+                    <th class="col-md-7">Teema</th>
                     <th class="col-md-2">Staatus</th>
                     <th class="col-md-2">Tegevused</th>
                 </tr>
