@@ -66,7 +66,7 @@ class digitalocean_api extends Controller
     {
         if (!(empty($droplet_name))) {
             $droplet = $this->droplet_api->create($droplet_name, 'ams3', '1gb', 'ubuntu-14-04-x64', 0, 0, 0, array($this->ssh_key->id)) or exit ('Creating of droplet failed');
-            $droplet_id = $droplet->id;
+            return $droplet->id;
         }
     }
 }
