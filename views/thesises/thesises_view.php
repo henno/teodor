@@ -59,11 +59,20 @@
 <? if ($auth->is_admin && $thesis['thesis_title_confirmed_at'] != NULL && $thesis['thesis_defended_at'] == NULL): ?>
 <form action="thesises/defended/<?= $thesis['thesis_id'] ?>">
     <div class="pull-right">
-        <button class="btn btn-primary">
+        <button class="defended btn btn-primary">
             Kaitstud
         </button>
     </div>
 </form>
+<? endif; ?>
+<? if ($auth->is_admin && $thesis['thesis_title_confirmed_at'] != NULL && $thesis['thesis_defended_at'] != NULL): ?>
+    <form action="thesises/not_defended/<?= $thesis['thesis_id'] ?>">
+        <div class="pull-right">
+            <button class="not-defended btn btn-danger">
+                Ei ole kaitstud
+            </button>
+        </div>
+    </form>
 <? endif; ?>
 <? if ($auth->is_admin && $thesis['thesis_defended_at'] == NULL): ?>
     <form action="thesises/edit/<?= $thesis['thesis_id'] ?>">
@@ -168,6 +177,23 @@
                 console.log(data);
             }
         }); }
+
+    $('.defended').click(function(){
+        if(window.confirm("Oled kindel, et soovid märkida lõputöö kaitstuks?")){
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    $('.not-defended').click(function(){
+        if(window.confirm("Oled kindel, et soovid lõputöölt eemaldada kaitstud staatuse?")){
+            return true;
+        } else {
+            return false;
+        }
+    });
+
 </script>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

@@ -227,6 +227,14 @@ class thesises extends Controller
 
     }
 
+    function not_defended()
+    {
+        $thesis_id = $this->params[0];
+        update('thesis', array('thesis_defended_at' => NULL), "thesis_id = '{$thesis_id}';");
+        header('Location: ' . BASE_URL . "thesises/view/$thesis_id");
+
+    }
+
 
     function add()
     {
