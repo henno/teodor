@@ -41,11 +41,11 @@
 
     <div class="pull-right">
 
-            <button class="btn btn-default" formaction="thesises/suggested_thesis/" value="thesis_idea"
-                    id="thesis_idea">Sisesta teema
+            <button class="btn btn-default" title="Paku õpilastele välja lõputöö teema" formaction="thesises/suggested_thesis/" value="thesis_idea"
+                    id="thesis_idea ">Sisesta teema
             </button>
 
-            <button class="btn btn-primary" formaction="thesises/add_post/" value="student_thesis" id="thesis_insert">
+            <button class="btn btn-primary" title="Sisesta teema, mida soovid lõputööna sooritada" formaction="thesises/add_post/" value="student_thesis" id="thesis_insert">
                 Sisesta lõputöö
             </button>
 
