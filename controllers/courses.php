@@ -19,6 +19,7 @@ class courses extends Controller
                   natural join subject
                   natural join period
                   natural join `group`
+                  natural join task
                 WHERE course.person_id = $my_id";
         $this->period_courses = get_all($sql);
         $this->periods = get_all("SELECT * FROM period");
@@ -38,6 +39,6 @@ class courses extends Controller
     }
     function view() {
         $this->course = get_first("SELECT * FROM course NATURAL JOIN person NATURAL JOIN subject NATURAL JOIN `group` WHERE course_id = '{$this->params[0]}'");
-
+        $this->task = get_first("SELECT * FROM task");
     }
 }

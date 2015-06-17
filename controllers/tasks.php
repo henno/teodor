@@ -99,7 +99,6 @@ class tasks extends Controller
             q("DELETE from virtual_machine WHERE virtual_machine_id NOT IN ($exsisting_droplet_ids)");
         } else {
             q("DELETE from virtual_machine");
-
         }
     }
 }
