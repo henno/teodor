@@ -10,7 +10,7 @@ class tasks extends Controller
 {
     function index()
     {
-        $this->tasks = get_all("SELECT *FROM person
+        $this->tasks = get_all("SELECT * FROM person
                               NATURAL JOIN group_persons
                               NATURAL JOIN `group`
                               JOIN course USING (group_id)
@@ -25,6 +25,13 @@ class tasks extends Controller
     {
         $comments = array();
         $task_id = $this->params[0];
+
+        // Virtual machines
+        $vms = new digitalocean_api();
+        $this->droplets = $vms->get_all();
+
+        //Delete nonexsisting virtual machines from database
+        $this->delete_orphan_virtual_machines($this->droplets);
 
         $this->task = get_first("SELECT
                                     task.`task_id`,
@@ -66,19 +73,33 @@ class tasks extends Controller
         }
         $this->comments = $comments;
 
-        // Virtual machines
-        $vms = new digitalocean_api();
-        $this->droplets = $vms->get_all();
+
+
+
         $this->virtual_machines = get_all("SELECT * FROM virtual_machine");
         $this->n = 1;
-        foreach ($this->droplets as &$droplet) {
-            $droplet->isReady = true;
-        }
-
     }
 
     function create_ajax()
     {
 
+    }
+
+    /**
+     * @param $exsisting_droplet_ids
+     */
+    public function delete_orphan_virtual_machines($exsisting_droplets)
+    {
+        foreach ($exsisting_droplets as $droplet) {
+            $exsisting_droplet_ids[] = $droplet->id;
+            $droplet->isReady = true;
+        }
+        if (!empty($exsisting_droplet_ids)) {
+            $exsisting_droplet_ids = implode(',', $exsisting_droplet_ids);
+            q("DELETE from virtual_machine WHERE virtual_machine_id NOT IN ($exsisting_droplet_ids)");
+        } else {
+            q("DELETE from virtual_machine");
+
+        }
     }
 }

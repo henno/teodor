@@ -4,7 +4,7 @@
 define('DEFAULT_CONTROLLER', 'welcome');
 
 // Load main menu badges
-$badges['tasks'] = 4;
+$badges['tasks'] = 1;
 
 // Load app
 require 'system/classes/Application.php';

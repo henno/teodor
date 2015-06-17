@@ -28,13 +28,14 @@
     <div class="col-sm-7 col-md-9">
         <p><?= $task['task_text'] ?></p>
         <? if ($task['uses_virtual_machines'] && !$task['virtual_machine_id']): ?>
-            <button type="submit" name="action[create]" class="btn btn-primary" onclick="createVirtualMachine()"><? __('Loo virtuaalmasin') ?></button>
+            <button type="submit" name="action[create]" class="btn btn-primary"
+                    onclick="createVirtualMachine()"><? __('Loo virtuaalmasin') ?></button>
 
         <? endif ?>
     </div>
 </div>
 
-<h3><? __('Virtuaalmasina andmed') ?></h3>
+<h3><? __('Ülesandega seotud virtuaalmasinad') ?></h3>
 <table class="table table-bordered" style="width: auto;">
     <tbody>
     <tr>
@@ -46,10 +47,7 @@
         <th>Viimane toiming</th>
         <th>Staatus</th>
         <th>SSL</th>
-        <th>Ekraanipilt</th>
         <th title="Märgi ära, kui oled ülesande valmis saanud">Valmis?</th>
-        <th>Õpilase kommentaar</th>
-        <th>Õpetaja kommentaar</th>
         <th>Aegub</th>
     </tr>
     <? $n = 0;
@@ -59,7 +57,7 @@
             data-id="<?= $droplet->id ?>"
             data-name="<?= $droplet->name ?>"
             data-created="<?= $droplet->createdAt ?>"
-            class="<?= isset($virtual_machines[$droplet->id]) && ($virtual_machines[$droplet->id]['status'] == 1) ? 'Ready' : 'NotReady' ?>">
+            class="<?= isset($droplet->id) && ($droplet->id['status'] == 1) ? 'Ready' : 'NotReady' ?>">
 
             <td><input type="checkbox" class="selection" name="droplets[<?= $droplet->id ?>]"/></td>
             <td><?= $n ?></td>
@@ -74,22 +72,17 @@
             <td class="droplet_action" id="da<?= $droplet->id ?>"></td>
             <td class="vert-align"><?= $droplet->status == 'active' ? '<span class="label label-success">aktiivne</span>' : '<span class="label label-danger">' . $droplet->status . '</span>' ?></td>
             <td class="ssl" id="ssl<?= $droplet->networks[0]->ipAddress ?>"></td>
-            <td class="screenshot" id="ss<?= $droplet->networks[0]->ipAddress ?>" style="padding:0px;">
-                <?= !empty($virtual_machines[$droplet->id]['image_link']) ? '<img src="screenshots/' . $droplet->id . '.jpg"></img>' : '' ?>
-            </td>
             <td><input type="checkbox"
                        class="ready-checkboxes"
-                       <? if ($virtual_machines[$droplet->id]['owner'] != $user AND $user != 'henno.taht'): ?>disabled="disabled"<? endif ?>
-                    <?= isset($virtual_machines[$droplet->id]) && ($virtual_machines[$droplet->id]['status'] == 1) ? 'checked="checked"' : '' ?>/>
+                       <? if ($droplet->id['owner'] != $this->auth AND $this->auth != 'henno.taht'): ?>disabled="disabled"<? endif ?>
+                    <?= isset($droplet->id) && ($droplet->id['status'] == 1) ? 'checked="checked"' : '' ?>/>
             </td>
-            <td class="comment comment_student"><?= !empty($virtual_machines[$droplet->id]['comment_student']) ? $virtual_machines[$droplet->id]['comment_student'] : '<span style="color:#adadad"><i>Lisamiseks kliki siia</i></span>' ?></td>
-            <td class="comment comment_teacher"><?= isset($virtual_machines[$droplet->id]) ? $virtual_machines[$droplet->id]['comment_teacher'] : '' ?></td>
             <td class="expiry">
-                <? if ($virtual_machines[$droplet->id]['status'] != 1): ?>
+                <? if ($droplet->id['status'] != 1): ?>
                     <time class="timeago"
-                          datetime="<?= isset($virtual_machines[$droplet->id]) ? $virtual_machines[$droplet->id]['expiry'] : '' ?>"
-                          title="<?= $virtual_machines[$droplet->id]['expiry'] ?>"></time>
-                    <? if (isset($virtual_machines[$droplet->id]['expiry']) && ($virtual_machines[$droplet->id]['owner'] == $user || $user == 'henno.taht')): ?>
+                          datetime="<?= isset($droplet->id) ? $droplet->id['expiry'] : '' ?>"
+                          title="<?= $droplet->id['expiry'] ?>"></time>
+                    <? if (isset($droplet->id['expiry']) && ($droplet->id['owner'] == $user || $user == 'henno.taht')): ?>
                         <button class="expiry-button" title="Pikenda praegusest 12h">
                             <img src="windup_key.png" width="20px" height="20px" alt="Pikenda 12h"/>
                         </button>
@@ -100,10 +93,9 @@
             </td>
             <? if (true): ?>
                 <td class="mark">
-                    <button <?= $droplet->isReady ? 'disabled="true"' : '' ?>
-                        class="mark-button btn btn-default <?= $droplet->isReady ? 'disabled' : '' ?>"
-                        name="mark[<?= $droplet->id ?>]" type="submit">
-                        Arvesta
+                    <button class="btn btn-danger delete_vm" name="action[delete]" type="submit"
+                            onclick="return confirm('Oled sa kindel?')">
+                        Kustuta
                     </button>
                 </td>
             <? endif ?>
@@ -175,6 +167,16 @@ foreach ($comments as $comment): $n++ ?>
 </div>
 
 <script>
+    $('.delete_vm').on('click', function () {
+        $.post("<?=BASE_URL?>virtual_machines/digitalocean/delete/" + $(this).parents('tr').data('id'),
+            function (response) {
+                if(response=='OK') {
+                    window.location.href=window.location.href;
+                } else {
+                    alert(response);
+                }
+            })
+    });
     $('#savecomment').on('click', function () {
         alert('To do: Write some actual code');
         $('#myModal').modal('hide')
@@ -188,9 +190,24 @@ foreach ($comments as $comment): $n++ ?>
                 return false;
             }
 
-            alert("Data Loaded: " + data);
+            window.location.href=window.location.href;
         });
         return false;
     }
 
+
+    calc_runtimes();
+
+    function calc_runtimes() {
+        $('td.runtime').each(function () {
+            var start_actual_time = $(this).find('div.starttime').html();
+            start_actual_time = new Date(start_actual_time);
+            var end_actual_time = new Date();
+            var diff = end_actual_time - start_actual_time;
+
+            var diffSeconds = diff / 1000;
+            var HH = diffSeconds / 3600;
+            $(this).find('div.starttime').html(Math.round(HH, 2));
+        })
+    }
 </script>

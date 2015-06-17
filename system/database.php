@@ -201,8 +201,8 @@ function escape(array $data)
         foreach ($data as $field => $value) {
             if ($value === NULL) {
                 $values[] = "`$field`=NULL";
-            } elseif (is_array($value) && isset($value['no_escape'])) {
-                $values[] = "`$field`=" . mysqli_real_escape_string($db, $value['no_escape']);
+            } elseif (isset($value['no_escape'])) {
+                $values[] = "`$field`=" . $value['no_escape'];
             } else {
                 $values[] = "`$field`='" . mysqli_real_escape_string($db, $value) . "'";
             }
