@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th><? __('Looja') ?></th>
-                <td><?= $task['person_lastname'] ?></td>
+                <td>Ants Malin</td>
             </tr>
         </table>
     </div>

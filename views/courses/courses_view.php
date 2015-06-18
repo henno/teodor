@@ -19,7 +19,7 @@
                 <tr>
                     <td><b>#</b></td>
                     <td><b><? __('Ülesanne') ?></b></td>
-                    <td><b><? __('Tähtaeg') ?></b></td>
+                    <td><b><? __('Tähtaeg') ?></b></td>a
                 </tr>
                 </thead>
                 <tbody>
