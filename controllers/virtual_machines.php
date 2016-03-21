@@ -20,7 +20,7 @@ class virtual_machines extends Controller
                 // Set variables
                 $task_id = $this->params[1];
                 $task_name = get_one("SELECT task_name FROM tasks WHERE task_id=$task_id");
-                $group_name = get_one("SELECT group_name FROM group_persons NATURAL JOIN groups WHERE person_id={$this->auth->person_id}");
+                $group_name = get_one("SELECT group_name FROM group_persons JOIN groups USING (group_id) WHERE person_id={$this->auth->person_id}");
                 $person = get_one("SELECT concat(person_firstname,' ', person_lastname) person_name FROM persons WHERE person_id={$this->auth->person_id}");
 
                 // Create droplet and get its id
