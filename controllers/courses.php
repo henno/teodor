@@ -29,10 +29,10 @@ class courses extends Controller
                                                   JOIN groups USING (group_id)
                                                   WHERE courses.teacher_id={$my_id}");
         $this->courses_taken = get_all("SELECT * FROM group_persons gp
-                                                 JOIN courses c ON c.group_id = gp.group_id
-                                                 JOIN groups g ON g.group_id = c.group_id
-                                                 JOIN subjects s ON s.subject_id = c.subject_id
-                                                 JOIN persons p ON p.person_id = c.teacher_id
+                                                 JOIN courses USING (group_id)
+                                                 JOIN groups USING (group_id)
+                                                 JOIN subjects USING (subject_id)
+                                                 JOIN persons USING (person_id)
                                                  WHERE `gp`.person_id={$my_id}");
 
     }
