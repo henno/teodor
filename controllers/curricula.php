@@ -5,10 +5,10 @@ class curricula extends Controller
 {
     function index()
     {
-        $this->curricula = get_all("SELECT *FROM curriculum");
+        $this->curriculums = get_all("SELECT *FROM curriculums");
     }
     function view()
     {
-        $this->curriculum = get_first("SELECT *FROM curriculum WHERE curriculum_id={$this->params[0]}");
+        $this->curriculums = get_first("SELECT *FROM curriculums WHERE curriculum_id={$this->params[0]}");
     }
 }
