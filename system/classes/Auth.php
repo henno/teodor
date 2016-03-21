@@ -14,7 +14,7 @@ class Auth
     {
         if (isset($_SESSION['person_id'])) {
             $person = get_first("SELECT *
-                                       FROM person
+                                       FROM persons
                                        WHERE person_id = '{$_SESSION['person_id']}'");
 
             $this->load_user_data($person);
@@ -41,7 +41,7 @@ class Auth
         if (isset($_POST['username'])) {
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $person = get_first("SELECT * FROM person
+            $person = get_first("SELECT * FROM persons
                                 WHERE username = '$username'
                                   AND password = '$password'
                                   AND  deleted = 0");
@@ -59,7 +59,7 @@ class Auth
         //var_dump($_COOKIE);
         //die();
         if (isset($_COOKIE['teodor_SID'])) {
-            $username = get_one("SELECT username FROM person WHERE person_SID='{$_COOKIE['teodor_SID']}'");
+            $username = get_one("SELECT username FROM persons WHERE person_SID='{$_COOKIE['teodor_SID']}'");
             if (!empty($username)) $cookie_login = true;
         }
 
@@ -74,7 +74,7 @@ class Auth
             if ($cookie_login or $this->login($username, $password)) {
 
                 // Check if person already exsists in db
-                $person = get_first("SELECT person_id, is_admin, person_first_visit, person_last_visit FROM person
+                $person = get_first("SELECT person_id, is_admin, person_first_visit, person_last_visit FROM persons
                                      WHERE username = '$username'
                                      AND deleted = 0");
 
@@ -83,12 +83,12 @@ class Auth
                     // Person did not exsist, insert this person and log the person in
                     $now = date('Y-m-d H:i:s');
                     $person = array('username' => $username, 'is_admin' => 0, 'person_first_visit' => $now, 'person_last_visit' => $now);
-                    $person['person_id'] = insert('person', $person);
+                    $person['person_id'] = insert('persons', $person);
 
                 } else {
 
                     // Person existed, update person's last visit time
-                    q("UPDATE person SET person_last_visit=NOW() WHERE username = '$username'");
+                    q("UPDATE persons SET person_last_visit=NOW() WHERE username = '$username'");
                 }
 
                 // Log the person in
@@ -104,13 +104,13 @@ class Auth
                     $time = 2147483647;
 
                     // Associate that random string with this user
-                    update('person', array('person_SID' => $SID), "username = '$username'");
+                    update('persons', array('person_SID' => $SID), "username = '$username'");
 
                     // Write that random string to cookie
                     setcookie("teodor_SID", $SID, $time, '/');
                 }
 
-                if(!get_one("SELECT setup FROM person WHERE person_id={$person['person_id']}")){
+                if(!get_one("SELECT setup FROM persons WHERE person_id={$person['person_id']}")){
                     header('Location: ' . BASE_URL . 'user_setup');
                     exit();
                 }
