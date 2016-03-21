@@ -17,6 +17,7 @@ class timetable extends Controller
                                    JOIN subjects USING (subject_id)"
         );
 
+
         foreach ($lectures as $lecture) {
             $timetable['title'] = <<<EOT
                 <a title="$lecture[room_nr]" href="schedule/rooms/$lecture[room_id]"><span class="label label-danger">$lecture[room_nr]</span></a>
