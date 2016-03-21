@@ -12,9 +12,9 @@ class test_questions extends Controller
     {
         $test_question_id = $this->params[0];
 
-        $this->question = get_first("SELECT * FROM test_question NATURAL JOIN test_question_type
+        $this->question = get_first("SELECT * FROM test_questions JOIN test_question_types USING (test_question_type_id)
                                        WHERE test_question_id = '$test_question_id'");
-        $this->answers = get_all("SELECT * FROM test_question_answer WHERE test_question_id = $test_question_id");
+        $this->answers = get_all("SELECT * FROM test_question_answers WHERE test_question_id = $test_question_id");
 
     }
 } 

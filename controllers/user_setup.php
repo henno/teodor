@@ -9,16 +9,16 @@ class user_setup extends Controller
 {
 
 function index() {
-    $this->groups = get_all("SELECT * FROM `group`");
+    $this->groups = get_all("SELECT * FROM groups");
 }
 
         function index_post()
         {
 
-            if (isset($_POST['group'])) {
+            if (isset($_POST['groups'])) {
                 $data2['setup'] = 1;
                 $person_id = $this->auth->person_id;
-                update('person', $data2, "person_id = '{$person_id}'");
+                update('persons', $data2, "person_id = '{$person_id}'");
                 header('Location: ' . BASE_URL);
             } else {
                 $data1 = $_POST['group_persons'];
@@ -28,7 +28,7 @@ function index() {
                 $data2['setup'] = 1;
                 q("BEGIN");
                 insert('group_persons', $data1);
-                update('person', $data2, "person_id = '{$person_id}'");
+                update('persons', $data2, "person_id = '{$person_id}'");
                 q("COMMIT");
                 header('Location: ' . BASE_URL);
             }

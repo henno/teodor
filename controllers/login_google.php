@@ -50,7 +50,7 @@ class login_google extends Controller
                 $username = $_SESSION['login_user'] = $user->username;
 
                 // Check if person already exsists in db
-                $person = get_first("SELECT person_id, is_admin, person_first_visit, person_last_visit FROM person
+                $person = get_first("SELECT person_id, is_admin, person_first_visit, person_last_visit FROM persons
                                      WHERE username = '$username'
                                      AND deleted = 0");
 
@@ -59,12 +59,12 @@ class login_google extends Controller
                     // Person did not exsist, insert this person and log the person in
                     $now = date('Y-m-d H:i:s');
                     $person = array('person_firstname' => $user->given_name,'person_lastname' => $user->family_name,'username' => $username, 'is_admin' => 0, 'person_first_visit' => $now, 'person_last_visit' => $now);
-                    $person['person_id'] = insert('person', $person);
+                    $person['person_id'] = insert('persons', $person);
 
                 } else {
 
                     // Person existed, update person's last visit time
-                    q("UPDATE person SET person_last_visit=NOW() WHERE username = '$username'");
+                    q("UPDATE persons SET person_last_visit=NOW() WHERE username = '$username'");
                 }
 
                 // Log the person in
@@ -80,14 +80,14 @@ class login_google extends Controller
                 $time = 2147483647;
 
                 // Associate that random string with this user
-                update('person', array('person_SID' => $SID), "username = '$username'");
+                update('persons', array('person_SID' => $SID), "username = '$username'");
 
                 // Write that random string to cookie
                 setcookie("teodor_SID", $SID, $time, '/');
 
                 /** end **/
 
-                if(!get_one("SELECT setup FROM person WHERE person_id={$person['person_id']}")){
+                if(!get_one("SELECT setup FROM persons WHERE person_id={$person['person_id']}")){
                     header('Location: ' . BASE_URL . 'user_setup');
                     exit();
                 }
