@@ -6,24 +6,24 @@ class thesises extends Controller
     function index()
     {
         // thesises to be confirmed
-        $this->thesises = get_all("SELECT * FROM `thesises` WHERE thesis_idea IS NULL AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL OR thesis_idea=0 AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL");
+        $this->thesises = get_all("SELECT * FROM thesises WHERE thesis_idea IS NULL AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL OR thesis_idea=0 AND thesis_title_confirmed_at IS NULL AND thesis_deleted IS NULL");
         // ideas for thesises
-        $this->thesis_ideas = get_all("SELECT * FROM `thesises` WHERE thesis_idea=1 AND thesis_deleted IS NULL");
+        $this->thesis_ideas = get_all("SELECT * FROM thesises WHERE thesis_idea=1 AND thesis_deleted IS NULL");
         // thesises that have been confirmed
-        $this->confirmed_thesises = get_all("SELECT * FROM `thesises` WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL AND thesis_deleted IS NULL");
+        $this->confirmed_thesises = get_all("SELECT * FROM thesises WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL AND thesis_deleted IS NULL");
         // archived thesises
-        $this->archived_thesises = get_all("SELECT * FROM `thesises` t
+        $this->archived_thesises = get_all("SELECT * FROM thesises t
                              LEFT JOIN thesis_authors ta ON ta.thesis_id = t.thesis_id
                              LEFT JOIN persons a ON a.person_id = ta.person_id
                              LEFT JOIN group_persons ON ta.person_id=group_persons.person_id
-                             LEFT JOIN `groups` g ON g.group_id = group_persons.group_id
+                             LEFT JOIN groups g ON g.group_id = group_persons.group_id
                              LEFT JOIN curriculum_groups ON group_persons.group_id=curriculum_groups.group_id
                              LEFT JOIN curriculums ON curriculum_groups.curriculum_id=curriculums.curriculum_id
                              LEFT JOIN departments on curriculums.department_id=departments.department_id WHERE thesis_defended_at
                              IS NOT NULL AND thesis_deleted IS NULL");
         // thesis related to currently logged in user
         $person_id_author = $this->auth->person_id;
-        $this->my_thesises = get_all("SELECT * FROM `thesises` JOIN thesis_authors WHERE person_id = {$person_id_author}");
+        $this->my_thesises = get_all("SELECT * FROM thesises JOIN thesis_authors WHERE person_id = {$person_id_author}");
 
     }
 
@@ -32,15 +32,15 @@ class thesises extends Controller
         $thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *, thesis_instructors.instructor_name
                                    FROM thesises
-                                   LEFT JOIN thesis_instructors
+                                   LEFT JOIN thesis_instructors USING (instructor_id)
                                    WHERE thesis_id = '$thesis_id' ");
         $this->files = get_all("SELECT * FROM thesis_files WHERE thesis_id = '$thesis_id' ");
         $this->thesis_authors = get_all("SELECT CONCAT (person_firstname, ' ', person_lastname) as author_name FROM thesis_authors JOIN persons WHERE thesis_id=$thesis_id");
         $this->author_name =  implode(", ", array_column($this->thesis_authors,'author_name'));
         $person_id = $this->auth->person_id;
-        $this->can_view_uploaded_files = get_all("SELECT * FROM `person_roles` WHERE person_id = {$person_id} AND role_id=1");
+        $this->can_view_uploaded_files = get_all("SELECT * FROM person_roles WHERE person_id = {$person_id} AND role_id=1");
         $this->instructors = get_all("SELECT * FROM thesis_instructors");
-        $this->is_author = get_all("SELECT * FROM thesis_authors JOIN thesises WHERE person_id=$person_id AND thesis_id=$thesis_id");
+        $this->is_author = get_all("SELECT * FROM thesis_authors JOIN thesises USING (thesis_id) WHERE person_id=$person_id AND thesis_id=$thesis_id");
     }
 
     function view_upload()
@@ -153,7 +153,7 @@ class thesises extends Controller
     function autocomplete()
     {
         $query = $this->params[0];
-        $persons = get_all("SELECT person_id, CONCAT(person_firstname, ' ', person_lastname, ' (', group_name, ')') AS person_name FROM persons JOIN group_persons JOIN `group` WHERE `group_name` LIKE '%$query%' OR person_lastname LIKE '%$query%'");
+        $persons = get_all("SELECT person_id, CONCAT(person_firstname, ' ', person_lastname, ' (', group_name, ')') AS person_name FROM persons JOIN group_persons JOIN group WHERE group_name LIKE '%$query%' OR person_lastname LIKE '%$query%'");
         header('Content-Type: application/json');
         exit(json_encode($persons));
     }
@@ -161,7 +161,7 @@ class thesises extends Controller
     function autocomplete_instructors()
     {
         $query = $this->params[0];
-        $instructors = get_all("SELECT instructor_id, instructor_name FROM thesis_instructors WHERE `instructor_name` LIKE '%$query%'");
+        $instructors = get_all("SELECT instructor_id, instructor_name FROM thesis_instructors WHERE instructor_name LIKE '%$query%'");
         header('Content-Type: application/json');
         exit(json_encode($instructors));
     }
