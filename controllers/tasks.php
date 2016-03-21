@@ -10,15 +10,15 @@ class tasks extends Controller
 {
     function index()
     {
-        $this->tasks = get_all("SELECT * FROM person
-                              NATURAL JOIN group_persons
-                              NATURAL JOIN `group`
-                              JOIN course USING (group_id)
-                              NATURAL JOIN `course_tasks`
-                              NATURAL JOIN subject
-                              JOIN task USING (task_id)
-                              NATURAL JOIN task_status
-                              WHERE person.person_id={$this->auth->person_id}");
+        $this->tasks = get_all("SELECT * FROM persons
+                              JOIN group_persons USING(person_id)
+                              JOIN groups USING(group_id)
+                              JOIN courses USING (group_id)
+                              JOIN course_tasks USING(course_id)
+                              JOIN subjects USING (subject_id)
+                              JOIN tasks USING (person_id)
+                              JOIN task_statuses USING(task_status_id)
+                              WHERE persons.person_id={$this->auth->person_id}");
     }
 
     function view()
@@ -30,11 +30,11 @@ class tasks extends Controller
         $vms = new digitalocean_api();
         $this->droplets = $vms->get_all();
 
-        //Delete nonexsisting virtual machines from database
+        //Delete non existing virtual machines from database
         $this->delete_orphan_virtual_machines($this->droplets);
 
         $this->task = get_first("SELECT
-                                    task.`task_id`,
+                                    tasks.`task_id`,
                                     `task_name`,
                                     `task_text`,
                                     `task_due`,
@@ -43,17 +43,17 @@ class tasks extends Controller
                                     `person_lastname`,
                                     `uses_virtual_machines`,
                                     `virtual_machine_id`
-                                 FROM task
-                                 NATURAL JOIN task_status
-                                 NATURAL JOIN person
-                                 LEFT JOIN person_tasks_statuses s ON s.task_id=task.task_id AND s.person_id = {$this->auth->person_id}
-                                 LEFT JOIN virtual_machine v ON v.task_id=task.task_id AND v.person_id = {$this->auth->person_id}
-                                 WHERE task.task_id={$task_id}");
-        $comments_raw = get_all("SELECT * FROM task_comment
-                                 NATURAL JOIN person
+                                 FROM tasks
+                                 JOIN task_statuses USING (task_status_id)
+                                 JOIN persons USING (person_id)
+                                 LEFT JOIN person_tasks_statuses s ON s.task_id=tasks.task_id AND s.person_id = {$this->auth->person_id}
+                                 LEFT JOIN virtual_machines v ON v.task_id=tasks.task_id AND v.person_id = {$this->auth->person_id}
+                                 WHERE tasks.task_id={$task_id}");
+        $comments_raw = get_all("SELECT * FROM task_comments
+                                 JOIN persons USING (person_id)
                                  WHERE task_id={$task_id}");
 
-        // Rename anynonomous members with comment id
+        // Rename anonymous members with comment id
         foreach ($comments_raw as $comment) {
             $comments[$comment['task_comment_id']] = $comment;
         }
@@ -76,7 +76,7 @@ class tasks extends Controller
 
 
 
-        $this->virtual_machines = get_all("SELECT * FROM virtual_machine");
+        $this->virtual_machines = get_all("SELECT * FROM virtual_machines");
         $this->n = 1;
     }
 
@@ -96,9 +96,9 @@ class tasks extends Controller
         }
         if (!empty($exsisting_droplet_ids)) {
             $exsisting_droplet_ids = implode(',', $exsisting_droplet_ids);
-            q("DELETE from virtual_machine WHERE virtual_machine_id NOT IN ($exsisting_droplet_ids)");
+            q("DELETE from virtual_machines WHERE virtual_machine_id NOT IN ($exsisting_droplet_ids)");
         } else {
-            q("DELETE from virtual_machine");
+            q("DELETE from virtual_machines");
         }
     }
 }
