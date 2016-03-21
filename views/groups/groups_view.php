@@ -48,7 +48,7 @@
     </tr>
     <? foreach($members as $member): ?>
     <tr>
-        <td><?=$member['person_lastname'] ?></td>
+        <td><?=$member['person_name'] ?></td>
         <td><?=$member['person_image'] ?></td>
     </tr>
     <? endforeach ?>
