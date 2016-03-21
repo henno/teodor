@@ -10,16 +10,16 @@ class thesises_manage extends Controller
 {
     function index()
     {
-        $this->departments = get_all("SELECT * FROM department");
+        $this->departments = get_all("SELECT * FROM departments");
     }
 
     function view()
     {
         $department_id = $this->params[1];
-        $this->selected_department = get_first("SELECT * FROM department WHERE department_id='{$department_id}'");
-        $this->departments = get_all("SELECT * FROM department");
-        $this->admins = get_all("SELECT * FROM thesis_admins JOIN person using (person_id) WHERE thesis_admins.department_id='{$department_id}'");
-        $this->persons = get_all("SELECT * FROM person");
+        $this->selected_department = get_first("SELECT * FROM departments WHERE department_id='{$department_id}'");
+        $this->departments = get_all("SELECT * FROM departments");
+        $this->admins = get_all("SELECT * FROM thesis_admins JOIN persons using (person_id) WHERE thesis_admins.department_id='{$department_id}'");
+        $this->persons = get_all("SELECT * FROM persons");
 
     }
 
