@@ -16,8 +16,8 @@ class tests extends Controller
     function view()
     {
         $test_id = $this->params[0];
-        $this->test = get_first("SELECT * FROM tests JOIN ON persons WHERE test_id = '$test_id'");
-        $this->questions = get_all("SELECT * FROM test_questions JOIN ON test_question_types
+        $this->test = get_first("SELECT * FROM tests JOIN persons USING (person_id)  WHERE test_id = '$test_id'");
+        $this->questions = get_all("SELECT * FROM test_questions JOIN test_question_types USING (test_question_type_id)
                                        WHERE test_id = '$test_id'");
         $this->question_types = get_all("SELECT * FROM test_question_types");
         $this->subjects = get_all("SELECT * FROM subjects");
