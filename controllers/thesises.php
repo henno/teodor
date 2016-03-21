@@ -13,13 +13,13 @@ class thesises extends Controller
         $this->confirmed_thesises = get_all("SELECT * FROM thesises WHERE thesis_title_confirmed_at IS NOT NULL AND thesis_defended_at IS NULL AND thesis_deleted IS NULL");
         // archived thesises
         $this->archived_thesises = get_all("SELECT * FROM thesises t
-                             LEFT JOIN thesis_authors ta ON ta.thesis_id = t.thesis_id
-                             LEFT JOIN persons a ON a.person_id = ta.person_id
-                             LEFT JOIN group_persons ON ta.person_id=group_persons.person_id
-                             LEFT JOIN groups g ON g.group_id = group_persons.group_id
-                             LEFT JOIN curriculum_groups ON group_persons.group_id=curriculum_groups.group_id
-                             LEFT JOIN curriculums ON curriculum_groups.curriculum_id=curriculums.curriculum_id
-                             LEFT JOIN departments on curriculums.department_id=departments.department_id WHERE thesis_defended_at
+                             JOIN thesis_authors ta USING (thesis_id)
+                             JOIN persons a USING (person_id)
+                             JOIN group_persons gp USING (person_id)
+                             JOIN groups g ON gp.group_id = g.group_id
+                             JOIN curriculum_groups cg ON g.group_id = cg.group_id
+                             JOIN curriculums c USING (curriculum_id)
+                             JOIN departments d ON c.department_id = d.department_id WHERE thesis_defended_at
                              IS NOT NULL AND thesis_deleted IS NULL");
         // thesis related to currently logged in user
         $person_id_author = $this->auth->person_id;
@@ -32,7 +32,7 @@ class thesises extends Controller
         $thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *, thesis_instructors.instructor_name
                                    FROM thesises
-                                   LEFT JOIN thesis_instructors USING (instructor_id)
+                                   JOIN thesis_instructors USING (instructor_id)
                                    WHERE thesis_id = '$thesis_id' ");
         $this->files = get_all("SELECT * FROM thesis_files WHERE thesis_id = '$thesis_id' ");
         $this->thesis_authors = get_all("SELECT CONCAT (person_firstname, ' ', person_lastname) as author_name FROM thesis_authors JOIN persons WHERE thesis_id=$thesis_id");
@@ -143,9 +143,9 @@ class thesises extends Controller
         $thesis_id = $this->params[0];
         $this->thesis = get_first("SELECT *, thesis_instructors.instructor_name
                                    FROM thesises
-                                   LEFT JOIN thesis_instructors
+                                   JOIN thesis_instructors USING (instructor_id)
                                    WHERE thesis_id = '$thesis_id' ");
-        $this->thesis_authors = get_all("SELECT *, persons.person_firstname, persons.person_lastname FROM thesis_authors LEFT JOIN persons on thesis_authors.person_id=persons.person_id WHERE thesis_id=$thesis_id");
+        $this->thesis_authors = get_all("SELECT *, persons.person_firstname, persons.person_lastname FROM thesis_authors JOIN persons USING (person_id) on thesis_authors.person_id=persons.person_id WHERE thesis_id=$thesis_id");
         $this->person = get_all("SELECT * FROM persons");
 
     }
