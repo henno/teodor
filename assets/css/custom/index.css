@@ -1,0 +1,5 @@
+/*cleanup from the style tag of index.html*/
+body {
+    min-height: 2000px !important;
+    padding-top: 70px;
+}
