@@ -69,12 +69,7 @@ if (isset($_POST['module'])) {
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <style>
-        body {
-            min-height: 2000px !important;
-            padding-top: 70px;
-        }
-    </style>
+    <link rel="stylesheet" href="/assets/css/custom/index.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>

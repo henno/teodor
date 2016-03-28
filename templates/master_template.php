@@ -14,32 +14,7 @@
 	<link href="assets/components/bootstrap/3.3.4-spacelab/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
-	<style>
-		body {
-			padding-top: 70px;
-		}
-
-        .dl-horizontal dt{
-            text-align: left;
-            margin-bottom: 1em;
-            width: auto;
-            padding-right: 1em;
-        }
-
-		.setup {
-			max-width: 500px;
-			margin: 0 auto;
-
-		}
-
-		.setup-body {
-			max-width: 400px;
-			margin: 0 auto;
-		}
-
-		.group {margin: 0 auto;}
-
-   	</style>
+	<link rel="stylesheet" href="assets/css/custom/master_template.css">
     <link rel="stylesheet" href="assets/css/application.css"/>
     <link rel="stylesheet" href="assets/components/chosen/chosen.css"/>
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
