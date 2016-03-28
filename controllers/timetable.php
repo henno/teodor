@@ -1,7 +1,7 @@
 <?php
 
 
-class schedule extends Controller
+class timetable extends Controller
 {
     public $timetable = [];
 
@@ -9,12 +9,14 @@ class schedule extends Controller
     {
 
         $lectures = get_all("SELECT *
-                                   FROM schedule
-                                   NATURAL JOIN `group`
-                                   NATURAL JOIN person
-                                   NATURAL JOIN room
-                                   NATURAL JOIN subject"
+                                   FROM schedules
+                                   JOIN courses USING (course_id)
+                                   JOIN groups USING (group_id)
+                                   JOIN persons ON (teacher_id=person_id)
+                                   JOIN rooms USING (room_id)
+                                   JOIN subjects USING (subject_id)"
         );
+
 
         foreach ($lectures as $lecture) {
             $timetable['title'] = <<<EOT
