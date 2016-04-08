@@ -4,7 +4,7 @@
         You are not an administrator.
     </div>
     <? exit(); endif; ?>
-<h1>group '<?= $group['groupname'] ?>'</h1>
+<h1>group '<?= $group['group_name'] ?>'</h1>
 <form id="form" method="post">
     <table class="table table-bordered">
         <tr>
@@ -18,7 +18,8 @@
 <div class="pull-right">
 
     <!-- CANCEL -->
-    <button class="btn btn-default" onclick="window.location.href = 'groups/view/<?= $group['group_id'] ?>/<?= $group['groupname'] ?>'">
+    <button class="btn btn-default"
+            onclick="window.location.href = 'groups/view/<?= $group['group_id'] ?>/<?= $group['group_name'] ?>'">
         Cancel
     </button>
 
