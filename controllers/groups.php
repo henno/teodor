@@ -29,8 +29,9 @@ class groups extends Controller
 
     function edit()
     {
+
         $group_id = $this->params[0];
-        $this->group = get_all("SELECT * FROM groups WHERE group_id = '{$group_id}'");
+        $this->group = get_first("SELECT * FROM groups WHERE group_id = '{$group_id}'");
     }
 
     function edit_post()
